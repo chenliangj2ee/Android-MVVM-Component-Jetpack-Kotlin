@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.chenliang.mvvmc">
-
+    package="com.chenliang.component_b">
     <application
         android:allowBackup="true"
         android:icon="@mipmap/base_ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/b_app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MVVMComponent">
-
+        android:theme="@style/Theme.BASE">
         <activity android:name=".act.MainActivity">
-
-            <intent-filter >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
