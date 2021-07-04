@@ -1,0 +1,5 @@
+include ':Component-B'
+include ':Component-A'
+include ':BaseLibrary'
+include ':app'
+rootProject.name = "MVVM-Component"
