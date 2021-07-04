@@ -1,13 +1,19 @@
-plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
+if (componentB_isApp.toBoolean()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
 }
+
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
     defaultConfig {
+        if (componentA_isApp.toBoolean()) {
+            applicationId "com.chenliang.component_b"
+        }
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
