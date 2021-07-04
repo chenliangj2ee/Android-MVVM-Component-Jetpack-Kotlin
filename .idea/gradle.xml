@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/BaseLibrary" />
             <option value="$PROJECT_DIR$/Component-A" />
             <option value="$PROJECT_DIR$/Component-B" />
+            <option value="$PROJECT_DIR$/ThirdLibrary" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
