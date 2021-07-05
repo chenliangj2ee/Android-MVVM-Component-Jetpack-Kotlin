@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
  * email:chenliangj2ee@163.com
  * 2021-03-13
  */
-open class MyRvAdapter<D : MyRecyclerViewModel>(
+class MyBaseAdapter<D : MyRecyclerViewModel>(
     context: Context, layoutIds: HashMap<Int, Int>,
     func: (d: D) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -51,7 +51,9 @@ open class MyRvAdapter<D : MyRecyclerViewModel>(
         if(position>=data.size-10 && !loading){
             Log.i("MyLog", "自动加载....$position")
             loading=true
-            loadFun!!()
+            if(loadFun!=null) {
+                loadFun!!()
+            }
         }
 
         val binding: ViewDataBinding = DataBindingUtil.getBinding(holder.itemView)!!

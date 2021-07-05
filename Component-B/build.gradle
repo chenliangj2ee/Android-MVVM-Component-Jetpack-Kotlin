@@ -11,7 +11,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        if (componentA_isApp.toBoolean()) {
+        if (componentB_isApp.toBoolean()) {
             applicationId "com.chenliang.component_b"
         }
         minSdkVersion 21
@@ -38,6 +38,16 @@ android {
     }
     dataBinding {
         enabled = true
+    }
+
+    sourceSets {
+        main {
+            if (componentA_isApp.toBoolean()) {
+                manifest.srcFile 'src/main/AndroidManifest_module/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
     }
 }
 

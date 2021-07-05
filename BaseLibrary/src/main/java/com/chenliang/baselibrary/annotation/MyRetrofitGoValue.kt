@@ -1,0 +1,3 @@
+package com.xl.base.anno
+
+class MyRetrofitGoValue(val loading:Boolean,val cache:Boolean,val hasCacheLoading:Boolean ,val tag:String)

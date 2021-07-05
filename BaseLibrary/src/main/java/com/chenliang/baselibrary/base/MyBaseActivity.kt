@@ -1,18 +1,21 @@
 package com.chenliang.baselibrary.base
 
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.chenliang.baselibrary.annotation.layoutId
+import com.chenliang.baselibrary.net.MyHttpEvent
 import java.lang.Exception
 
 abstract class MyBaseActivity<Binding : ViewDataBinding> : AppCompatActivity() {
     lateinit var binding: Binding
-
+    lateinit var httpEvent: MyHttpEvent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        httpEvent = MyHttpEvent(this)
         var layoutId = layoutId(this)
         if (layoutId > 0) {
             binding = DataBindingUtil.setContentView<Binding>(this, layoutId)
@@ -21,17 +24,31 @@ abstract class MyBaseActivity<Binding : ViewDataBinding> : AppCompatActivity() {
         initCreate()
         var onCreateEnd = System.currentTimeMillis()
         if (onCreateEnd - onCreateStart > 200) {
-            throw Exception("${this::class.simpleName } initCreate耗时太长，请优化...")
+            throw Exception("${this::class.simpleName} initCreate耗时太长，请优化...")
         }
     }
 
+    abstract fun initCreate()
+
     override fun onResume() {
         super.onResume()
+        httpEvent.onResume()
     }
 
-    abstract fun initCreate()
+    override fun onPause() {
+        super.onPause()
+        httpEvent.onPause()
+    }
+
+
     override fun onDestroy() {
         super.onDestroy()
         binding.unbind()
+        httpEvent.onDestroy()
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        httpEvent.onTouchEvent(event)
+        return super.onTouchEvent(event)
     }
 }
