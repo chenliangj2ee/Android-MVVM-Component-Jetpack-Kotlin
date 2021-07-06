@@ -5,10 +5,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.appcompat.app.AppCompatActivity
-class MyBaseDialog<Binding : ViewDataBinding>(id: Int) : DialogFragment() {
-    private lateinit var binding: Binding
-    private var layoutId = id
 
+abstract class MyBaseDialog<Binding : ViewDataBinding> : DialogFragment() {
+    lateinit var binding: Binding
     private lateinit var layout: View
 
     override fun onStart() {
@@ -33,34 +32,35 @@ class MyBaseDialog<Binding : ViewDataBinding>(id: Int) : DialogFragment() {
         savedInstanceState: android.os.Bundle?
     ): android.view.View? {
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        binding = DataBindingUtil.inflate(inflater, layoutId, container, false);
+        binding = DataBindingUtil.inflate(inflater, layoutId(), container, false);
         layout = binding.root
+        initCreate()
         return layout
     }
-
-
+    abstract fun initCreate()
+    abstract fun layoutId(): Int
     fun show(con: AppCompatActivity) {
-//
-//        if (con.isDestroyed || isAdded)
-//            return
-//        try {
-//            this.show(con.supportFragmentManager, "")
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
+
+        if (con.isDestroyed || isAdded)
+            return
+        try {
+            this.show(con.supportFragmentManager, "")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
     }
 
     fun show(con: AppCompatActivity, tag: String) {
-//        if (con.isDestroyed || isAdded)
-//            return
-//        try {
-//            var frag = con.supportFragmentManager.findFragmentByTag(tag)
-//            if (frag != null)
-//                return
-//            this.show(con.supportFragmentManager, tag)
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
+        if (con.isDestroyed || isAdded)
+            return
+        try {
+            var frag = con.supportFragmentManager.findFragmentByTag(tag)
+            if (frag != null)
+                return
+            this.show(con.supportFragmentManager, tag)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
