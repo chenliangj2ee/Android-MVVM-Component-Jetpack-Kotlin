@@ -2,6 +2,7 @@ package com.chenliang.baselibrary.base
 
 import android.os.Bundle
 import android.view.MotionEvent
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -9,17 +10,15 @@ import com.chenliang.baselibrary.annotation.layoutId
 import com.chenliang.baselibrary.net.MyHttpEvent
 import java.lang.Exception
 
-abstract class MyBaseActivity<Binding : ViewDataBinding> : AppCompatActivity() {
-    lateinit var binding: Binding
+abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
+    lateinit var binding: BINDING
     lateinit var httpEvent: MyHttpEvent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         httpEvent = MyHttpEvent(this)
-        var layoutId = layoutId(this)
-        if (layoutId > 0) {
-            binding = DataBindingUtil.setContentView<Binding>(this, layoutId)
-        }
+        binding = DataBindingUtil.setContentView(this, layoutId())
+
         var onCreateStart = System.currentTimeMillis()
         initCreate()
         var onCreateEnd = System.currentTimeMillis()
@@ -28,6 +27,7 @@ abstract class MyBaseActivity<Binding : ViewDataBinding> : AppCompatActivity() {
         }
     }
 
+    abstract fun layoutId(): Int
     abstract fun initCreate()
 
     override fun onResume() {

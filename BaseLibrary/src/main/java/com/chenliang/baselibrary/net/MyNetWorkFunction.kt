@@ -60,7 +60,7 @@ fun <T> MyBaseViewModel.go(
                 res.body()
             } else {
                 var bean = BaseResponse<T>()
-                if (res.code() == 404) bean.errmsg = "找不到地址"
+                if (res.code() == 404) bean.message = "找不到地址"
                 bean
             }
 
@@ -70,7 +70,7 @@ fun <T> MyBaseViewModel.go(
         BaseBeanLog().send(myRetrofitGoValue!!.tag, path, responseBean!!)
         viewModelScope.launch(Dispatchers.Main) { data.value=responseBean as BaseResponse<Any> }
         //把数据更新到缓存
-        if (responseBean?.errno == 0) {
+        if (responseBean?.code == 0) {
             MyCache.putCache(path, responseBean);
         }
 
@@ -107,21 +107,21 @@ fun <T> ViewModel.initDatas() = lazy { MutableLiveData<BaseResponse<ArrayList<T>
  * 网络数据请求成功
  */
 fun <T> BaseResponse<T>.y(func: () -> Unit) {
-    if (this.errno == 0 && !this.cache) func()
+    if (this.code == 0 && !this.cache) func()
 }
 
 /**
  * 缓存数据请求成功
  */
 fun <T> BaseResponse<T>.c(func: () -> Unit) {
-    if (this.errno == 0 && this.cache) func()
+    if (this.code == 0 && this.cache) func()
 }
 
 /**
  * 网络数据请求失败
  */
 fun <T> BaseResponse<T>.n(func: () -> Unit) {
-    if (this.errno != 0 && !this.cache) func()
+    if (this.code != 0 && !this.cache) func()
 }
 
 /**
@@ -174,19 +174,19 @@ private fun <T> apiException(e: Exception): BaseResponse<T> {
     e.printStackTrace()
     var bean = BaseResponse<T>()
     when (e) {
-        is SocketTimeoutException -> bean.errmsg = "网络超时"
+        is SocketTimeoutException -> bean.message = "网络超时"
         is HttpException -> {
             when {
-                e.code() == 403 -> bean.errmsg = "访问被拒绝"
-                e.code() == 404 -> bean.errmsg = "找不到路径"
-                e.code().toString().startsWith("4") -> bean.errmsg = "客户端异常"
-                e.code().toString().startsWith("5") -> bean.errmsg = "服务器异常"
+                e.code() == 403 -> bean.message = "访问被拒绝"
+                e.code() == 404 -> bean.message = "找不到路径"
+                e.code().toString().startsWith("4") -> bean.message = "客户端异常"
+                e.code().toString().startsWith("5") -> bean.message = "服务器异常"
             }
         }
-        is UnknownHostException -> bean.errmsg = "找不到服务器，请检查网络"
-        is JSONException -> bean.errmsg = "数据解析异常，非法JSON"
-        is MalformedJsonException -> bean.errmsg = "数据解析异常，非法JSON"
-        is Exception -> bean.errmsg = "程序异常" + e.javaClass.name
+        is UnknownHostException -> bean.message = "找不到服务器，请检查网络"
+        is JSONException -> bean.message = "数据解析异常，非法JSON"
+        is MalformedJsonException -> bean.message = "数据解析异常，非法JSON"
+        is Exception -> bean.message = "程序异常" + e.javaClass.name
     }
     return bean
 }

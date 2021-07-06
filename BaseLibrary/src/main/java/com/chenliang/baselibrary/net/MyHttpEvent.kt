@@ -2,8 +2,11 @@ package com.chenliang.baselibrary.net
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
+import com.chenliang.baselibrary.base.MyBaseActivity
 import com.xl.base.net.log.BaseBeanLog
 import com.xl.base.net.log.FloatView
 import gorden.rxbus2.RxBus
@@ -54,6 +57,7 @@ class MyHttpEvent(act: Activity) {
             floatButton.addLog(bean)
 
     }
+
 
     /**
      * 注销event，关闭所有loading Dialog

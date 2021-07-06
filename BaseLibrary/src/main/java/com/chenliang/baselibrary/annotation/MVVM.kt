@@ -1,18 +1,16 @@
 package com.chenliang.baselibrary.annotation
 
-import androidx.databinding.ViewDataBinding
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
-import kotlin.reflect.KClass
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
 
 /**
  *
  */
 
-@MustBeDocumented
-@Target(AnnotationTarget.CLASS)
+@Target(AnnotationTarget.FIELD)
+@Retention(AnnotationRetention.BINARY)
 annotation class MVVM(
-    val id: Int = 0
+    @LayoutRes val id: Int=0
 )
 
 /**
