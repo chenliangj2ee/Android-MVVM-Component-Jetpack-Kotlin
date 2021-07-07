@@ -1,4 +1,4 @@
-package com.xl.base.net.log
+package com.chenliang.baselibrary.net.log
 
 import com.google.gson.GsonBuilder
 import gorden.rxbus2.RxBus

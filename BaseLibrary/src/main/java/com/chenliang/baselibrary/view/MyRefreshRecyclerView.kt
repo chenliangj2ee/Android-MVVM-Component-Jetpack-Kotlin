@@ -16,7 +16,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.chenliang.baselibrary.base.MyRecyclerViewModel
-import com.xl.base.utils.show
+import com.chenliang.baselibrary.utils.show
 
 /**
  * chenliang

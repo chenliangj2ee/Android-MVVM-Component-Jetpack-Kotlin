@@ -1,7 +1,7 @@
 package com.chenliang.baselibrary.net
 
-import com.xl.base.anno.MyRetrofitGo
-import com.xl.base.anno.MyRetrofitGoValue
+import com.chenliang.baselibrary.annotation.MyRetrofitGo
+import com.chenliang.baselibrary.annotation.MyRetrofitGoValue
 import retrofit2.http.GET
 import retrofit2.http.POST
 

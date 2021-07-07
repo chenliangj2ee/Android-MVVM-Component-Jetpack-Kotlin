@@ -13,14 +13,17 @@
         android:theme="@style/Theme.MVVMComponent"
         tools:replace="icon,label,theme">
 
-        <activity android:name=".act.MainActivity">
+        <activity android:name=".act.LoginActivity"
+            android:label="登录">
 
-            <intent-filter >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".act.MainActivity"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.xl.base.net.log
+package com.chenliang.baselibrary.net.log
 
 import android.annotation.SuppressLint
 import android.app.Activity

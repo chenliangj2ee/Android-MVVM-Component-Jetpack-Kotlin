@@ -4,11 +4,11 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
-import com.xl.base.anno.MyRetrofitGoValue
+import com.chenliang.baselibrary.annotation.MyRetrofitGoValue
 import com.google.gson.Gson
 import com.google.gson.stream.MalformedJsonException
 import com.chenliang.baselibrary.base.MyBaseViewModel
-import com.xl.base.net.log.BaseBeanLog
+import com.chenliang.baselibrary.net.log.BaseBeanLog
 import gorden.rxbus2.RxBus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -9,3 +9,7 @@ fun View.show(show: Boolean) = this.apply {
         this.visibility = View.GONE
     }
 }
+
+fun View.click(func: (view: View) -> Unit) = this.apply {
+    this.setOnClickListener { func(it) }
+}

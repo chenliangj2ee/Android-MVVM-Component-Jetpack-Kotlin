@@ -1,12 +1,17 @@
 package com.chenliang.baselibrary.view
 
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import com.chenliang.baselibrary.R
+import com.chenliang.baselibrary.base.MyBaseActivity
+import kotlinx.android.synthetic.main.base_layout_toolbar.view.*
 
 class MyToolBar : LinearLayout {
+    lateinit var root: View
 
     constructor(context: Context?) : this(context, null)
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -19,7 +24,13 @@ class MyToolBar : LinearLayout {
     }
 
     private fun initViews() {
-        var view: View =
-            LayoutInflater.from(context).inflate(R.layout.base_layout_boobar, this, true)
+        root = LayoutInflater.from(context).inflate(R.layout.base_layout_toolbar, this, true)
+        root.toolbar_back.setOnClickListener {
+            (context as MyBaseActivity<*>).onBackPressed()
+        }
+    }
+
+    public fun setTitle(title: String) {
+        root.title.text = title
     }
 }

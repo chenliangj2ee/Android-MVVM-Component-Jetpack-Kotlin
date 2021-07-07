@@ -1,4 +1,4 @@
-package com.xl.base.anno
+package com.chenliang.baselibrary.annotation
 
 /**
  * loading:是否显示loadingDialog：true显示，false，不显示，默认true
