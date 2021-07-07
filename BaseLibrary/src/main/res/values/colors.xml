@@ -7,4 +7,5 @@
     <color name="base_teal_700">#FF018786</color>
     <color name="base_black">#FF000000</color>
     <color name="base_white">#FFFFFFFF</color>
+    <color name="base_toolbar_text_color">#000000</color>
 </resources>

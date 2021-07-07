@@ -17,8 +17,10 @@ import kotlinx.coroutines.launch
 import org.json.JSONException
 import retrofit2.Call
 import retrofit2.HttpException
+import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import javax.net.ssl.SSLException
 
 
 /**
@@ -27,21 +29,20 @@ import java.net.UnknownHostException
 fun <T> Any.initAPI(url: String, cla: Class<T>): T = MyNetWork.initRetrofit(url).create(cla)
 
 
-
 fun <T> MyBaseViewModel.go(
     block: () -> Call<BaseResponse<T>>
 ): MutableLiveData<BaseResponse<T>> {
 
 
-    var s=System.currentTimeMillis()
+    var s = System.currentTimeMillis()
     var cell = block()
-    var path  = cell.request().url.toString()
+    var path = cell.request().url.toString()
     Log.i("chenliang", "path:$path")
 
-    var data =dataMap[path.split("?")[0]]
-    if(data==null){
-        data=MutableLiveData<BaseResponse<Any>>()
-        dataMap[path.split("?")[0]]=data
+    var data = dataMap[path.split("?")[0]]
+    if (data == null) {
+        data = MutableLiveData<BaseResponse<Any>>()
+        dataMap[path.split("?")[0]] = data
     }
 
     viewModelScope.launch(Dispatchers.IO) {
@@ -68,7 +69,7 @@ fun <T> MyBaseViewModel.go(
             apiException<T>(e)
         }
         BaseBeanLog().send(myRetrofitGoValue!!.tag, path, responseBean!!)
-        viewModelScope.launch(Dispatchers.Main) { data.value=responseBean as BaseResponse<Any> }
+        viewModelScope.launch(Dispatchers.Main) { data.value = responseBean as BaseResponse<Any> }
         //把数据更新到缓存
         if (responseBean?.code == 0) {
             MyCache.putCache(path, responseBean);
@@ -77,7 +78,7 @@ fun <T> MyBaseViewModel.go(
         delay(100)
         RxBus.get().send(31415927, path)
     }
-   return data!! as MutableLiveData<BaseResponse<T>>
+    return data!! as MutableLiveData<BaseResponse<T>>
 }
 
 /**
@@ -150,7 +151,7 @@ fun <T> initCache(
 
         if (cacheResponse != null) {
             cacheResponse.cache = true
-            viewModelScope.launch(Dispatchers.Main) { data.value=cacheResponse }
+            viewModelScope.launch(Dispatchers.Main) { data.value = cacheResponse }
             hasCache = true
         }
 
@@ -183,6 +184,8 @@ private fun <T> apiException(e: Exception): BaseResponse<T> {
                 e.code().toString().startsWith("5") -> bean.message = "服务器异常"
             }
         }
+        is ConnectException -> bean.message = "网络链接异常"
+        is SSLException -> bean.message = "证书异常"
         is UnknownHostException -> bean.message = "找不到服务器，请检查网络"
         is JSONException -> bean.message = "数据解析异常，非法JSON"
         is MalformedJsonException -> bean.message = "数据解析异常，非法JSON"
@@ -212,7 +215,6 @@ fun <T : ViewModel> FragmentActivity.initVM(modelClass: Class<T>) =
 
 fun <T : ViewModel> Fragment.initVM(modelClass: Class<T>) =
     ViewModelProviders.of(this).get(modelClass)
-
 
 
 fun Any.toJson(): String = Gson().toJson(this)

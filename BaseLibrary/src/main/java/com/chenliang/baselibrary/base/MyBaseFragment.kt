@@ -1,6 +1,7 @@
 package com.chenliang.baselibrary.base
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ abstract class MyBaseFragment<T : ViewDataBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.i("MyActivityManager",this.javaClass.name);
         var layoutId = layoutId(this)
         if (layoutId > 0) {
             binding = DataBindingUtil.inflate(inflater, layoutId, container, false);

@@ -16,6 +16,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i("MyActivityManager",this.javaClass.name);
         httpEvent = MyHttpEvent(this)
         binding = DataBindingUtil.setContentView(this, layoutId())
 
@@ -25,6 +26,11 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
         if (onCreateEnd - onCreateStart > 200) {
             throw Exception("${this::class.simpleName} initCreate耗时太长，请优化...")
         }
+    }
+
+
+    fun initToolbar(){
+//        MyToolBar
     }
 
     abstract fun layoutId(): Int
