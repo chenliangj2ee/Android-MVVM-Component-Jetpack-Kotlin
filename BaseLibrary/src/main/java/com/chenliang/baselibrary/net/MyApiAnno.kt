@@ -10,24 +10,23 @@ object MyApiAnno {
     var value = HashMap<String, MyRetrofitGoValue>()
 
 
-
-    fun <T> register(cla: Class<T>){
-        initMyRetrofitGoValue(cla)
+    fun <T> register(classes: Class<T>) {
+        initMyRetrofitGoValue(classes)
     }
 
     /**
      * 获取MyRetrofitGo注解loading和cache
      */
-    fun <T> initMyRetrofitGoValue(cla: Class<T>){
+    fun <T> initMyRetrofitGoValue(cla: Class<T>) {
         var methods = cla.methods
         loop@ for (method in methods) {
 
             var postAnnotation = method.getAnnotation(POST::class.java)
             var getAnnotation = method.getAnnotation(GET::class.java)
-            var path:String?=null
+            var path: String? = null
             when {
-                postAnnotation != null -> path= postAnnotation.value
-                getAnnotation != null -> path=getAnnotation.value
+                postAnnotation != null -> path = postAnnotation.value
+                getAnnotation != null -> path = getAnnotation.value
                 else -> break@loop
             }
 
@@ -37,7 +36,7 @@ object MyApiAnno {
             var hasCacheLoading = method.getAnnotation(MyRetrofitGo::class.java).hasCacheLoading
             var tag = method.getAnnotation(MyRetrofitGo::class.java).tag
 
-            value[path] = MyRetrofitGoValue(loading, cache, hasCacheLoading,tag)
+            value[path] = MyRetrofitGoValue(loading, cache, hasCacheLoading, tag)
 
         }
     }
