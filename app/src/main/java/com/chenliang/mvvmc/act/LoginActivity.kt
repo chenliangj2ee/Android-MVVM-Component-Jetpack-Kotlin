@@ -29,8 +29,8 @@ class LoginActivity : MyBaseActivity<ActivityMainBinding>() {
         var name = account.text.toString()
         var pass = password.text.toString()
 
-        if (hasNull(name, pass)) {
-            Toast.makeText(this, "请输入账号或密码", Toast.LENGTH_LONG).show()
+        if (hasNull(name,"请输入账号", pass,"请输入密码")) {
+
             return
         }
 
