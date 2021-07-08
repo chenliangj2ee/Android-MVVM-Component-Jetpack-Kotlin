@@ -1,4 +1,4 @@
-package com.chenliang.baselibrary.net
+package com.chenliang.baselibrary.net.utils
 
 import android.app.Activity
 import android.app.ProgressDialog
@@ -85,7 +85,7 @@ class MyHttpEvent(act: Activity) {
      */
     var downTime = 0L;
     var down = false;
-    fun onTouchEvent(event: MotionEvent?) {
+    fun dispatchTouchEvent(event: MotionEvent?) {
         if (event!!.action == MotionEvent.ACTION_DOWN) {
             down = true
             downTime = System.currentTimeMillis()

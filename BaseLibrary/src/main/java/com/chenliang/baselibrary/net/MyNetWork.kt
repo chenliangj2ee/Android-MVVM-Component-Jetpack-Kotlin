@@ -7,6 +7,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+/**
+ * 创建API
+ */
+fun <T> Any.initAPI(url: String, cla: Class<T>): T = MyNetWork.initRetrofit(url).create(cla)
 
 object MyNetWork {
     private val timeUnit: TimeUnit = TimeUnit.SECONDS

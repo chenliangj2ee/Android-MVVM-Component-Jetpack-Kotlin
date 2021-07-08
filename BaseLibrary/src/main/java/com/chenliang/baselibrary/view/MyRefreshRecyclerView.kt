@@ -6,17 +6,19 @@ import android.os.Handler
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
+import android.view.View.OnScrollChangeListener
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.chenliang.baselibrary.R
+import com.chenliang.baselibrary.R.*
+import com.chenliang.baselibrary.base.MyRecyclerViewModel
+import com.chenliang.baselibrary.utils.show
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
-import com.chenliang.baselibrary.base.MyRecyclerViewModel
-import com.chenliang.baselibrary.utils.show
 
 /**
  * chenliang
@@ -33,46 +35,28 @@ import com.chenliang.baselibrary.utils.show
             MyRecyclerView
  */
 
-/*--------------------------------------------------------------------------------------------------
+/*
  * 布局说明：
-        <com.chenliang.baselibrary.view.MyRefreshRecyclerView
+        <com.chenliang.library.view.MyRefreshRecyclerView
             android:id="@+id/refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:my_empty_layout="@layout/layout_empty"
-            app:my_item_layout="@layout/item_product"
-	        app:my_top_enable="true" />
+            app:empty_layout="@layout/layout_empty"
+            app:item="@layout/item_product" />
 布局参数说明：
-            app:my_empty_layout="@layout/layout_empty"：列表数据为空时显示的布局
-            app:my_item_layout="@layout/item_layout"：item所对应的layout布局
-            app:my_top_enable="true"：下滑到第50个tiem会自动显示【回到顶部】按钮
-
-代码：-----------------------------------------------------------------------------------------------
-     1、单type类型：配置：  app:my_item_layout="@layout/item_product"
-        refresh.bindData<Product> {
-            （it.binding as ItemProduct0Binding).product = it
-        }
-
-     2、多type类型：
-        refresh.putItemByType("0", R.layout.item_product_0)
-        refresh.putItemByType("1", R.layout.item_product_1)
-        refresh.putItemByType("2", R.layout.item_product_2)
-        refresh.bindData<Product> {
-            if (it.itemType == 0) (it.binding as ItemProduct0Binding).product = it
-            if (it.itemType == 1) (it.binding as ItemProduct1Binding).product = it
-            if (it.itemType == 2) (it.binding as ItemProduct2Binding).product = it
-        }
-----------------------------------------------------------------------------------------------------
+            app:empty_layout="@layout/layout_empty"：列表数据为空时显示的布局
+            app:item="@layout/item_layout"：item所对应的layout布局
+ 代码：
+ * 绑定item
+            refresh.binding(fun(binding: ItemBinding, bean: Product) {
+                    binding.bean = bean
+                })
 *数据加载监听：下拉刷新，上拉加载
             refresh.load() {
                     分页请使用refresh.pageSize,refresh.pageIndex数据传递给后台
                 }
-----------------------------------------------------------------------------------------------------
 数据更新：数据加载后，添加到列表：
-        refresh.addData(list)
-----------------------------------------------------------------------------------------------------
-失败时，调用：
-*         refresh.stop()
+        recyclerView.addData(list)
  */
 
 class MyRefreshRecyclerView : SmartRefreshLayout {
@@ -99,11 +83,11 @@ class MyRefreshRecyclerView : SmartRefreshLayout {
 
     constructor(context: Context?, attributeSet: AttributeSet) : super(context!!, attributeSet) {
         val typedArray =
-            context.obtainStyledAttributes(attributeSet, R.styleable.MyRefreshRecyclerView)
-        emptyLayoutId = typedArray.getResourceId(R.styleable.MyRefreshRecyclerView_my_empty_layout, 0)
-        layoutId = typedArray.getResourceId(R.styleable.MyRefreshRecyclerView_my_item_layout, 0)
-        topLayoutId = typedArray.getResourceId(R.styleable.MyRefreshRecyclerView_my_top_layout, 0)
-        enableTop = typedArray.getBoolean(R.styleable.MyRefreshRecyclerView_my_top_enable, false)
+            context.obtainStyledAttributes(attributeSet, styleable.MyRefreshRecyclerView)
+        emptyLayoutId = typedArray.getResourceId(styleable.MyRefreshRecyclerView_my_empty_layout, 0)
+        layoutId = typedArray.getResourceId(styleable.MyRefreshRecyclerView_my_item_layout, 0)
+        topLayoutId = typedArray.getResourceId(styleable.MyRefreshRecyclerView_my_top_layout, 0)
+        enableTop = typedArray.getBoolean(styleable.MyRefreshRecyclerView_my_top_enable, false)
 
         params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         setRefreshHeader(ClassicsHeader(context));
@@ -156,7 +140,7 @@ class MyRefreshRecyclerView : SmartRefreshLayout {
 
     private fun initTop(context: Context?, attributeSet: AttributeSet) {
         if(topLayoutId==0)
-            topLayoutId= R.layout.base_layout_top
+            topLayoutId=R.layout.base_layout_top
         if (topLayoutId != 0) {
             var params =
                 FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
@@ -227,10 +211,10 @@ class MyRefreshRecyclerView : SmartRefreshLayout {
             }
             recyclerView!!.addData(list)
 
-            emptyLayout!!.show(recyclerView!!.getData<MyRecyclerViewModel>().size == 0)
+            emptyLayout?.show(recyclerView!!.getData<MyRecyclerViewModel>().size == 0)
             recyclerView!!.show(recyclerView!!.getData<MyRecyclerViewModel>().size > 0)
 
-            this.setEnableLoadMore(list.size >= pageSize)
+//            this.setEnableLoadMore(list.size >= pageSize)
         }
         stop()
     }

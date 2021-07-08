@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.FragmentActivity
 import com.chenliang.baselibrary.R
+import com.chenliang.baselibrary.utils.toast
 
 @SuppressLint("AppCompatCustomView")
 class FloatView(context: Context?) : Button(context) {
@@ -39,6 +40,12 @@ class FloatView(context: Context?) : Button(context) {
         } else {
             show = !show
             this.setOnClickListener {
+                if (logs.isEmpty()) {
+                    toast("不存在网络请求")
+                    visibility = View.GONE
+                    show = false
+                    return@setOnClickListener
+                }
                 var dialog = LogDialog()
                 dialog.setData(logs)
                 visibility = View.GONE

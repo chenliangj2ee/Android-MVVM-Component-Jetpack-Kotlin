@@ -1,19 +1,18 @@
 package com.chenliang.baselibrary.base
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.annotation.activityRefresh
 import com.chenliang.baselibrary.annotation.activityTitle
 import com.chenliang.baselibrary.annotation.activityToolbar
-import com.chenliang.baselibrary.extend.show
-import com.chenliang.baselibrary.net.MyHttpEvent
+import com.chenliang.baselibrary.net.utils.MyHttpEvent
+import com.chenliang.baselibrary.utils.log
+import com.chenliang.baselibrary.utils.show
 import com.chenliang.baselibrary.view.MyToolBar
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
@@ -21,18 +20,17 @@ import kotlinx.android.synthetic.main.base_activity_content.*
 
 abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
     lateinit var toolBar: MyToolBar
-    lateinit var refresh: SmartRefreshLayout
+    lateinit var defaultRefresh: SmartRefreshLayout
     lateinit var binding: BINDING
     lateinit var httpEvent: MyHttpEvent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("MyActivityManager", this.javaClass.name);
+        log("MyActivityManager", this.javaClass.name)
         setContentView(R.layout.base_activity_content)
-//        binding = DataBindingUtil.setContentView<BINDING>(this,layoutId())
+        httpEvent = MyHttpEvent(this)
         initToolbar()
         bindView()
-        httpEvent = MyHttpEvent(this)
         var onCreateStart = System.currentTimeMillis()
         initCreate()
         var onCreateEnd = System.currentTimeMillis()
@@ -45,19 +43,19 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
     }
 
     open fun stopRefresh() {
-        refresh.finishRefresh()
+        defaultRefresh.finishRefresh()
     }
 
     private fun bindView() {
         var content = layoutInflater.inflate(layoutId(), null)
 
-        refresh = SmartRefreshLayout(this)
-        refresh.setEnableRefresh(activityRefresh(this))
-        refresh.setRefreshHeader(ClassicsHeader(this))
-        refresh.setOnRefreshListener {
+        defaultRefresh = SmartRefreshLayout(this)
+        defaultRefresh.setEnableRefresh(activityRefresh(this))
+        defaultRefresh.setRefreshHeader(ClassicsHeader(this))
+        defaultRefresh.setOnRefreshListener {
             refresh();
         }
-        refresh.addView(
+        defaultRefresh.addView(
             content, LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
@@ -65,7 +63,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
         )
         binding = DataBindingUtil.bind<BINDING>(content)!!
         base_root.addView(
-            refresh,
+            defaultRefresh,
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
@@ -119,8 +117,9 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
         httpEvent.onDestroy()
     }
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        httpEvent.onTouchEvent(event)
-        return super.onTouchEvent(event)
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        httpEvent.dispatchTouchEvent(ev)
+        return super.dispatchTouchEvent(ev)
     }
 }

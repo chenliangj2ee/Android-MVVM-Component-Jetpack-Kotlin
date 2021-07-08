@@ -4,18 +4,18 @@ import com.google.gson.GsonBuilder
 import gorden.rxbus2.RxBus
 
 class BaseBeanLog {
-    var tag=""
+    var tag = ""
     var url = ""
     var json = ""
 
-    fun send(tag:String,path:String,json:Any){
-        this.tag = if(tag==""){
+    fun send(tag: String, path: String, json: Any) {
+        this.tag = if (tag == "") {
             "接口：${path.split("?")[0].split("/").last()}"
-        }else{
+        } else {
             "接口：$tag"
         }
-        this.url=path
-        this.json= GsonBuilder() .setPrettyPrinting()  .create().toJson(json)
+        this.url = path
+        this.json = GsonBuilder().setPrettyPrinting().create().toJson(json)
         RxBus.get().send(31415928, this)
     }
 }

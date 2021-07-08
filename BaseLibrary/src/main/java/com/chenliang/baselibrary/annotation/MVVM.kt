@@ -11,7 +11,7 @@ import androidx.annotation.LayoutRes
 annotation class MVVM(
     val id: Int = 0,
     val title: String = "",
-    val toolbar: Boolean = true,
+    val toolbar: Boolean = false,
     val refresh: Boolean = false
 )
 

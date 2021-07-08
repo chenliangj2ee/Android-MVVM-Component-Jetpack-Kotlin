@@ -1,4 +1,6 @@
 package com.chenliang.mvvmc.bean
 
-class BeanUser {
+import com.chenliang.baselibrary.base.MyRecyclerViewModel
+
+class BeanUser : MyRecyclerViewModel() {
 }

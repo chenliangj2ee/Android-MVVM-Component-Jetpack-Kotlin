@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.LinearLayout
 import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.base.MyBaseActivity
+import com.chenliang.baselibrary.utils.show
 import kotlinx.android.synthetic.main.base_layout_toolbar.view.*
 
 class MyToolBar : LinearLayout {
@@ -28,6 +29,14 @@ class MyToolBar : LinearLayout {
         root.toolbar_back.setOnClickListener {
             (context as MyBaseActivity<*>).onBackPressed()
         }
+    }
+
+    public fun showLeft(show: Boolean) {
+        root.toolbar_back.show(show)
+    }
+
+    public fun showRight(show: Boolean) {
+        root.toolbar_right.show(show)
     }
 
     public fun setTitle(title: String) {

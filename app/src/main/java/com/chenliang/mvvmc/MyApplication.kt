@@ -7,6 +7,13 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        BaseInit.registerApi(this, ApiService::class.java )
+
+        /**
+         * 注册接口API
+         */
+        BaseInit.registerApi(this, ApiService::class.java)
+        BaseInit.registerApi(this, com.chenliang.component_a.ApiService::class.java)
+        BaseInit.registerApi(this, com.chenliang.component_b.ApiService::class.java)
+
     }
 }

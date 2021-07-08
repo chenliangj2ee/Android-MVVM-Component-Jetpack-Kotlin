@@ -1,16 +1,9 @@
-package com.chenliang.mvvmc.act
+package com.chenliang.mvvmc.demo
 
-import android.widget.Toast
 import com.chenliang.baselibrary.annotation.MVVM
 import com.chenliang.baselibrary.base.MyBaseActivity
-import com.chenliang.baselibrary.extend.click
-import com.chenliang.baselibrary.extend.hasNull
-import com.chenliang.baselibrary.extend.initVM
-import com.chenliang.baselibrary.extend.toAct
-import com.chenliang.baselibrary.net.c
-import com.chenliang.baselibrary.net.n
-import com.chenliang.baselibrary.net.obs
-import com.chenliang.baselibrary.net.y
+import com.chenliang.baselibrary.base.obs
+import com.chenliang.baselibrary.utils.*
 import com.chenliang.mvvmc.R
 import com.chenliang.mvvmc.bean.BeanUser
 import com.chenliang.mvvmc.databinding.ActivityMainBinding
@@ -18,7 +11,7 @@ import com.chenliang.mvvmc.vm.AccountViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
 @MVVM(title = "登录", toolbar = true, refresh = false)
-class LoginActivity : MyBaseActivity<ActivityMainBinding>() {
+class NetWorkDemoActivity : MyBaseActivity<ActivityMainBinding>() {
     override fun layoutId() = R.layout.activity_login
     override fun initCreate() {
         login.click { loginAction() }
@@ -29,7 +22,7 @@ class LoginActivity : MyBaseActivity<ActivityMainBinding>() {
         var name = account.text.toString()
         var pass = password.text.toString()
 
-        if (hasNull(name,"请输入账号", pass,"请输入密码")) {
+        if (hasNull(name, "请输入账号", pass, "请输入密码")) {
 
             return
         }
@@ -45,13 +38,13 @@ class LoginActivity : MyBaseActivity<ActivityMainBinding>() {
      * 登录成功
      */
     private fun loginSucess(user: BeanUser?) {
-        toAct(MainActivity::class.java)
+        toAct(ToolBarDemoActivity::class.java)
     }
 
     /**
      * 登录失败
      */
     fun loginFail(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        toast(message)
     }
 }

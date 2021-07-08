@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chenliang.baselibrary.R
 
-class LogDialog : DialogFragment() {
+internal class LogDialog : DialogFragment() {
 
     var root: View? = null
     var listview: ListView? = null

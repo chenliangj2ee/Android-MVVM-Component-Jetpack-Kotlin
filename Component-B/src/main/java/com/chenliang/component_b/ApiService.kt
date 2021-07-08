@@ -1,8 +1,8 @@
-package com.chenliang.mvvmc
+package com.chenliang.component_b
 
 import com.chenliang.baselibrary.net.BaseResponse
-import com.chenliang.mvvmc.bean.BeanUser
 import com.chenliang.baselibrary.annotation.MyRetrofitGo
+import com.chenliang.component_b.bean.BeanUserB
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.POST
@@ -15,16 +15,11 @@ typealias Datas<T> = Call<BaseResponse<ArrayList<T>>>
 
 interface ApiService {
 
-    @MyRetrofitGo(tag = "登录", loading = true)
-    @POST("home/login")
+    @MyRetrofitGo(loading = true, cache = false, hasCacheLoading = false)
+    @POST("home/loginb")
     fun login(
         @Query("account") account: String,
         @Query("password") password: String
-    ): Data<BeanUser>
+    ): Data<BeanUserB>
 
-    @MyRetrofitGo(loading = true, cache = true, hasCacheLoading = false)
-    @POST("home/reminds")
-    fun getDatas(
-        @Query("userId") userId: String
-    ): Datas<JSONObject>
 }

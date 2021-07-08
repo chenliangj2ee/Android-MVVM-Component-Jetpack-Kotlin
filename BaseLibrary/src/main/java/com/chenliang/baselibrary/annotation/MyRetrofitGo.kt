@@ -7,8 +7,8 @@ package com.chenliang.baselibrary.annotation
  */
 @Target(AnnotationTarget.FUNCTION)
 annotation class MyRetrofitGo(
-    val loading: Boolean = true,
-    val cache: Boolean = true,
+    val loading: Boolean = false,
+    val cache: Boolean = false,
     val hasCacheLoading: Boolean = false,
     val tag: String = ""
 )

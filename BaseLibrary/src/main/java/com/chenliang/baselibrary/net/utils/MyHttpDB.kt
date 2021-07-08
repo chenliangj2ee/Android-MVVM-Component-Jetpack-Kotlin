@@ -1,4 +1,4 @@
-package com.chenliang.baselibrary.net
+package com.chenliang.baselibrary.net.utils
 
 import android.content.Context
 import android.text.TextUtils
@@ -8,7 +8,7 @@ import com.chenliang.baselibrary.BaseInit
 import java.lang.reflect.Type
 import java.util.*
 
-object MyCache {
+object MyHttpDB {
     private var MyCache = "SPUtils-android"
     private val datasMap = HashMap<String, Any>()
 
@@ -44,7 +44,13 @@ object MyCache {
             return res as T
         }
 
-        res = BaseInit.con?.let { getObject(it, key, clazz) }
+        res = BaseInit.con?.let {
+            getObject(
+                it,
+                key,
+                clazz
+            )
+        }
         if (res != null) {
             Log.i("MyLog", "使用文件缓存")
             datasMap[key] = res
@@ -63,7 +69,11 @@ object MyCache {
         Log.i("MyLog", "更新数据到内存缓存")
         if (datasMap.size > 100)
             datasMap.clear()
-        putString(BaseInit.con!!, key, Gson().toJson(bean))
+        putString(
+            BaseInit.con!!,
+            key,
+            Gson().toJson(bean)
+        )
         Log.i("MyLog", "更新数据到文件缓存")
     }
 
@@ -75,7 +85,8 @@ object MyCache {
     ): T? {
         if (context == null)
             return null
-        val json = getString(context, key)
+        val json =
+            getString(context, key)
         return if (TextUtils.isEmpty(json)) {
             null
         } else try {
@@ -91,7 +102,8 @@ object MyCache {
         key: String,
         type: Type?
     ): ArrayList<T>? {
-        val json = getString(context, key)
+        val json =
+            getString(context, key)
         return if (TextUtils.isEmpty(json)) {
             null
         } else try {

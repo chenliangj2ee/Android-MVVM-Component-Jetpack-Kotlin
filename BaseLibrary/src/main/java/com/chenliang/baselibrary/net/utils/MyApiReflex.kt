@@ -1,17 +1,20 @@
-package com.chenliang.baselibrary.net
+package com.chenliang.baselibrary.net.utils
 
 import com.chenliang.baselibrary.annotation.MyRetrofitGo
 import com.chenliang.baselibrary.annotation.MyRetrofitGoValue
+import com.chenliang.baselibrary.utils.log
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-object MyApiAnno {
+object MyApiReflex {
 
     var value = HashMap<String, MyRetrofitGoValue>()
 
 
     fun <T> register(classes: Class<T>) {
-        initMyRetrofitGoValue(classes)
+        initMyRetrofitGoValue(
+            classes
+        )
     }
 
     /**
@@ -36,6 +39,7 @@ object MyApiAnno {
             var hasCacheLoading = method.getAnnotation(MyRetrofitGo::class.java).hasCacheLoading
             var tag = method.getAnnotation(MyRetrofitGo::class.java).tag
 
+            log("path:$path   loading:$loading   cache:$cache    hasCacheLoading:$hasCacheLoading")
             value[path] = MyRetrofitGoValue(loading, cache, hasCacheLoading, tag)
 
         }

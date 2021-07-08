@@ -14,22 +14,22 @@ import androidx.recyclerview.widget.RecyclerView
  * email:chenliangj2ee@163.com
  * 2021-03-13
  */
-class MyBaseAdapter<D : MyRecyclerViewModel>(
+open class MyBaseAdapter<D : MyRecyclerViewModel>(
     context: Context, layoutIds: HashMap<Int, Int>,
     func: (d: D) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var loading=false;
+    var loading = false;
     var con = context;
     var data = ArrayList<D>()
     var layoutIds = layoutIds;
     var viewHolders = HashMap<Int, MyViewHolder>()
     var func = func
     var loadFun: (() -> Unit?)? = null
-    var position=0
+    var position = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        var type=viewType
+        var type = viewType
         if (layoutIds.size == 1) {
             type = 31415926
         }
@@ -41,19 +41,17 @@ class MyBaseAdapter<D : MyRecyclerViewModel>(
         return viewHolders[type]!!
     }
 
-    fun  finishLoading(){
-        loading=false
+    fun finishLoading() {
+        loading = false
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 //        Log.i("MyLog", "onBindViewHolder....$position")
-        this.position=position
-        if(position>=data.size-10 && !loading){
+        this.position = position
+        if (position >= data.size - 10 && !loading) {
             Log.i("MyLog", "自动加载....$position")
-            loading=true
-            if(loadFun!=null) {
-                loadFun!!()
-            }
+            loading = true
+            loadFun!!()
         }
 
         val binding: ViewDataBinding = DataBindingUtil.getBinding(holder.itemView)!!

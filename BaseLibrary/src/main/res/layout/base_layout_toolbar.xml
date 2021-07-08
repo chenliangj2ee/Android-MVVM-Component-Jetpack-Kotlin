@@ -32,7 +32,7 @@
             android:textSize="@dimen/toolbar_text_size" />
 
         <TextView
-            android:id="@+id/tv_title_right"
+            android:id="@+id/toolbar_right"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical|right"
