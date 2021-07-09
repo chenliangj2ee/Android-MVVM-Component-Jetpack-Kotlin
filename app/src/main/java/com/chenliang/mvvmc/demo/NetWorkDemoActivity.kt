@@ -1,6 +1,7 @@
 package com.chenliang.mvvmc.demo
 
-import com.chenliang.baselibrary.annotation.MVVM
+import android.Manifest
+import com.chenliang.baselibrary.annotation.My
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.base.obs
 import com.chenliang.baselibrary.utils.*
@@ -10,11 +11,13 @@ import com.chenliang.mvvmc.databinding.ActivityMainBinding
 import com.chenliang.mvvmc.vm.AccountViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
-@MVVM(title = "登录", toolbar = true, refresh = false)
+@My(myToolbarTitle = "登录", myToolbarShow = true)
 class NetWorkDemoActivity : MyBaseActivity<ActivityMainBinding>() {
     override fun layoutId() = R.layout.activity_login
     override fun initCreate() {
         login.click { loginAction() }
+
+
     }
 
     private fun loginAction() {

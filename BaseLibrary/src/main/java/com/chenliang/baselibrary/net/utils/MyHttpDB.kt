@@ -8,7 +8,7 @@ import com.chenliang.baselibrary.BaseInit
 import java.lang.reflect.Type
 import java.util.*
 
-object MyHttpDB {
+internal object MyHttpDB {
     private var MyCache = "SPUtils-android"
     private val datasMap = HashMap<String, Any>()
 

@@ -1,11 +1,11 @@
 package com.chenliang.mvvmc.demo
 
-import com.chenliang.baselibrary.annotation.MVVM
+import com.chenliang.baselibrary.annotation.My
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.mvvmc.R
 import com.chenliang.mvvmc.databinding.ActivityMainBinding
 
-@MVVM(title = "主页", toolbar = true)
+@My(myToolbarTitle = "主页", myToolbarShow = true)
 class ToolBarDemoActivity : MyBaseActivity<ActivityMainBinding>() {
     override fun initCreate() {
 

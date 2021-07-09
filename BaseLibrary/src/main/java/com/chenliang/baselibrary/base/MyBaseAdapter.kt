@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
  * email:chenliangj2ee@163.com
  * 2021-03-13
  */
-open class MyBaseAdapter<D : MyRecyclerViewModel>(
+open class MyBaseAdapter<D : MyBaseBean>(
     context: Context, layoutIds: HashMap<Int, Int>,
     func: (d: D) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -83,7 +83,7 @@ open class MyBaseAdapter<D : MyRecyclerViewModel>(
 
 }
 
-open class MyRecyclerViewModel() {
+open class MyBaseBean() {
     open var itemType = 0
     open var binding: ViewDataBinding? = null
 }

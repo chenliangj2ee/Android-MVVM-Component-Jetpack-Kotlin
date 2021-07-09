@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.base.MyBaseAdapter
-import com.chenliang.baselibrary.base.MyRecyclerViewModel
+import com.chenliang.baselibrary.base.MyBaseBean
 
 /**
  * chenliang
@@ -59,7 +59,7 @@ class MyRecyclerView : RecyclerView {
     }
 
 
-    fun <D : MyRecyclerViewModel> binding(
+    fun <D : MyBaseBean> binding(
         func: (d: D) -> Unit
     ) {
 
@@ -76,18 +76,18 @@ class MyRecyclerView : RecyclerView {
         (listAdapter as MyBaseAdapter<*>).loadFun=func
     }
 
-    public fun <D : MyRecyclerViewModel> addData(list: ArrayList<D>) {
+    public fun <D : MyBaseBean> addData(list: ArrayList<D>) {
         (listAdapter as MyBaseAdapter<D>).data.addAll(list)
         listAdapter.notifyDataSetChanged()
     }
 
-    public fun <D : MyRecyclerViewModel> clearData() {
+    public fun <D : MyBaseBean> clearData() {
 
         (listAdapter as MyBaseAdapter<D>).data.clear()
         listAdapter.notifyDataSetChanged()
     }
 
-    public fun <D : MyRecyclerViewModel> getData(): ArrayList<D> {
+    public fun <D : MyBaseBean> getData(): ArrayList<D> {
         return (listAdapter as MyBaseAdapter<D>).data
 
     }

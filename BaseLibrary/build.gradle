@@ -61,4 +61,10 @@ dependencies {
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
 
     api 'lib.gorden.rxbus2:rxbus:2.0.1'
+    //状态栏
+    api 'com.github.xubo.statusbarutils:StatusBarUtils:1.0.1'
+
+    //权限
+    api 'com.github.tbruyelle:rxpermissions:0.12'
+    api 'io.reactivex.rxjava3:rxjava:3.0.4'
 }

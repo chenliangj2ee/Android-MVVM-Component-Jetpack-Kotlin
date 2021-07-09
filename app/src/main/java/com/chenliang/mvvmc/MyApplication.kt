@@ -11,9 +11,12 @@ class MyApplication : Application() {
         /**
          * 注册接口API
          */
-        BaseInit.registerApi(this, ApiService::class.java)
-        BaseInit.registerApi(this, com.chenliang.component_a.ApiService::class.java)
-        BaseInit.registerApi(this, com.chenliang.component_b.ApiService::class.java)
+        BaseInit.registerApi(
+            this,
+            ApiService::class.java,
+            com.chenliang.component_a.ApiService::class.java,
+            com.chenliang.component_b.ApiService::class.java
+        )
 
     }
 }

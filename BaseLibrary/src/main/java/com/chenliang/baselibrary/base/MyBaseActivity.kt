@@ -1,36 +1,47 @@
 package com.chenliang.baselibrary.base
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.View
+import android.view.WindowManager
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.chenliang.baselibrary.R
+import com.chenliang.baselibrary.annotation.activityFullScreen
 import com.chenliang.baselibrary.annotation.activityRefresh
 import com.chenliang.baselibrary.annotation.activityTitle
 import com.chenliang.baselibrary.annotation.activityToolbar
 import com.chenliang.baselibrary.net.utils.MyHttpEvent
+import com.chenliang.baselibrary.utils.MyApp
 import com.chenliang.baselibrary.utils.log
 import com.chenliang.baselibrary.utils.show
 import com.chenliang.baselibrary.view.MyToolBar
+import com.github.xubo.statusbarutils.StatusBarUtils
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.base_activity_content.*
 
 abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
-    lateinit var toolBar: MyToolBar
-    lateinit var defaultRefresh: SmartRefreshLayout
-    lateinit var binding: BINDING
-    lateinit var httpEvent: MyHttpEvent
+    lateinit var mToolBar: MyToolBar
+    lateinit var mRefresh: SmartRefreshLayout
+    lateinit var mBinding: BINDING
+    private lateinit var mHttpEvent: MyHttpEvent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         log("MyActivityManager", this.javaClass.name)
+
         setContentView(R.layout.base_activity_content)
-        httpEvent = MyHttpEvent(this)
+
+        mHttpEvent = MyHttpEvent(this)
+        MyApp.activityToTranslucent(this)
+        initStatusBar()
         initToolbar()
         bindView()
+
         var onCreateStart = System.currentTimeMillis()
         initCreate()
         var onCreateEnd = System.currentTimeMillis()
@@ -39,31 +50,40 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
         }
     }
 
+    /**
+     * 刷新回调
+     */
     open fun refresh() {
     }
 
+    /**
+     * 结束刷新
+     */
     open fun stopRefresh() {
-        defaultRefresh.finishRefresh()
+        mRefresh.finishRefresh()
     }
 
+    /**
+     * 绑定view
+     */
     private fun bindView() {
         var content = layoutInflater.inflate(layoutId(), null)
 
-        defaultRefresh = SmartRefreshLayout(this)
-        defaultRefresh.setEnableRefresh(activityRefresh(this))
-        defaultRefresh.setRefreshHeader(ClassicsHeader(this))
-        defaultRefresh.setOnRefreshListener {
+        mRefresh = SmartRefreshLayout(this)
+        mRefresh.setEnableRefresh(activityRefresh(this))
+        mRefresh.setRefreshHeader(ClassicsHeader(this))
+        mRefresh.setOnRefreshListener {
             refresh();
         }
-        defaultRefresh.addView(
+        mRefresh.addView(
             content, LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
             )
         )
-        binding = DataBindingUtil.bind<BINDING>(content)!!
+        mBinding = DataBindingUtil.bind<BINDING>(content)!!
         base_root.addView(
-            defaultRefresh,
+            mRefresh,
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
@@ -71,26 +91,47 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
         )
     }
 
+    /**
+     * 状态栏默认状态，白底，黑字
+     */
+    private fun initStatusBar() {
+        if (activityFullScreen(this)) {
+            StatusBarUtils.setStatusBarTransparen(this)
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            StatusBarUtils.setStatusBarColor(this, Color.WHITE)
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
 
+    }
+
+    /**
+     * 初始化标题栏
+     */
     private fun initToolbar() {
-        toolBar = MyToolBar(this)
+        mToolBar = MyToolBar(this)
         base_root.addView(
-            toolBar,
+            mToolBar,
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
         )
 
-        toolBar.setTitle(activityTitle(this))
-        toolBar.show(activityToolbar(this))
+        mToolBar.setTitle(activityTitle(this))
+        mToolBar.show(activityToolbar(this))
     }
 
+    /**
+     * 设置标题栏标题
+     * @param title String
+     */
     fun setToolbarTitle(title: String) {
         if (title.isNullOrEmpty())
             return
-        toolBar.setTitle(title)
-        toolBar.show(true)
+        mToolBar.setTitle(title)
+        mToolBar.show(true)
     }
 
     abstract fun layoutId(): Int
@@ -98,7 +139,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        httpEvent.onResume()
+        mHttpEvent.onResume()
     }
 
     override fun onBackPressed() {
@@ -107,19 +148,22 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        httpEvent.onPause()
+        mHttpEvent.onPause()
     }
 
+    open fun initFragment(){
+
+    }
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.unbind()
-        httpEvent.onDestroy()
+        mBinding.unbind()
+        mHttpEvent.onDestroy()
     }
 
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        httpEvent.dispatchTouchEvent(ev)
+        mHttpEvent.dispatchTouchEvent(ev)
         return super.dispatchTouchEvent(ev)
     }
 }

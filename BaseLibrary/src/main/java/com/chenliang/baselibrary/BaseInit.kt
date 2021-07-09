@@ -6,17 +6,13 @@ import com.chenliang.baselibrary.net.utils.MyApiReflex
 object BaseInit {
     var con: Context? = null
 
-    //    fun <T> registerApi(context: Context, vararg classes: Class<T>) {
-//        con = context
-//
-//        for (item in classes) {
-//            MyApiAnno.register(item)
-//        }
-//
-//    }
-    fun <T> registerApi(context: Context, classes: Class<T>) {
+    fun   registerApi(context: Context, vararg classes: Class<*>) {
         con = context
-        MyApiReflex.register(classes)
+
+        for (item in classes) {
+            MyApiReflex.register(item)
+        }
 
     }
+
 }
