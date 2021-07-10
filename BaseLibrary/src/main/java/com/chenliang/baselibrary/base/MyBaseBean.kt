@@ -1,5 +1,6 @@
 package com.chenliang.baselibrary.base
 
+import androidx.databinding.BaseObservable
 import androidx.databinding.ViewDataBinding
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.utils.MySp
@@ -20,7 +21,7 @@ import java.io.Serializable
 
       BeanUser().clear()//清除
  */
-open class MyBaseBean() : Serializable {
+open class MyBaseBean() : BaseObservable(),Serializable {
     open var itemType = 0
     open var binding: ViewDataBinding? = null
 

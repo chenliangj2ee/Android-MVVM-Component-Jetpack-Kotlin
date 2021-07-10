@@ -2,7 +2,6 @@ package com.chenliang.baselibrary.net.utils
 
 import android.app.Activity
 import android.app.Dialog
-import android.app.ProgressDialog
 import android.os.Handler
 import android.view.MotionEvent
 import com.chenliang.baselibrary.R

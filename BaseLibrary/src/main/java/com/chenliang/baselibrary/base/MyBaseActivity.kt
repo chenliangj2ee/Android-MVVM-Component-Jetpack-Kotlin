@@ -36,8 +36,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        log("MyActivityManager", this.javaClass.name)
-
+        log("MyActivityManager", javaClass.name)
         setContentView(R.layout.base_activity_content)
         RxBus.get().register(this)
         mHttpEvent = MyHttpEvent(this)
@@ -59,7 +58,6 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
      */
     open fun refresh() {
     }
-
     /**
      * 结束刷新
      */
@@ -148,6 +146,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
+//        overridePendingTransition(R.anim.base_left_in, R.anim.base_right_out)
     }
 
     override fun onPause() {
@@ -221,4 +220,5 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
             func()
         }, delay)
     }
+
 }

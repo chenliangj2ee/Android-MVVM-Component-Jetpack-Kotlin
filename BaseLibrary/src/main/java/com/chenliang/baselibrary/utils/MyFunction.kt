@@ -9,6 +9,7 @@ import android.graphics.Matrix
 import android.graphics.PixelFormat
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Handler
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -50,7 +51,12 @@ fun View.show(show: Boolean) = this.apply {
     }
 }
 
+var toastData = HashMap<String, String>()
 fun Any.toast(msg: String) {
+
+    if (toastData.containsKey(msg))
+        return
+    toastData[msg] = msg
     var view = View.inflate(BaseInit.con, R.layout.base_toast, null)
     var message = view.message
     message.text = msg
@@ -59,6 +65,7 @@ fun Any.toast(msg: String) {
     toast!!.setGravity(Gravity.CENTER, 0, 0)
     toast!!.duration = Toast.LENGTH_SHORT
     toast.show()
+    Handler().postDelayed(Runnable { toastData.remove(msg) }, 1500)
 
 }
 
@@ -113,14 +120,6 @@ fun View.click(func: (view: View) -> Unit) = this.apply {
 fun <T : ViewModel> AppCompatActivity.initVM(modelClass: Class<T>) =
     ViewModelProvider(this)[modelClass]
 
-/**
- * 打开无参Activity
- * @receiver Activity
- * @param cls Class<T>
- */
-fun <T> Activity.toAct(cls: Class<T>) {
-    startActivity(Intent(this, cls))
-}
 
 fun Any.hasNull(vararg args: String): Boolean {
     val array = arrayOf(args)
@@ -282,10 +281,13 @@ fun Bitmap.toZoomImage(w: Int, h: Int): Bitmap {
 
 fun <T> Context.goto(cls: Class<T>) {
     startActivity(Intent(this, cls))
+//    if(this is Activity) {
+//        overridePendingTransition(R.anim.base_right_in, R.anim.base_left_out)
+//    }
 }
 
 fun Any.goto(path: String, vararg values: Any) {
-    var post = ARouter.getInstance().build(path)
+    var post = ARouter.getInstance().build(path)//.withTransition(R.anim.base_right_in, R.anim.base_left_out)
     var size = values.size - 1
     for (index in 0..size step 2) {
         var key = values[index]
@@ -300,8 +302,12 @@ fun Any.goto(path: String, vararg values: Any) {
             is Serializable -> post.withSerializable(key.toString(), value)
         }
     }
+    if (this is Context) {
+        post.navigation(this)
+    } else {
+        post.navigation()
+    }
 
-    post.navigation()
 }
 
 fun Any.send(code: Int) {

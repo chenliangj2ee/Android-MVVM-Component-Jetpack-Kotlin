@@ -12,31 +12,34 @@ import gorden.rxbus2.Subscribe
 import kotlinx.android.synthetic.main.account_act_login.*
 
 
-@My(myToolbarTitle = "模块A", myToolbarShow = true)
+@My(myToolbarTitle = "登录", myToolbarShow = true)
 class LoginActivity : MyBaseActivity<AccountActLoginBinding>() {
     override fun layoutId() = R.layout.account_act_login
-
+    var user = BeanUser();
+    lateinit var loginVM: AccountViewModel
     override fun initCreate() {
-        login.click { loginAction() }
-        register.click { toAct(RegisterActivity::class.java) }
+        loginVM = initVM(AccountViewModel::class.java)
+        mBinding.user = user
+        mBinding.act = this
+        register.click {
+            goto(RegisterActivity::class.java)
+        }
+    }
+
+    fun registerAction() {
 
     }
 
-    private fun loginAction() {
-        var loginVM = initVM(AccountViewModel::class.java)
-        var name = account.text.toString()
-        var pass = password.text.toString()
+    fun loginAction() {
+        with(user) {
+            if (hasNull(user.name, "请输入账号", user.password, "请输入密码")) return
 
-        if (hasNull(name, "请输入账号", pass, "请输入密码")) {
+            loginVM.login(user.name, user.password).obs(this@LoginActivity) {
+                it.c { }//登录不处理缓存
+                it.y { loginSucess(it.data!!) }
+                it.n { loginFail(it.message) }
 
-            return
-        }
-
-        loginVM.login(name, pass).obs(this) {
-            it.c { }//登录不处理缓存
-            it.y { loginSucess(it.data!!) }
-            it.n { loginFail(it.message) }
-
+            }
         }
     }
 
@@ -51,11 +54,9 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding>() {
      * 登录失败,登录失败，创建个账号信息，保存，模拟登录成功
      */
     fun loginFail(message: String) {
-
         var user = BeanUser()
         user.name = "tom"
         user.age = 12
-
         user.save()
 
         toast(message)
@@ -64,7 +65,8 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding>() {
     }
 
     @Subscribe(code = 100)
-    fun eventRegiest(user: BeanUser) {
+    fun eventRegiest(u: BeanUser) {
+        this.user=u
         mBinding.user = user
     }
 

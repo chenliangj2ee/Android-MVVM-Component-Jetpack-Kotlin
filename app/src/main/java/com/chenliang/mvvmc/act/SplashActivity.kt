@@ -4,6 +4,7 @@ import android.content.Intent
 import com.chenliang.account.act.LoginActivity
 import com.chenliang.account.bean.BeanUser
 import com.chenliang.baselibrary.base.MyBaseActivity
+import com.chenliang.baselibrary.utils.goto
 import com.chenliang.baselibrary.utils.send
 import com.chenliang.mvvmc.R
 import com.chenliang.mvvmc.databinding.ActivitySplashBinding
@@ -21,9 +22,9 @@ class SplashActivity : MyBaseActivity<ActivitySplashBinding>() {
 
     fun next() {
         if (BeanUser().get() == null) {
-            startActivity(Intent(this, LoginActivity::class.java))
+            goto(LoginActivity::class.java)
         } else {
-            startActivity(Intent(this, MainActivity::class.java))
+            goto(MainActivity::class.java)
         }
         finish()
     }

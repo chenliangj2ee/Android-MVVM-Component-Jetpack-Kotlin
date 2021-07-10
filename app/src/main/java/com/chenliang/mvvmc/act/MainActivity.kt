@@ -5,7 +5,6 @@ import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.log
 import com.chenliang.mvvmc.R
 import com.chenliang.mvvmc.databinding.ActivityMainBinding
-import kotlin.math.log
 
 /**
  * 主页

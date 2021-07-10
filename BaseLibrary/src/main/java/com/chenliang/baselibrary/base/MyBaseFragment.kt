@@ -33,7 +33,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        log("MyActivityManager", this.javaClass.name)
+        log("MyActivityManager", javaClass.name)
         rootView = layoutInflater.inflate(R.layout.base_fragment_content, null)
         initToolbar()
         bindView()

@@ -7,33 +7,34 @@ import com.chenliang.account.vm.AccountViewModel
 import com.chenliang.baselibrary.annotation.My
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.base.obs
-import com.chenliang.baselibrary.utils.*
-import kotlinx.android.synthetic.main.account_act_login.*
+import com.chenliang.baselibrary.utils.hasNull
+import com.chenliang.baselibrary.utils.initVM
+import com.chenliang.baselibrary.utils.sendSelf
+import com.chenliang.baselibrary.utils.toast
 
 @My(myToolbarTitle = "注册", myToolbarShow = true)
 class RegisterActivity : MyBaseActivity<AccountActRegisterBinding>() {
     override fun layoutId() = R.layout.account_act_register
+    var user = BeanUser();
+    lateinit var accountVM: AccountViewModel
 
     override fun initCreate() {
-        register.click { loginAction() }
+        accountVM = initVM(AccountViewModel::class.java)
+        mBinding.user = user
+        mBinding.act=this
     }
 
-    private fun loginAction() {
-        var loginVM = initVM(AccountViewModel::class.java)
-        var name = account.text.toString()
-        var pass = password.text.toString()
+    fun registerAction() {
 
-        if (hasNull(name, "请输入账号", pass, "请输入密码")) {
+        with(user) {
+            if (hasNull(name, "请输入账号", password, "请输入密码")) return
 
-            return
+            accountVM.register(name, password).obs(this@RegisterActivity) {
+                it.y { loginSucess(it.data!!) }
+                it.n { loginFail(it.message) }
+            }
         }
 
-        loginVM.register(name, pass).obs(this) {
-            it.c { }//注册不处理缓存
-            it.y { loginSucess(it.data!!) }
-            it.n { loginFail(it.message) }
-
-        }
     }
 
     /**
@@ -49,10 +50,6 @@ class RegisterActivity : MyBaseActivity<AccountActRegisterBinding>() {
      */
     fun loginFail(message: String) {
         toast(message)
-
-        var user = BeanUser()
-        user.name = account.text.toString()
-        user.password = password.text.toString()
         user.sendSelf(100)
         finish()
     }
