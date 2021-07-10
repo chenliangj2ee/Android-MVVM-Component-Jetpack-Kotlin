@@ -15,16 +15,5 @@ typealias Datas<T> = Call<BaseResponse<ArrayList<T>>>
 
 interface ApiService {
 
-    @MyRetrofitGo(tag = "登录", loading = true )
-    @POST("home/login")
-    fun login(
-        @Query("account") account: String,
-        @Query("password") password: String
-    ): Data<BeanUser>
 
-    @MyRetrofitGo(loading = true, cache = true, hasCacheLoading = false)
-    @POST("home/reminds")
-    fun getDatas(
-        @Query("userId") userId: String
-    ): Datas<JSONObject>
 }

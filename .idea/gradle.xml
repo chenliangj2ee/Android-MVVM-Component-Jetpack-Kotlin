@@ -12,9 +12,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/BaseLibrary" />
-            <option value="$PROJECT_DIR$/Component-A" />
-            <option value="$PROJECT_DIR$/Component-B" />
-            <option value="$PROJECT_DIR$/ThirdLibrary" />
+            <option value="$PROJECT_DIR$/C-Account" />
+            <option value="$PROJECT_DIR$/C-ThirdLibrary" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

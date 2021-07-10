@@ -14,8 +14,7 @@ class MyApplication : Application() {
         BaseInit.registerApi(
             this,
             ApiService::class.java,
-            com.chenliang.component_a.ApiService::class.java,
-            com.chenliang.component_b.ApiService::class.java
+            com.chenliang.account.ApiService::class.java
         )
 
     }

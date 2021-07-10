@@ -1,12 +1,13 @@
-package com.chenliang.mvvmc
+package com.chenliang.account
 
 import com.chenliang.baselibrary.net.initAPI
 
 var Any.API: ApiService
     set(value) {}
     get() = MyApiFactory.api!!
+
 object MyApiFactory {
-    var base = "http://api.alpha.xiaoliuyisheng.cn/app/doctor/2222"
+    var base = "http://api.alpha.xiaoliuyisheng.cn/app/doctor/"
     var api: ApiService? = null
 
     init {

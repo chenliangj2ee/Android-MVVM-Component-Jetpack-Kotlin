@@ -1,21 +1,28 @@
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-android-extensions'
+if (C_Account_isApp.toBoolean()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
 }
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.chenliang.mvvmc"
+        if (C_Account_isApp.toBoolean()) {
+            applicationId "com.chenliang.account"
+        }
+
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -34,8 +41,19 @@ android {
     dataBinding {
         enabled = true
     }
+
+    sourceSets {
+        main {
+            if (C_Account_isApp.toBoolean()) {
+                manifest.srcFile 'src/main/AndroidManifest_module/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
 }
 
 dependencies {
-    implementation project(path: ':C-Account')
+
+    api project(path: ':BaseLibrary')
 }

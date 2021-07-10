@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.chenliang.mvvmc">
 
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".MyApplication"
@@ -15,39 +13,38 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MVVMComponent"
         tools:replace="icon,label,theme">
-
         <activity
-            android:name=".demo.NetWorkDemoActivity"
-            android:label="网络Demo">
+            android:name=".act.SplashActivity"
+            android:label="MVVM">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".demo.RefreshDemoActivity"
-            android:label="刷新Demo">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".demo.ToolBarDemoActivity"
-            android:label="ToolBarDemo">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".demo.RefreshRecyclerViewActivity"
-            android:label="分页列表">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <!--        <activity-->
+        <!--            android:name=".demo.RefreshDemoActivity"-->
+        <!--            android:label="刷新Demo">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
+        <!--        <activity-->
+        <!--            android:name=".demo.ToolBarDemoActivity"-->
+        <!--            android:label="ToolBarDemo">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
+        <!--        <activity-->
+        <!--            android:name=".demo.RefreshRecyclerViewActivity"-->
+        <!--            android:label="分页列表">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
     </application>
 
 </manifest>
