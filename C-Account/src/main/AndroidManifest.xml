@@ -8,6 +8,8 @@
         android:label="@string/a_app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.BASE">
-        <activity android:name=".act.LoginActivity" />
+        <activity android:name=".act.LoginActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".act.RegisterActivity" />
     </application>
 </manifest>

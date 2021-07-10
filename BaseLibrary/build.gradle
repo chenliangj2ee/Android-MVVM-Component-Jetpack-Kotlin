@@ -4,6 +4,12 @@ plugins {
     id 'kotlin-android'
 }
 apply plugin: 'kotlin-kapt'
+//ARoute配置
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -36,6 +42,7 @@ android {
         enabled = true
     }
 }
+
 
 dependencies {
 
@@ -73,4 +80,9 @@ dependencies {
     //权限
     api 'com.github.tbruyelle:rxpermissions:0.12'
     api 'io.reactivex.rxjava3:rxjava:3.0.4'
+
+    //路由
+    api 'com.alibaba:arouter-api:1.5.2'
+    //ARoute配置
+    kapt  'com.alibaba:arouter-compiler:1.5.2'
 }

@@ -4,5 +4,6 @@ import com.chenliang.baselibrary.base.MyBaseBean
 
 class BeanUser : MyBaseBean() {
     var name = ""
+    var password = ""
     var age = 0
 }

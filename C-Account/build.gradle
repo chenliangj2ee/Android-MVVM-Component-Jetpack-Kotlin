@@ -7,6 +7,12 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
+//ARoute配置
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -23,6 +29,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
     }
 
     buildTypes {
@@ -53,7 +60,10 @@ android {
     }
 }
 
+
 dependencies {
+    //ARoute配置
+    kapt 'com.alibaba:arouter-compiler:1.5.2'
 
     api project(path: ':BaseLibrary')
 }

@@ -1,6 +1,7 @@
 package com.chenliang.baselibrary.utils
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -16,14 +17,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.alibaba.android.arouter.launcher.ARouter
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.R
-import com.chenliang.baselibrary.base.MyBaseBean
 import com.google.gson.Gson
 import com.tbruyelle.rxpermissions3.RxPermissions
+import gorden.rxbus2.RxBus
 import kotlinx.android.synthetic.main.base_toast.view.*
+import java.io.Serializable
 import java.text.SimpleDateFormat
-import java.util.*
 import java.util.regex.Pattern
 
 /**
@@ -276,4 +278,41 @@ fun Bitmap.toZoomImage(w: Int, h: Int): Bitmap {
     val matrix = Matrix()
     matrix.postScale(scaleWidth, scaleHeight)
     return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
+}
+
+fun <T> Context.goto(cls: Class<T>) {
+    startActivity(Intent(this, cls))
+}
+
+fun Any.goto(path: String, vararg values: Any) {
+    var post = ARouter.getInstance().build(path)
+    var size = values.size - 1
+    for (index in 0..size step 2) {
+        var key = values[index]
+        var value = values[values.indexOf(key) + 1]
+        when (value) {
+            is Int -> post.withInt(key.toString(), value)
+            is Long -> post.withLong(key.toString(), value)
+            is String -> post.withString(key.toString(), value)
+            is Boolean -> post.withBoolean(key.toString(), value)
+            is Double -> post.withDouble(key.toString(), value)
+            is Float -> post.withFloat(key.toString(), value)
+            is Serializable -> post.withSerializable(key.toString(), value)
+        }
+    }
+
+    post.navigation()
+}
+
+fun Any.send(code: Int) {
+    RxBus.get().send(code)
+}
+
+fun Any.sendSelf(code: Int) {
+    RxBus.get().send(code, this)
+    RxBus.get().send(this)
+}
+
+fun Any.sendSelf() {
+    RxBus.get().send(this)
 }

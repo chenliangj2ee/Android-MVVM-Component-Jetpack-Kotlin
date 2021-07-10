@@ -6,10 +6,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:ignore="MissingDefaultResource">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="启动页" />
+            android:text="启动页"
+            android:textSize="40sp" />
     </LinearLayout>
 </layout>

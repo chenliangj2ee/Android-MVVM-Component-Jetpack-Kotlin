@@ -2,6 +2,7 @@ package com.chenliang.baselibrary.base
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
@@ -24,20 +25,21 @@ import com.chenliang.baselibrary.view.MyToolBar
 import com.github.xubo.statusbarutils.StatusBarUtils
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
+import gorden.rxbus2.RxBus
 import kotlinx.android.synthetic.main.base_activity_content.*
 
 abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
     lateinit var mToolBar: MyToolBar
     lateinit var mRefresh: SmartRefreshLayout
     lateinit var mBinding: BINDING
-    private lateinit var mHttpEvent: MyHttpEvent
+    open lateinit var mHttpEvent: MyHttpEvent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         log("MyActivityManager", this.javaClass.name)
 
         setContentView(R.layout.base_activity_content)
-
+        RxBus.get().register(this)
         mHttpEvent = MyHttpEvent(this)
         MyApp.activityToTranslucent(this)
         initStatusBar()
@@ -159,6 +161,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        RxBus.get().unRegister(this)
         mBinding.unbind()
         mHttpEvent.onDestroy()
     }
@@ -211,5 +214,11 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
             mft.hide(f)
         }
         mft.commitAllowingStateLoss()
+    }
+
+    open fun delayed(delay: Long, func: () -> Unit) {
+        Handler().postDelayed(Runnable {
+            func()
+        }, delay)
     }
 }

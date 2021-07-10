@@ -21,6 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".act.MainActivity" />
+
         <!--        <activity-->
         <!--            android:name=".demo.RefreshDemoActivity"-->
         <!--            android:label="刷新Demo">-->

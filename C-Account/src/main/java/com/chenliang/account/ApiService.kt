@@ -20,5 +20,12 @@ interface ApiService {
         @Query("password") password: String
     ): Data<BeanUser>
 
+    @MyRetrofitGo(tag = "注册", loading = true)
+    @POST("home/register")
+    fun register(
+        @Query("account") account: String,
+        @Query("password") password: String
+    ): Data<BeanUser>
+
 
 }
