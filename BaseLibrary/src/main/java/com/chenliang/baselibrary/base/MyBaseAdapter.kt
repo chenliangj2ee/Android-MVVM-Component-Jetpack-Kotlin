@@ -83,7 +83,3 @@ open class MyBaseAdapter<D : MyBaseBean>(
 
 }
 
-open class MyBaseBean() {
-    open var itemType = 0
-    open var binding: ViewDataBinding? = null
-}

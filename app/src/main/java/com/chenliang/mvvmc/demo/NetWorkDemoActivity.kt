@@ -15,6 +15,11 @@ import kotlinx.android.synthetic.main.activity_login.*
 class NetWorkDemoActivity : MyBaseActivity<ActivityMainBinding>() {
     override fun layoutId() = R.layout.activity_login
     override fun initCreate() {
+
+        var user = BeanUser().get()
+        if (user != null) {//已登录
+        }
+
         login.click { loginAction() }
 
 
@@ -30,17 +35,19 @@ class NetWorkDemoActivity : MyBaseActivity<ActivityMainBinding>() {
             return
         }
 
-        loginVM.test(name, pass).obs(this) {
+        loginVM.login(name, pass).obs(this) {
             it.c { }
-            it.y { loginSucess(it.data) }
+            it.y { loginSucess(it.data!!) }
             it.n { loginFail(it.message) }
+
         }
     }
 
     /**
      * 登录成功
      */
-    private fun loginSucess(user: BeanUser?) {
+    private fun loginSucess(user: BeanUser) {
+        user.save()//保存user数据到sp缓存
         toAct(ToolBarDemoActivity::class.java)
     }
 

@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.annotation.My
 import com.chenliang.baselibrary.annotation.activityRefresh
@@ -98,5 +99,50 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding> : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         binding.unbind()
+    }
+
+
+    var currentFragment: Fragment? = null
+
+    fun replace(id: Int, f: Fragment) {
+        if (f === currentFragment) return
+        val mft: FragmentTransaction? =activity?.supportFragmentManager?.beginTransaction()
+        if (currentFragment != null) mft?.hide(currentFragment!!)
+        if (f.isAdded) {
+            mft?.show(f)
+        } else {
+            mft?.add(id, f)
+        }
+        mft?.commitAllowingStateLoss()
+        currentFragment = f
+    }
+
+    /**
+     * 展示fragment
+     *
+     * @param f
+     * @param id
+     */
+    open fun showFragment(id: Int, f: Fragment) {
+        val mft = activity?.supportFragmentManager?.beginTransaction()
+        if (f.isAdded) {
+            mft?.show(f)
+        } else {
+            mft?.add(id, f)
+        }
+        mft?.commitAllowingStateLoss()
+    }
+
+    /**
+     * 隐藏fragment
+     *
+     * @param f
+     */
+    open fun hideFragment(f: Fragment) {
+        val mft = activity?.supportFragmentManager?.beginTransaction()
+        if (f.isAdded) {
+            mft?.hide(f)
+        }
+        mft?.commitAllowingStateLoss()
     }
 }

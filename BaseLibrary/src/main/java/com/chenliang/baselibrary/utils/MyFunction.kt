@@ -2,6 +2,12 @@ package com.chenliang.baselibrary.utils
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Matrix
+import android.graphics.PixelFormat
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -12,10 +18,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.R
+import com.chenliang.baselibrary.base.MyBaseBean
 import com.google.gson.Gson
 import com.tbruyelle.rxpermissions3.RxPermissions
 import kotlinx.android.synthetic.main.base_toast.view.*
 import java.text.SimpleDateFormat
+import java.util.*
+import java.util.regex.Pattern
 
 /**
  *
@@ -49,6 +58,11 @@ fun Any.toast(msg: String) {
     toast!!.duration = Toast.LENGTH_SHORT
     toast.show()
 
+}
+
+fun Any.logJson() {
+    Log.i("MyLog", Gson().toJson(this))
+    Log.i(this::class.java.simpleName, Gson().toJson(this))
 }
 
 fun Any.log(message: String) {
@@ -226,4 +240,40 @@ fun Long.date(pattern: String): String {
 
 fun String.format(pattern: String) = this.apply {
     return String.format(pattern, this)
+}
+
+/**
+ * 手机号格式判断
+ */
+fun String.isPhone() = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$").matcher(this).matches()
+
+/**
+ * 邮箱格式判断
+ */
+fun String.isEmail() =
+    Pattern.compile("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]\$").matcher(this).matches()
+
+
+fun Drawable.bitmap(): Bitmap {
+    val w: Int = this.intrinsicWidth
+    val h: Int = this.intrinsicHeight
+    val config =
+        if (this.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
+    val bitmap = Bitmap.createBitmap(w, h, config)
+    val canvas = Canvas(bitmap)
+    this.setBounds(0, 0, w, h)
+    this.draw(canvas)
+    return bitmap
+}
+
+fun Bitmap.drawable() = BitmapDrawable(this)
+
+fun Bitmap.toZoomImage(w: Int, h: Int): Bitmap {
+    val width: Int = this.width
+    val height: Int = this.height
+    val scaleWidth = w as Float / width
+    val scaleHeight = h as Float / height
+    val matrix = Matrix()
+    matrix.postScale(scaleWidth, scaleHeight)
+    return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
 }
