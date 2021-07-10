@@ -19,6 +19,7 @@ import com.chenliang.baselibrary.annotation.activityTitle
 import com.chenliang.baselibrary.annotation.activityToolbar
 import com.chenliang.baselibrary.net.utils.MyHttpEvent
 import com.chenliang.baselibrary.utils.MyApp
+import com.chenliang.baselibrary.utils.anrCheck
 import com.chenliang.baselibrary.utils.log
 import com.chenliang.baselibrary.utils.show
 import com.chenliang.baselibrary.view.MyToolBar
@@ -40,16 +41,13 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
         setContentView(R.layout.base_activity_content)
         RxBus.get().register(this)
         mHttpEvent = MyHttpEvent(this)
-        MyApp.activityToTranslucent(this)
+//        MyApp.activityToTranslucent(this)
         initStatusBar()
         initToolbar()
         bindView()
 
-        var onCreateStart = System.currentTimeMillis()
-        initCreate()
-        var onCreateEnd = System.currentTimeMillis()
-        if (onCreateEnd - onCreateStart > 200) {
-            throw Exception("${this::class.simpleName} initCreate耗时太长，请优化...")
+        anrCheck(200){
+            initCreate()
         }
     }
 
@@ -58,6 +56,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
      */
     open fun refresh() {
     }
+
     /**
      * 结束刷新
      */
@@ -163,6 +162,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
         RxBus.get().unRegister(this)
         mBinding.unbind()
         mHttpEvent.onDestroy()
+        handlerRunnable.forEach { handler.removeCallbacks(it) }
     }
 
 
@@ -215,10 +215,15 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
         mft.commitAllowingStateLoss()
     }
 
+    private var handler = Handler()
+
+    var handlerRunnable = ArrayList<Runnable>()
     open fun delayed(delay: Long, func: () -> Unit) {
-        Handler().postDelayed(Runnable {
+        var run = Runnable {
             func()
-        }, delay)
+        }
+        handler.postDelayed(run, delay)
+        handlerRunnable.add(run)
     }
 
 }

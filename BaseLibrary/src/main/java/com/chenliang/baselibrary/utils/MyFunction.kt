@@ -9,6 +9,7 @@ import android.graphics.Matrix
 import android.graphics.PixelFormat
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Debug
 import android.os.Handler
 import android.util.Log
 import android.view.Gravity
@@ -281,13 +282,14 @@ fun Bitmap.toZoomImage(w: Int, h: Int): Bitmap {
 
 fun <T> Context.goto(cls: Class<T>) {
     startActivity(Intent(this, cls))
-//    if(this is Activity) {
+    if (this is Activity) {
 //        overridePendingTransition(R.anim.base_right_in, R.anim.base_left_out)
-//    }
+    }
 }
 
 fun Any.goto(path: String, vararg values: Any) {
-    var post = ARouter.getInstance().build(path)//.withTransition(R.anim.base_right_in, R.anim.base_left_out)
+    var post = ARouter.getInstance()
+        .build(path)//.withTransition(R.anim.base_right_in, R.anim.base_left_out)
     var size = values.size - 1
     for (index in 0..size step 2) {
         var key = values[index]
@@ -321,4 +323,32 @@ fun Any.sendSelf(code: Int) {
 
 fun Any.sendSelf() {
     RxBus.get().send(this)
+}
+
+/**
+ * 耗时操作检测，默认100毫秒
+ */
+fun Any.anrCheck(func: () -> Unit) {
+    anrCheck(100) { func() }
+}
+
+/**
+ * 耗时操作检测，自定义时长
+ */
+fun Any.anrCheck(time: Int, func: () -> Unit) {
+    var start = System.currentTimeMillis();
+    func()
+    var end = System.currentTimeMillis();
+    if (end - start > time) {
+        logE("--------------------------------------------------------------------------------------")
+        logE("--                                                                                  --")
+        logE("--                                                                                  --")
+        logE("--                                                                                  --")
+        logE("--                              耗时操作:${end - start}毫秒                            ")
+        logE("--                                                                                  --")
+        logE("--                                                                                  --")
+        logE("--                                                                                  --")
+        logE("--------------------------------------------------------------------------------------")
+        throw Exception("${this::class.simpleName} initCreate耗时太长，请优化...")
+    }
 }
