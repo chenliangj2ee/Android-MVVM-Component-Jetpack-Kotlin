@@ -11,10 +11,10 @@ object BaseInit {
 
     fun init(context: Application) {
         con = context
-//        thread {
+        thread {
             ARouter.openDebug();
             ARouter.init(context);
-//        }
+        }
 
     }
 
