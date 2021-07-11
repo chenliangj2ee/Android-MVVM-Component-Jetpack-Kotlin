@@ -1,6 +1,5 @@
 package com.chenliang.baselibrary.base
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -139,7 +138,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
     }
 
     private fun layoutId(): Int {
-        return JavaClass.getLayoutIdByBinging(
+        return JavaClass.getLayoutIdByBinding(
             this,
             this::class.java.genericSuperclass.typeName.split("<")[1].split(",")[0]
         )

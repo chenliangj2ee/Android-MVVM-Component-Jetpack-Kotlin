@@ -22,7 +22,7 @@ public class JavaClass {
         return null;
     }
 
-    public static int getLayoutIdByBinging(Context context, String bingingName) {
+    public static int getLayoutIdByBinding(Context context, String bingingName) {
         bingingName = bingingName.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
         String [] bingingNames=bingingName.split("\\.");
         String name=bingingNames[bingingNames.length-1].replace("_binding","");

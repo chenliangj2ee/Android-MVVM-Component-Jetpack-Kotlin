@@ -95,7 +95,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
 
     abstract fun initOnCreateView()
     private fun layoutId(): Int {
-        return JavaClass.getLayoutIdByBinging(
+        return JavaClass.getLayoutIdByBinding(
             context,
             this::class.java.genericSuperclass.typeName.split("<")[1].split(",")[0]
         )
