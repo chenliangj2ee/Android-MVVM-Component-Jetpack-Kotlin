@@ -9,8 +9,7 @@ import com.chenliang.baselibrary.base.obs
 import com.chenliang.baselibrary.utils.goto
 import com.chenliang.baselibrary.utils.hasNull
 
-
-@My(myToolbarTitle = "登录" )
+@My(myToolbarTitle = "登录")
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {
     var user = BeanUser();
     override fun initCreate() {
@@ -25,11 +24,8 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
     fun loginAction() {
         with(user) {
             if (hasNull(name, "请输入账号", password, "请输入密码")) return
-
             mViewModel.login(name, password).obs(this@LoginActivity) {
-                it.code=0//测试，默认都成功
                 it.y { loginSuccess(it.data!!) }
-
             }
         }
     }
@@ -39,6 +35,5 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
         goto("/app/main", "username", "tom", "age", 15)
         finish()
     }
-
 
 }
