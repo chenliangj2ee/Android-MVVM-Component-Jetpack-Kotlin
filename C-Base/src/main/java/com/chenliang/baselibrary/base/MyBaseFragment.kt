@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModel
 import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.annotation.activityRefresh
 import com.chenliang.baselibrary.annotation.activityTitle
-import com.chenliang.baselibrary.utils.JavaClass
+import com.chenliang.baselibrary.utils.MyKotlinClass
 import com.chenliang.baselibrary.utils.anrCheck
 import com.chenliang.baselibrary.utils.log
 import com.chenliang.baselibrary.utils.show
@@ -36,9 +36,9 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
     ): View? {
         log("MyActivityManager", javaClass.name)
         mRootView = layoutInflater.inflate(R.layout.base_fragment_content, null)
-        mViewModel = JavaClass.createByName<VM>(
+        mViewModel = MyKotlinClass.createByName<VM>(
             this::class.java.genericSuperclass.typeName.split(",")[1].trim().replace(">", "")
-        )
+        )!!
         initToolbar()
         bindView()
 
@@ -95,8 +95,8 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
 
     abstract fun initOnCreateView()
     private fun layoutId(): Int {
-        return JavaClass.getLayoutIdByBinding(
-            context,
+        return MyKotlinClass.getLayoutIdByBinding(
+            context!!,
             this::class.java.genericSuperclass.typeName.split("<")[1].split(",")[0]
         )
     }

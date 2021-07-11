@@ -18,7 +18,7 @@ import com.chenliang.baselibrary.annotation.activityFullScreen
 import com.chenliang.baselibrary.annotation.activityRefresh
 import com.chenliang.baselibrary.annotation.activityTitle
 import com.chenliang.baselibrary.net.utils.MyHttpEvent
-import com.chenliang.baselibrary.utils.JavaClass
+import com.chenliang.baselibrary.utils.MyKotlinClass
 import com.chenliang.baselibrary.utils.anrCheck
 import com.chenliang.baselibrary.utils.log
 import com.chenliang.baselibrary.utils.show
@@ -42,9 +42,9 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
         setContentView(R.layout.base_activity_content)
         RxBus.get().register(this)
         mHttpEvent = MyHttpEvent(this)
-        mViewModel = JavaClass.createByName<VM>(
+        mViewModel = MyKotlinClass.createByName<VM>(
             this::class.java.genericSuperclass.typeName.split(",")[1].trim().replace(">", "")
-        )
+        )!!
 
         initStatusBar()
         initToolbar()
@@ -138,7 +138,8 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
     }
 
     private fun layoutId(): Int {
-        return JavaClass.getLayoutIdByBinding(
+
+        return MyKotlinClass.getLayoutIdByBinding(
             this,
             this::class.java.genericSuperclass.typeName.split("<")[1].split(",")[0]
         )
