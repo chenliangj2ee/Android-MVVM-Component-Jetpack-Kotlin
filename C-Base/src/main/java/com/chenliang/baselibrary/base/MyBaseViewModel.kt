@@ -20,6 +20,7 @@ import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.net.UnknownServiceException
 import javax.net.ssl.SSLException
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -145,6 +146,7 @@ open class MyBaseViewModel : ViewModel() {
             is UnknownHostException -> bean.message = "找不到服务器，请检查网络"
             is JSONException -> bean.message = "数据解析异常，非法JSON"
             is MalformedJsonException -> bean.message = "数据解析异常，非法JSON"
+            is UnknownServiceException -> bean.message = "找不到服务器"
             is Exception -> bean.message = "程序异常" + e.javaClass.name
         }
         return bean
