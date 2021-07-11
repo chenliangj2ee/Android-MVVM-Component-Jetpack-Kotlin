@@ -13,7 +13,6 @@ import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.annotation.My
 import com.chenliang.baselibrary.annotation.activityRefresh
 import com.chenliang.baselibrary.annotation.activityTitle
-import com.chenliang.baselibrary.annotation.activityToolbar
 import com.chenliang.baselibrary.utils.log
 import com.chenliang.baselibrary.utils.show
 import com.chenliang.baselibrary.view.MyToolBar
@@ -22,7 +21,6 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.base_activity_content.*
 import kotlinx.android.synthetic.main.base_fragment_content.view.*
 
-@My(myToolbarShow = false)
 abstract class MyBaseFragment<BINDING : ViewDataBinding> : Fragment() {
     lateinit var rootView: View
     lateinit var toolBar: MyToolBar
@@ -58,7 +56,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding> : Fragment() {
         toolBar.showLeft(false)
         toolBar.showRight(false)
         toolBar.setTitle(activityTitle(this))
-        toolBar.show(activityToolbar(this))
+        toolBar.show(activityTitle(this).isNullOrEmpty().not())
     }
 
     open fun refresh() {

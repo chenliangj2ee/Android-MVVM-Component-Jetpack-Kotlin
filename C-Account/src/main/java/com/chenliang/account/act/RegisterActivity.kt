@@ -9,7 +9,7 @@ import com.chenliang.baselibrary.base.obs
 import com.chenliang.baselibrary.utils.goto
 import com.chenliang.baselibrary.utils.hasNull
 
-@My(myToolbarTitle = "注册", myToolbarShow = true)
+@My(myToolbarTitle = "注册" )
 class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewModel>() {
     var user = BeanUser();
 

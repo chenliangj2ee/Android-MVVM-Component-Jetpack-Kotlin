@@ -10,7 +10,7 @@ import com.chenliang.mvvmc.databinding.ActivityRecyclerviewBinding
 import com.chenliang.mvvmc.databinding.ItemRecyclerviewBinding
 import kotlinx.android.synthetic.main.activity_recyclerview.*
 
-@My(myToolbarTitle = "分页列表", myToolbarShow = true)
+@My(myToolbarTitle = "分页列表" )
 class RefreshRecyclerViewActivity : MyBaseActivity<ActivityRecyclerviewBinding, DefaultViewModel>() {
     override fun initCreate() {
 

@@ -18,7 +18,6 @@ import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.annotation.activityFullScreen
 import com.chenliang.baselibrary.annotation.activityRefresh
 import com.chenliang.baselibrary.annotation.activityTitle
-import com.chenliang.baselibrary.annotation.activityToolbar
 import com.chenliang.baselibrary.net.utils.MyHttpEvent
 import com.chenliang.baselibrary.utils.JavaClass
 import com.chenliang.baselibrary.utils.anrCheck
@@ -131,7 +130,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
         )
 
         mToolBar.setTitle(activityTitle(this))
-        mToolBar.show(activityToolbar(this))
+        mToolBar.show(activityTitle(this).isNullOrEmpty().not())
     }
 
     /**

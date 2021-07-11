@@ -10,7 +10,7 @@ import com.chenliang.baselibrary.utils.goto
 import com.chenliang.baselibrary.utils.hasNull
 
 
-@My(myToolbarTitle = "登录", myToolbarShow = true)
+@My(myToolbarTitle = "登录" )
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {
     var user = BeanUser();
     override fun initCreate() {
