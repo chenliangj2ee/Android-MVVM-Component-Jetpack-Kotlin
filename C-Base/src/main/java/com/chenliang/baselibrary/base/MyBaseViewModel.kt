@@ -146,7 +146,7 @@ open class MyBaseViewModel : ViewModel() {
             is UnknownHostException -> bean.message = "找不到服务器，请检查网络"
             is JSONException -> bean.message = "数据解析异常，非法JSON"
             is MalformedJsonException -> bean.message = "数据解析异常，非法JSON"
-            is UnknownServiceException -> bean.message = "找不到服务器"
+            is UnknownServiceException -> bean.message = "未知服务器路径"
             is Exception -> bean.message = "程序异常" + e.javaClass.name
         }
         return bean
