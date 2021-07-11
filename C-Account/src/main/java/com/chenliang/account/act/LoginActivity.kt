@@ -11,7 +11,7 @@ import com.chenliang.baselibrary.utils.hasNull
 
 @My(myToolbarTitle = "登录")
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {
-    var user = BeanUser();
+    var user = BeanUser()
     override fun initCreate() {
         mBinding.user = user
         mBinding.act = this

@@ -11,7 +11,7 @@ import com.chenliang.baselibrary.utils.hasNull
 
 @My(myToolbarTitle = "注册" )
 class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewModel>() {
-    var user = BeanUser();
+    var user = BeanUser()
 
     override fun initCreate() {
         mBinding.user = user
