@@ -280,17 +280,47 @@ fun Bitmap.toZoomImage(w: Int, h: Int): Bitmap {
     return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
 }
 
-fun <T> Context.goto(cls: Class<T>) {
-    startActivity(Intent(this, cls))
+fun <T> Context.goto(cls: Class<T>, vararg values: Any) {
+
+    var size = values.size - 1
+
+    if (values.size % 2 != 0) {
+        throw Exception("${this::class.simpleName} goto(path,values) values参数必须为偶数对...")
+    }
+
+    var intent = Intent(this, cls)
+
+    for (index in 0..size step 2) {
+        var key = values[index]
+        var value = values[values.indexOf(key) + 1]
+        when (value) {
+            is Int -> intent.putExtra(key.toString(), value)
+            is Long -> intent.putExtra(key.toString(), value)
+            is String -> intent.putExtra(key.toString(), value)
+            is Boolean -> intent.putExtra(key.toString(), value)
+            is Double -> intent.putExtra(key.toString(), value)
+            is Float -> intent.putExtra(key.toString(), value)
+            is Serializable -> intent.putExtra(key.toString(), value)
+        }
+    }
+
+
+    startActivity(intent)
     if (this is Activity) {
-//        overridePendingTransition(R.anim.base_right_in, R.anim.base_left_out)
+        overridePendingTransition(R.anim.base_right_in, R.anim.base_left_out)
     }
 }
 
 fun Any.goto(path: String, vararg values: Any) {
-    var post = ARouter.getInstance()
-        .build(path)//.withTransition(R.anim.base_right_in, R.anim.base_left_out)
+
     var size = values.size - 1
+    if (values.size % 2 != 0) {
+        throw Exception("${this::class.simpleName} goto(path,values) values参数必须为偶数对...")
+    }
+
+    var post = ARouter.getInstance()
+        .build(path).withTransition(R.anim.base_right_in, R.anim.base_left_out)
+
     for (index in 0..size step 2) {
         var key = values[index]
         var value = values[values.indexOf(key) + 1]

@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.appcompat.app.AppCompatActivity
+import com.chenliang.baselibrary.utils.dip2px
 
 abstract class MyBaseDialog<Binding : ViewDataBinding> : DialogFragment() {
     lateinit var binding: Binding
@@ -14,10 +15,9 @@ abstract class MyBaseDialog<Binding : ViewDataBinding> : DialogFragment() {
         super.onStart()
         val dm = android.util.DisplayMetrics()
         activity?.windowManager?.defaultDisplay?.getMetrics(dm)
-//        dialog?.window?.setLayout(
-//            (dm.widthPixels - ScreenUtils.dip2px(context, 60f)),
-//            android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-//        )
+        dialog?.window?.setLayout(  dm.widthPixels - 60.dip2px(),
+            android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+        )
     }
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
@@ -37,6 +37,7 @@ abstract class MyBaseDialog<Binding : ViewDataBinding> : DialogFragment() {
         initCreate()
         return layout
     }
+
     abstract fun initCreate()
     abstract fun layoutId(): Int
     fun show(con: AppCompatActivity) {

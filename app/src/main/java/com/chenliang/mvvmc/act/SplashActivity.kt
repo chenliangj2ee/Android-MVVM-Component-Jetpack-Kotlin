@@ -1,14 +1,11 @@
 package com.chenliang.mvvmc.act
 
-import android.content.Intent
 import com.chenliang.account.act.LoginActivity
 import com.chenliang.account.bean.BeanUser
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.goto
-import com.chenliang.baselibrary.utils.send
 import com.chenliang.mvvmc.R
 import com.chenliang.mvvmc.databinding.ActivitySplashBinding
-import gorden.rxbus2.RxBus
 
 /**
  * 启动页

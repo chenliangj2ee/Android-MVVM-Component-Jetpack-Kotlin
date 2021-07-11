@@ -9,8 +9,6 @@ import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.base.obs
 import com.chenliang.baselibrary.utils.hasNull
 import com.chenliang.baselibrary.utils.initVM
-import com.chenliang.baselibrary.utils.sendSelf
-import com.chenliang.baselibrary.utils.toast
 
 @My(myToolbarTitle = "注册", myToolbarShow = true)
 class RegisterActivity : MyBaseActivity<AccountActRegisterBinding>() {
@@ -30,8 +28,7 @@ class RegisterActivity : MyBaseActivity<AccountActRegisterBinding>() {
             if (hasNull(name, "请输入账号", password, "请输入密码")) return
 
             accountVM.register(name, password).obs(this@RegisterActivity) {
-                it.y { loginSucess(it.data!!) }
-                it.n { loginFail(it.message) }
+                it.y { registerSuccess(it.data!!) }
             }
         }
 
@@ -40,18 +37,10 @@ class RegisterActivity : MyBaseActivity<AccountActRegisterBinding>() {
     /**
      * 登录成功
      */
-    private fun loginSucess(user: BeanUser) {
+    private fun registerSuccess(user: BeanUser) {
         user.save()
         finish()
     }
 
-    /**
-     * 登录失败
-     */
-    fun loginFail(message: String) {
-        toast(message)
-        user.sendSelf(100)
-        finish()
-    }
 
 }

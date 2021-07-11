@@ -34,13 +34,14 @@ object MyApiReflex {
             }
 
 
-            var loading = method.getAnnotation(MyRetrofitGo::class.java).loading
-            var cache = method.getAnnotation(MyRetrofitGo::class.java).cache
-            var hasCacheLoading = method.getAnnotation(MyRetrofitGo::class.java).hasCacheLoading
-            var tag = method.getAnnotation(MyRetrofitGo::class.java).tag
+            var loading = method.getAnnotation(MyRetrofitGo::class.java).myLoading
+            var cache = method.getAnnotation(MyRetrofitGo::class.java).myCache
+            var hasCacheLoading = method.getAnnotation(MyRetrofitGo::class.java).myHasCacheLoading
+            var tag = method.getAnnotation(MyRetrofitGo::class.java).myTag
+            var failToast = method.getAnnotation(MyRetrofitGo::class.java).myFailToast
 
             log("path:$path   loading:$loading   cache:$cache    hasCacheLoading:$hasCacheLoading")
-            value[path] = MyRetrofitGoValue(loading, cache, hasCacheLoading, tag)
+            value[path] = MyRetrofitGoValue(loading, cache, hasCacheLoading, tag,failToast)
 
         }
     }

@@ -65,5 +65,5 @@ dependencies {
     //ARoute配置
     kapt 'com.alibaba:arouter-compiler:1.5.2'
 
-    api project(path: ':BaseLibrary')
+    api project(path: ':C-Base')
 }

@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-
+            android:onClick="@{()-> act.registerAction()}"
             android:text="注册" />
     </LinearLayout>
 </layout>

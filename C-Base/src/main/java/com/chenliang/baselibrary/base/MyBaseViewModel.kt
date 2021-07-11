@@ -7,6 +7,7 @@ import com.chenliang.baselibrary.net.BaseResponse
 import com.chenliang.baselibrary.net.utils.MyApiReflex
 import com.chenliang.baselibrary.net.utils.MyHttpDB
 import com.chenliang.baselibrary.net.log.BaseBeanLog
+import com.chenliang.baselibrary.utils.toast
 import com.google.gson.stream.MalformedJsonException
 import gorden.rxbus2.RxBus
 import kotlinx.coroutines.CoroutineScope
@@ -38,7 +39,6 @@ open class MyBaseViewModel : ViewModel() {
         var s = System.currentTimeMillis()
         var cell = block()
         var path = cell.request().url.toString()
-        Log.i("chenliang", "path:$path")
 
         var data = dataMap[path.split("?")[0]]
         if (data == null) {
@@ -76,6 +76,11 @@ open class MyBaseViewModel : ViewModel() {
             BaseBeanLog().send(myRetrofitGoValue!!.tag, path, responseBean!!)
             viewModelScope.launch(Dispatchers.Main) {
                 data.value = responseBean as BaseResponse<Any>
+
+                if (myRetrofitGoValue.failToast) {
+                    toast(responseBean.message)
+                }
+
             }
             //把数据更新到缓存
             if (responseBean?.code == 0) {
@@ -148,13 +153,19 @@ open class MyBaseViewModel : ViewModel() {
     /**
      * 获取MyRetrofitGo注解loading和cache
      */
-    fun getMyRetrofitGoValue(path: String): MyRetrofitGoValue {
+    private fun getMyRetrofitGoValue(path: String): MyRetrofitGoValue {
         MyApiReflex.value.forEach {
             if (path.split("?")[0].endsWith(it.key)) {
                 return it.value
             }
         }
-        return MyRetrofitGoValue(loading = false, cache = false, hasCacheLoading = false, tag = "")
+        return MyRetrofitGoValue(
+            loading = false,
+            cache = false,
+            hasCacheLoading = false,
+            tag = "",
+            failToast = false
+        )
     }
 
     /**对象

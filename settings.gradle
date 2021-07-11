@@ -1,5 +1,5 @@
-include ':C-ThirdLibrary'
+include ':C-Third'
 include ':C-Account'
-include ':BaseLibrary'
+include ':C-Base'
 include ':app'
 rootProject.name = "MVVM-Component"

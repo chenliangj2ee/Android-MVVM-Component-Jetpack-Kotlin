@@ -11,15 +11,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/BaseLibrary" />
             <option value="$PROJECT_DIR$/C-Account" />
-            <option value="$PROJECT_DIR$/C-ThirdLibrary" />
+            <option value="$PROJECT_DIR$/C-Base" />
+            <option value="$PROJECT_DIR$/C-Third" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
-        <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>
+    <option name="offlineMode" value="true" />
   </component>
 </project>

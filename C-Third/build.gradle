@@ -34,5 +34,5 @@ android {
 
 dependencies {
 
-    implementation project(path: ':BaseLibrary')
+    implementation project(path: ':C-Base')
 }

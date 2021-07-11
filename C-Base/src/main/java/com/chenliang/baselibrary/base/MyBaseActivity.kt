@@ -145,7 +145,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-//        overridePendingTransition(R.anim.base_left_in, R.anim.base_right_out)
+        overridePendingTransition(R.anim.base_left_in, R.anim.base_right_out)
     }
 
     override fun onPause() {
