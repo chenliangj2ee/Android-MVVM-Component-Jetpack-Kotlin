@@ -13,7 +13,7 @@ typealias Datas<T> = Call<BaseResponse<ArrayList<T>>>
 
 
 interface ApiService {
-    @MyRetrofitGo(myTag = "登录", myLoading = true)
+    @MyRetrofitGo(myTag = "登录", myLoading = true,myFailToast = true)
     @POST("home/login")
     fun login(
         @Query("account") account: String,
