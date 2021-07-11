@@ -1,5 +1,6 @@
 package com.chenliang.baselibrary.base
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -12,13 +13,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModel
 import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.annotation.activityFullScreen
 import com.chenliang.baselibrary.annotation.activityRefresh
 import com.chenliang.baselibrary.annotation.activityTitle
 import com.chenliang.baselibrary.annotation.activityToolbar
 import com.chenliang.baselibrary.net.utils.MyHttpEvent
-import com.chenliang.baselibrary.utils.MyApp
+import com.chenliang.baselibrary.utils.JavaClass
 import com.chenliang.baselibrary.utils.anrCheck
 import com.chenliang.baselibrary.utils.log
 import com.chenliang.baselibrary.utils.show
@@ -29,10 +31,11 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import gorden.rxbus2.RxBus
 import kotlinx.android.synthetic.main.base_activity_content.*
 
-abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
+abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCompatActivity() {
     lateinit var mToolBar: MyToolBar
     lateinit var mRefresh: SmartRefreshLayout
     lateinit var mBinding: BINDING
+    lateinit var mViewModel: VM
     open lateinit var mHttpEvent: MyHttpEvent
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,12 +44,15 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
         setContentView(R.layout.base_activity_content)
         RxBus.get().register(this)
         mHttpEvent = MyHttpEvent(this)
-//        MyApp.activityToTranslucent(this)
+        mViewModel = JavaClass.createByName<VM>(
+            this::class.java.genericSuperclass.typeName.split(",")[1].trim().replace(">", "")
+        )
+
         initStatusBar()
         initToolbar()
         bindView()
 
-        anrCheck(200){
+        anrCheck(200) {
             initCreate()
         }
     }
@@ -62,6 +68,10 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
      */
     open fun stopRefresh() {
         mRefresh.finishRefresh()
+    }
+
+    open fun getLayoutId(context: Context, resName: String?): Int {
+        return context.resources.getIdentifier(resName, "layout", context.packageName)
     }
 
     /**
@@ -135,7 +145,13 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding> : AppCompatActivity() {
         mToolBar.show(true)
     }
 
-    abstract fun layoutId(): Int
+    fun layoutId(): Int {
+        return JavaClass.getLayoutIdByBinging(
+            this,
+            this::class.java.genericSuperclass.typeName.split("<")[1].split(",")[0]
+        )
+    }
+
     abstract fun initCreate()
 
     override fun onResume() {

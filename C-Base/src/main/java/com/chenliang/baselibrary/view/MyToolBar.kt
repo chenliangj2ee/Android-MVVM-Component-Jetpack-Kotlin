@@ -27,7 +27,7 @@ class MyToolBar : LinearLayout {
     private fun initViews() {
         root = LayoutInflater.from(context).inflate(R.layout.base_layout_toolbar, this, true)
         root.toolbar_back.setOnClickListener {
-            (context as MyBaseActivity<*>).onBackPressed()
+            (context as MyBaseActivity<*,*>).onBackPressed()
         }
     }
 

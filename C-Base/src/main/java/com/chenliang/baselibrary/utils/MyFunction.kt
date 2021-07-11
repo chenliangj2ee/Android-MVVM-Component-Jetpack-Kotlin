@@ -382,3 +382,4 @@ fun Any.anrCheck(time: Int, func: () -> Unit) {
         throw Exception("${this::class.simpleName} initCreate耗时太长，请优化...")
     }
 }
+

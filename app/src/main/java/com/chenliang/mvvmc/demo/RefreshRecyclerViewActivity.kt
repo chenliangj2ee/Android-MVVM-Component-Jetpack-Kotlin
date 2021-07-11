@@ -3,6 +3,7 @@ package com.chenliang.mvvmc.demo
 import android.os.Handler
 import com.chenliang.account.bean.BeanUser
 import com.chenliang.baselibrary.annotation.My
+import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.mvvmc.R
 import com.chenliang.mvvmc.databinding.ActivityRecyclerviewBinding
@@ -10,7 +11,7 @@ import com.chenliang.mvvmc.databinding.ItemRecyclerviewBinding
 import kotlinx.android.synthetic.main.activity_recyclerview.*
 
 @My(myToolbarTitle = "分页列表", myToolbarShow = true)
-class RefreshRecyclerViewActivity : MyBaseActivity<ActivityRecyclerviewBinding>() {
+class RefreshRecyclerViewActivity : MyBaseActivity<ActivityRecyclerviewBinding, DefaultViewModel>() {
     override fun initCreate() {
 
         refresh.bindData<BeanUser> { (it.binding as ItemRecyclerviewBinding).user = it }
@@ -24,10 +25,6 @@ class RefreshRecyclerViewActivity : MyBaseActivity<ActivityRecyclerviewBinding>(
             }, 500)
         }
 
-    }
-
-    override fun layoutId(): Int {
-        return R.layout.activity_recyclerview
     }
 
 }
