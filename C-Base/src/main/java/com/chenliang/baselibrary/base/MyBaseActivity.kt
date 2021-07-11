@@ -51,9 +51,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
         initToolbar()
         bindView()
 
-        anrCheck(200) {
-            initCreate()
-        }
+        anrCheck(200) { initCreate() }
     }
 
     /**
@@ -67,10 +65,6 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
      */
     open fun stopRefresh() {
         mRefresh.finishRefresh()
-    }
-
-    open fun getLayoutId(context: Context, resName: String?): Int {
-        return context.resources.getIdentifier(resName, "layout", context.packageName)
     }
 
     /**
@@ -144,7 +138,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
         mToolBar.show(true)
     }
 
-    fun layoutId(): Int {
+    private fun layoutId(): Int {
         return JavaClass.getLayoutIdByBinging(
             this,
             this::class.java.genericSuperclass.typeName.split("<")[1].split(",")[0]
@@ -166,10 +160,6 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
     override fun onPause() {
         super.onPause()
         mHttpEvent.onPause()
-    }
-
-    open fun initFragment() {
-
     }
 
     override fun onDestroy() {

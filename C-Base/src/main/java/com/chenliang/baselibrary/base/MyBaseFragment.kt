@@ -9,10 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModel
 import com.chenliang.baselibrary.R
-import com.chenliang.baselibrary.annotation.My
 import com.chenliang.baselibrary.annotation.activityRefresh
 import com.chenliang.baselibrary.annotation.activityTitle
+import com.chenliang.baselibrary.utils.JavaClass
+import com.chenliang.baselibrary.utils.anrCheck
 import com.chenliang.baselibrary.utils.log
 import com.chenliang.baselibrary.utils.show
 import com.chenliang.baselibrary.view.MyToolBar
@@ -21,69 +23,69 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.base_activity_content.*
 import kotlinx.android.synthetic.main.base_fragment_content.view.*
 
-abstract class MyBaseFragment<BINDING : ViewDataBinding> : Fragment() {
-    lateinit var rootView: View
-    lateinit var toolBar: MyToolBar
-    lateinit var refresh: SmartRefreshLayout
-    lateinit var binding: BINDING
+abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragment() {
+    lateinit var mRootView: View
+    lateinit var mToolBar: MyToolBar
+    lateinit var mRefresh: SmartRefreshLayout
+    lateinit var mBinding: BINDING
+    lateinit var mViewModel: VM
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         log("MyActivityManager", javaClass.name)
-        rootView = layoutInflater.inflate(R.layout.base_fragment_content, null)
+        mRootView = layoutInflater.inflate(R.layout.base_fragment_content, null)
+        mViewModel = JavaClass.createByName<VM>(
+            this::class.java.genericSuperclass.typeName.split(",")[1].trim().replace(">", "")
+        )
         initToolbar()
         bindView()
-        var onCreateStart = System.currentTimeMillis()
-        initOnCreateView()
-        var onCreateEnd = System.currentTimeMillis()
-        if (onCreateEnd - onCreateStart > 200) {
-            throw Exception("${this::class.simpleName} initOnCreateView耗时太长，请优化...")
-        }
-        return rootView
+
+        anrCheck { initOnCreateView() }
+        return mRootView
     }
 
     private fun initToolbar() {
-        toolBar = MyToolBar(context)
-        rootView.base_root.addView(
-            toolBar,
+        mToolBar = MyToolBar(context)
+        mRootView.base_root.addView(
+            mToolBar,
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
         )
-        toolBar.showLeft(false)
-        toolBar.showRight(false)
-        toolBar.setTitle(activityTitle(this))
-        toolBar.show(activityTitle(this).isNullOrEmpty().not())
+        mToolBar.showLeft(false)
+        mToolBar.showRight(false)
+        mToolBar.setTitle(activityTitle(this))
+        mToolBar.show(activityTitle(this).isNullOrEmpty().not())
     }
 
     open fun refresh() {
     }
 
     open fun stopRefresh() {
-        refresh.finishRefresh()
+        mRefresh.finishRefresh()
     }
 
     private fun bindView() {
         var content = layoutInflater.inflate(layoutId(), null)
 
-        refresh = SmartRefreshLayout(context)
-        refresh.setEnableRefresh(activityRefresh(this))
-        refresh.setRefreshHeader(ClassicsHeader(context))
-        refresh.setOnRefreshListener {
+        mRefresh = SmartRefreshLayout(context)
+        mRefresh.setEnableRefresh(activityRefresh(this))
+        mRefresh.setRefreshHeader(ClassicsHeader(context))
+        mRefresh.setOnRefreshListener {
             refresh();
         }
-        refresh.addView(
+        mRefresh.addView(
             content, LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
             )
         )
-        binding = DataBindingUtil.bind<BINDING>(content)!!
+        mBinding = DataBindingUtil.bind<BINDING>(content)!!
         base_root.addView(
-            refresh,
+            mRefresh,
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
@@ -92,11 +94,16 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding> : Fragment() {
     }
 
     abstract fun initOnCreateView()
-    abstract fun layoutId(): Int
+    private fun layoutId(): Int {
+        return JavaClass.getLayoutIdByBinging(
+            context,
+            this::class.java.genericSuperclass.typeName.split("<")[1].split(",")[0]
+        )
+    }
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.unbind()
+        mBinding.unbind()
     }
 
 
@@ -104,7 +111,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding> : Fragment() {
 
     fun replace(id: Int, f: Fragment) {
         if (f === currentFragment) return
-        val mft: FragmentTransaction? =activity?.supportFragmentManager?.beginTransaction()
+        val mft: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
         if (currentFragment != null) mft?.hide(currentFragment!!)
         if (f.isAdded) {
             mft?.show(f)
