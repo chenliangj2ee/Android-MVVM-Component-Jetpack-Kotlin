@@ -13,4 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
-/BaseLibrary/build
+/C-Account/build
+/C-Base/build
+/C-Third/build
+/app/build
