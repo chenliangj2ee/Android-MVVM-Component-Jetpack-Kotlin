@@ -8,6 +8,7 @@ import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.base.obs
 import com.chenliang.baselibrary.utils.goto
 import com.chenliang.baselibrary.utils.hasNull
+import gorden.rxbus2.Subscribe
 
 @My(myToolbarTitle = "登录")
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {
@@ -35,5 +36,8 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
         goto("/app/main", "username", "tom", "age", 15)
         finish()
     }
+
+    @Subscribe(code = 100)
+    fun eventRegister(user: BeanUser) {  mBinding.user = user   }
 
 }

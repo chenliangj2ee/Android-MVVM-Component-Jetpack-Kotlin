@@ -8,6 +8,7 @@ import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.base.obs
 import com.chenliang.baselibrary.utils.goto
 import com.chenliang.baselibrary.utils.hasNull
+import com.chenliang.baselibrary.utils.sendSelf
 
 @My(myToolbarTitle = "注册" )
 class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewModel>() {
@@ -25,9 +26,15 @@ class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewMo
 
             mViewModel.register(name, password).obs(this@RegisterActivity) {
                 it.y { registerSuccess(it.data!!) }
+                it.n { registerFail() }
             }
         }
 
+    }
+
+    private fun registerFail() {
+        user.sendSelf(100)
+        finish()
     }
 
     private fun registerSuccess(user: BeanUser) {
