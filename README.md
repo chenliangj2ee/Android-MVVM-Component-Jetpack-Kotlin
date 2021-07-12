@@ -6,7 +6,7 @@
 
 # 有多精简？看Demo代码：
 ## 获取账号、密码，验证，登录成功后保存账号信息，失败会自带tosat提示，成功后带参跳转到Main页面，finish当前页；
-## R.layout.login在哪里指定？ViewModel又在哪里初始化？AccountViewModel就2行代码？是的，极简框架，就这么简单
+## R.layout.login在哪里指定？ViewModel又在哪里初始化？AccountViewModel就2行代码？是的，极简框架，就这么简单！
 
 ```
 @My(myToolbarTitle = "登录")
