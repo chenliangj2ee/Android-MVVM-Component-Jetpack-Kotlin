@@ -348,7 +348,6 @@ fun Any.send(code: Int) {
 
 fun Any.sendSelf(code: Int) {
     RxBus.get().send(code, this)
-    RxBus.get().send(this)
 }
 
 fun Any.sendSelf() {
