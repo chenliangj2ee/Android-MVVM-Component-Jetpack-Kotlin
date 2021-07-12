@@ -38,6 +38,9 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
     }
 
     @Subscribe(code = 100)
-    fun eventRegister(user: BeanUser) {  mBinding.user = user   }
+      fun eventRegister(user: BeanUser) {
+        this.user=user
+        mBinding.user = user
+    }
 
 }
