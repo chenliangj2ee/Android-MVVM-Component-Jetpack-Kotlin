@@ -25,21 +25,15 @@ class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewMo
             if (hasNull(name, "请输入账号", password, "请输入密码")) return
 
             mViewModel.register(name, password).obs(this@RegisterActivity) {
+                it.code=0//模拟注册成功
                 it.y { registerSuccess(it.data!!) }
-                it.n { registerFail() }
             }
         }
 
     }
 
-    private fun registerFail() {
-        user.sendSelf(100)
-        finish()
-    }
-
     private fun registerSuccess(user: BeanUser) {
-        user.save()
-        goto("/app/main", "username", "tom", "age", 15)
+        user.sendSelf(100)
         finish()
     }
 

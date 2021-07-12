@@ -26,6 +26,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
         with(user) {
             if (hasNull(name, "请输入账号", password, "请输入密码")) return
             mViewModel.login(name, password).obs(this@LoginActivity) {
+                it.code=0//模拟登录成功
                 it.y { loginSuccess(it.data!!) }
             }
         }
