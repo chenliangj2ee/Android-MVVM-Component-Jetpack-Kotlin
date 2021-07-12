@@ -26,6 +26,7 @@ class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewMo
 
             mViewModel.register(name, password).obs(this@RegisterActivity) {
                 it.code=0//模拟注册成功
+                it.data=user//模拟注册成功
                 it.y { registerSuccess(it.data!!) }
             }
         }
@@ -35,6 +36,7 @@ class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewMo
     private fun registerSuccess(user: BeanUser) {
         user.sendSelf(100)
         finish()
+
     }
 
 }
