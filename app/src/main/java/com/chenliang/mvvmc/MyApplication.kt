@@ -1,21 +1,25 @@
 package com.chenliang.mvvmc
 
-import android.app.Application
+import com.chenliang.account.AccountApplication
 import com.chenliang.baselibrary.BaseInit
+import com.chenliang.baselibrary.MyBaseApplication
 import com.chenliang.baselibrary.utils.anrCheck
+import com.chenliang.third.ThirdApplication
 
-class MyApplication : Application() {
+class MyApplication : MyBaseApplication() {
+
+    /**
+     * 初始化Module模块Application
+     */
+    override fun initModuleApplication() {
+        createModuleApp(AccountApplication::class.java)
+        createModuleApp(ThirdApplication::class.java)
+    }
 
     override fun onCreate() {
-        super.onCreate()
         anrCheck {
-            BaseInit.init(this)
-            BaseInit.registerApi(
-                ApiService::class.java,
-                com.chenliang.account.ApiService::class.java
-            )
+            super.onCreate()
+            BaseInit.registerApi(ApiService::class.java)
         }
-
-
     }
 }

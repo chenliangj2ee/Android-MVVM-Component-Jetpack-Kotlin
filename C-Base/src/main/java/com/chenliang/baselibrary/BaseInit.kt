@@ -10,10 +10,12 @@ object BaseInit {
     var con: Context? = null
 
     fun init(context: Application) {
-        con = context
-        thread {
-            ARouter.openDebug();
-            ARouter.init(context);
+        if (con == null) {
+            con = context
+            thread {
+                ARouter.openDebug();
+                ARouter.init(context);
+            }
         }
 
     }

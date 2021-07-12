@@ -3,6 +3,7 @@
     package="com.chenliang.account">
 
     <application
+        android:name=".AccountApplication"
         android:allowBackup="true"
         android:icon="@mipmap/base_ic_launcher"
         android:label="@string/a_app_name"

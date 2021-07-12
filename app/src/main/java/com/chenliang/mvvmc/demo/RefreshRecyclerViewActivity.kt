@@ -5,7 +5,6 @@ import com.chenliang.account.bean.BeanUser
 import com.chenliang.baselibrary.annotation.My
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
-import com.chenliang.mvvmc.R
 import com.chenliang.mvvmc.databinding.ActivityRecyclerviewBinding
 import com.chenliang.mvvmc.databinding.ItemRecyclerviewBinding
 import kotlinx.android.synthetic.main.activity_recyclerview.*

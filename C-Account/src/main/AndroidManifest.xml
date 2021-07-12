@@ -8,7 +8,7 @@
         android:label="@string/a_app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.BASE">
-        <activity android:name=".act.LoginActivity"  />
-        <activity android:name=".act.RegisterActivity" />
+        <activity android:name="com.chenliang.account.act.LoginActivity"  />
+        <activity android:name="com.chenliang.account.act.RegisterActivity" />
     </application>
 </manifest>
