@@ -77,7 +77,6 @@ open class MyBaseViewModel : ViewModel() {
             } catch (e: Exception) {
                 apiException<T>(e)
             }
-//           log("genericSuperclass", responseBean!!::class.java.toGenericString())
             BaseBeanLog().send(myRetrofitGoValue!!.tag, path, responseBean!!)
             viewModelScope.launch(Dispatchers.Main) {
                 data.value = responseBean as BaseResponse<Any>
