@@ -8,8 +8,6 @@ import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.base.obs
 import com.chenliang.baselibrary.utils.goto
 import com.chenliang.baselibrary.utils.hasNull
-import com.chenliang.baselibrary.utils.send
-import com.chenliang.baselibrary.utils.sendSelf
 
 @My(myToolbarTitle = "注册" )
 class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewModel>() {
