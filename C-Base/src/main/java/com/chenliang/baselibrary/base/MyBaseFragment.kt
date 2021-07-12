@@ -37,7 +37,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
         log("MyActivityManager", javaClass.name)
         mRootView = layoutInflater.inflate(R.layout.base_fragment_content, null)
         mViewModel = MyKotlinClass.createByName<VM>(
-            this::class.java.genericSuperclass.typeName.split(",")[1].trim().replace(">", "")
+            this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")
         )!!
         initToolbar()
         bindView()
@@ -97,7 +97,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
     private fun layoutId(): Int {
         return MyKotlinClass.getLayoutIdByBinding(
             context!!,
-            this::class.java.genericSuperclass.typeName.split("<")[1].split(",")[0]
+            this::class.java.genericSuperclass.toString().split("<")[1].split(",")[0]
         )
     }
 

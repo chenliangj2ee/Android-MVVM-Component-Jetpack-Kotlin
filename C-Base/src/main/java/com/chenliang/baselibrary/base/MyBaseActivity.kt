@@ -43,7 +43,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
         RxBus.get().register(this)
         mHttpEvent = MyHttpEvent(this)
         mViewModel = MyKotlinClass.createByName<VM>(
-            this::class.java.genericSuperclass.typeName.split(",")[1].trim().replace(">", "")
+            this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")
         )!!
 
         initStatusBar()
@@ -141,7 +141,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
 
         return MyKotlinClass.getLayoutIdByBinding(
             this,
-            this::class.java.genericSuperclass.typeName.split("<")[1].split(",")[0]
+            this::class.java.genericSuperclass.toString().split("<")[1].split(",")[0]
         )
     }
 
