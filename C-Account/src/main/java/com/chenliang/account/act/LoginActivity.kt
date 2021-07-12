@@ -6,6 +6,8 @@ import com.chenliang.account.vm.AccountViewModel
 import com.chenliang.baselibrary.annotation.My
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.base.obs
+import com.chenliang.baselibrary.utils.TEST2
+import com.chenliang.baselibrary.utils.Test
 import com.chenliang.baselibrary.utils.goto
 import com.chenliang.baselibrary.utils.hasNull
 
@@ -15,6 +17,9 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
     override fun initCreate() {
         mBinding.user = user
         mBinding.act = this
+
+        var ddd= TEST2()
+        ddd.ddd(Test<BeanUser>())
     }
 
     fun registerAction() {

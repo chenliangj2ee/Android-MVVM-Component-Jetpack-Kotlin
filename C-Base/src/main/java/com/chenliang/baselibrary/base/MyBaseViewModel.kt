@@ -7,6 +7,9 @@ import com.chenliang.baselibrary.net.BaseResponse
 import com.chenliang.baselibrary.net.utils.MyApiReflex
 import com.chenliang.baselibrary.net.utils.MyHttpDB
 import com.chenliang.baselibrary.net.log.BaseBeanLog
+import com.chenliang.baselibrary.utils.log
+import com.chenliang.baselibrary.utils.logJson
+import com.chenliang.baselibrary.utils.toJson
 import com.chenliang.baselibrary.utils.toast
 import com.google.gson.stream.MalformedJsonException
 import gorden.rxbus2.RxBus
@@ -74,6 +77,7 @@ open class MyBaseViewModel : ViewModel() {
             } catch (e: Exception) {
                 apiException<T>(e)
             }
+//           log("genericSuperclass", responseBean!!::class.java.toGenericString())
             BaseBeanLog().send(myRetrofitGoValue!!.tag, path, responseBean!!)
             viewModelScope.launch(Dispatchers.Main) {
                 data.value = responseBean as BaseResponse<Any>
