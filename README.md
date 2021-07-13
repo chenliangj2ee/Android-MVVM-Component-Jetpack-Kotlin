@@ -3,7 +3,10 @@
 
 # 结构
 ![结构](https://user-images.githubusercontent.com/4067327/125152474-577f7880-e17f-11eb-8e94-8813379e2d53.jpg)
-
+# 说明
+    1、每个module都自己独自的AndroidMinifast.xml文件，各自模块的权限，activity，service等声明，均在各自module声明；
+    2、每个module都有自己的Application，各自模块需要启动就初始化的代码均放在自己的application里，可以直接脱离主app直接运行；
+    3、每个module都有自己的ApiService，且需在各自的Application中注册，以保证module在application模式下可以直接运行；
 # 有多精简？以登录为例：
 ## 一、登录接口定义：
 ```
