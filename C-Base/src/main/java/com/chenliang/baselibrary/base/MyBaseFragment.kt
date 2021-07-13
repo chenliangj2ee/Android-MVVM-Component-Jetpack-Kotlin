@@ -34,7 +34,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        log("MyActivityManager", javaClass.name)
+        log("MyActivityManager", "启动》》》${javaClass.name}")
         mRootView = layoutInflater.inflate(R.layout.base_fragment_content, null)
         mViewModel = MyKotlinClass.createByName<VM>(
             this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")

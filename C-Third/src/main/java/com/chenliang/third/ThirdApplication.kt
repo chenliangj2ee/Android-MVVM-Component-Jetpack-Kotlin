@@ -18,7 +18,4 @@ class ThirdApplication : MyBaseApplication() {
         BaseInit.registerApi(ApiService::class.java)
     }
 
-    override fun initModuleApplication() {
-
-    }
 }

@@ -2,6 +2,8 @@ package com.chenliang.baselibrary
 
 import android.app.Application
 import android.content.Context
+import android.content.pm.PackageManager
+import com.chenliang.baselibrary.utils.log
 import java.lang.reflect.Method
 
 /**
@@ -19,7 +21,6 @@ abstract class MyBaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        BaseInit.init(this)
         moduleApps.forEach {
             it.onCreate()
         }
@@ -30,9 +31,31 @@ abstract class MyBaseApplication : Application() {
         initModuleApplication()
     }
 
-    abstract fun initModuleApplication()
 
-    fun <T> createModuleApp(clasz: Class<T>) {
+    private fun initModuleApplication() {
+        if (BaseInit.con != null)
+            return
+        BaseInit.init(this)
+        var info = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+        if(info.metaData==null)
+            return
+        var apps = info.metaData.keySet()
+        apps.forEach {
+            try {
+                var cla = Class.forName(it.toString())
+                var app = cla.newInstance()
+                if (app is Application && cla.name != this::class.java.name) {
+                    createModuleApp(cla)
+                }
+
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+
+        }
+    }
+
+    private fun <T> createModuleApp(clasz: Class<T>) {
         var app: T? = null
         try {
             val classLoader: ClassLoader = this.classLoader

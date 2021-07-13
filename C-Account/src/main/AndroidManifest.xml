@@ -2,13 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chenliang.account">
 
+
     <application
+        android:name=".AccountApplication"
         android:allowBackup="true"
         android:icon="@mipmap/base_ic_launcher"
         android:label="@string/a_app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.BASE">
-        <activity android:name="com.chenliang.account.act.LoginActivity"  />
+
+        <meta-data
+            android:name="com.chenliang.account.AccountApplication"
+            android:value="com.chenliang.account.AccountApplication" />
+
+        <activity android:name="com.chenliang.account.act.LoginActivity"/>
         <activity android:name="com.chenliang.account.act.RegisterActivity" />
+
+
     </application>
 </manifest>

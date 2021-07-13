@@ -9,7 +9,6 @@ import android.graphics.Matrix
 import android.graphics.PixelFormat
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.os.Debug
 import android.os.Handler
 import android.util.Log
 import android.view.Gravity
@@ -76,23 +75,47 @@ fun Any.logJson() {
 }
 
 fun Any.log(message: String) {
-    Log.i("MyLog", message)
+    val className =  Thread.currentThread().stackTrace[3].className
+    val fileName =  Thread.currentThread().stackTrace[3].fileName
+    val methodName =   Thread.currentThread().stackTrace[3].methodName
+    val lineNumber =   Thread.currentThread().stackTrace[3].lineNumber
+    Log.i("MyLog", "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
+            "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————")
     Log.i(this::class.java.simpleName, message)
 }
 
 fun Any.log(tag: String, message: String) {
     Log.i(tag, message)
-    log(message)
+
+    val className =  Thread.currentThread().stackTrace[3].className
+    val fileName =  Thread.currentThread().stackTrace[3].fileName
+    val methodName =   Thread.currentThread().stackTrace[3].methodName
+    val lineNumber =   Thread.currentThread().stackTrace[3].lineNumber
+    Log.i("MyLog", "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
+            "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————")
+
 }
 
 fun Any.logE(message: String) {
-    Log.e("MyLog", message)
+    val className =  Thread.currentThread().stackTrace[3].className
+    val fileName =  Thread.currentThread().stackTrace[3].fileName
+    val methodName =   Thread.currentThread().stackTrace[3].methodName
+    val lineNumber =   Thread.currentThread().stackTrace[3].lineNumber
+    Log.e("MyLog", "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
+            "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————")
+
     Log.e(this::class.java.simpleName, message)
 }
 
 fun Any.logE(tag: String, message: String) {
     Log.e(tag, message)
-    logE(message)
+    val className =  Thread.currentThread().stackTrace[3].className
+    val fileName =  Thread.currentThread().stackTrace[3].fileName
+    val methodName =   Thread.currentThread().stackTrace[3].methodName
+    val lineNumber =   Thread.currentThread().stackTrace[3].lineNumber
+    Log.e("MyLog", "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
+            "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————")
+
 }
 
 /**

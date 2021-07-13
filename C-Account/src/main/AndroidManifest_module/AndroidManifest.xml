@@ -10,13 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BASE">
         <activity android:name=".act.LoginActivity" android:label="登录">
-            <intent-filter>
+            <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".act.RegisterActivity" />
+
+        <meta-data
+            android:name="com.chenliang.account.AccountApplication"
+            android:value="com.chenliang.account.AccountApplication" />
     </application>
 
 </manifest>

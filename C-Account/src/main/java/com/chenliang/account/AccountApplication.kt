@@ -19,7 +19,4 @@ class AccountApplication : MyBaseApplication() {
         BaseInit.registerApi(ApiService::class.java)
     }
 
-    override fun initModuleApplication() {
-
-    }
 }

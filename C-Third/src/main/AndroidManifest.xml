@@ -2,4 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chenliang.third">
 
+    <application
+        android:name=".ThirdApplication">
+
+        <meta-data
+            android:name="com.chenliang.third.ThirdApplication"
+            android:value="com.chenliang.third.ThirdApplication" />
+
+    </application>
 </manifest>
