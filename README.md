@@ -3,10 +3,29 @@
 
 # 结构
 ![结构](https://user-images.githubusercontent.com/4067327/125152474-577f7880-e17f-11eb-8e94-8813379e2d53.jpg)
-
-# 有多精简？看Demo代码：
-## 获取账号、密码，验证，登录成功后保存账号信息，失败会自带tosat提示，成功后带参跳转到Main页面，finish当前页；
-## R.layout.login在哪里指定？ViewModel又在哪里初始化？AccountViewModel就2行代码？是的，极简框架，就这么简单
+# 说明
+    1、每个module都自己独自的AndroidMinifast.xml文件，各自模块的权限，activity，service等声明，均在各自module声明；
+    2、每个module都有自己的Application，各自模块需要启动就初始化的代码均放在自己的application里，可以直接脱离主app直接运行；
+    3、每个module都有自己的ApiService，且需在各自的Application中注册，以保证module在application模式下可以直接运行；
+# 有多精简？以登录为例：
+## 一、登录接口定义：
+```
+interface ApiService {
+    @MyRetrofitGo(myTag = "登录", myLoading = true,myFailToast = true)
+    @POST("home/login")
+    fun login(
+        @Query("account") account: String,
+        @Query("password") password: String
+    ): Data<BeanUser>
+}
+```
+## 二、登录ViewMode：
+```
+class AccountViewModel : MyBaseViewModel() {
+    fun login(account: String, pass: String) = go { API.login(account, pass) }
+}
+```
+## 三、登录Activity：
 
 ```
 @My(myToolbarTitle = "登录")
@@ -24,9 +43,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
     fun loginAction() {
         with(user) {
             if (hasNull(name, "请输入账号", password, "请输入密码")) return
-            mViewModel.login(name, password).obs(this@LoginActivity) {
-                it.y { loginSuccess(it.data!!) }
-            }
+            mViewModel.login(name, password).obs(this@LoginActivity) {  it.y { loginSuccess(it.data!!) }  }
         }
     }
 
@@ -38,4 +55,9 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 
 }
 ```
+## R.layout.login在哪里指定？
+## ViewModel又在哪里初始化？
+## AccountViewModel就1行代码？
+## 是的，极简框架，就这么简单！
+
 
