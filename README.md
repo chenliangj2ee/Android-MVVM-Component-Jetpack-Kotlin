@@ -40,9 +40,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
     fun loginAction() {
         with(user) {
             if (hasNull(name, "请输入账号", password, "请输入密码")) return
-            mViewModel.login(name, password).obs(this@LoginActivity) {
-                it.y { loginSuccess(it.data!!) }
-            }
+            mViewModel.login(name, password).obs(this@LoginActivity) {  it.y { loginSuccess(it.data!!) }  }
         }
     }
 
