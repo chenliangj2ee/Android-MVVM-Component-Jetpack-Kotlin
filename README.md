@@ -4,9 +4,25 @@
 # 结构
 ![结构](https://user-images.githubusercontent.com/4067327/125152474-577f7880-e17f-11eb-8e94-8813379e2d53.jpg)
 
-# 有多精简？看Demo代码：
-## 获取账号、密码，验证，登录成功后保存账号信息，失败会自带tosat提示，成功后带参跳转到Main页面，finish当前页；
-## R.layout.login在哪里指定？ViewModel又在哪里初始化？AccountViewModel就2行代码？是的，极简框架，就这么简单！
+# 有多精简？以登录为例：
+## 登录接口定义：
+'''
+interface ApiService {
+    @MyRetrofitGo(myTag = "登录", myLoading = true,myFailToast = true)
+    @POST("home/login")
+    fun login(
+        @Query("account") account: String,
+        @Query("password") password: String
+    ): Data<BeanUser>
+}
+'''
+## 登录ViewMode：
+```
+class AccountViewModel : MyBaseViewModel() {
+    fun login(account: String, pass: String) = go { API.login(account, pass) }
+}
+```
+## 登录Activity：
 
 ```
 @My(myToolbarTitle = "登录")
@@ -38,4 +54,6 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 
 }
 ```
+## R.layout.login在哪里指定？ViewModel又在哪里初始化？AccountViewModel就2行代码？是的，极简框架，就这么简单！
+
 
