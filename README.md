@@ -55,6 +55,9 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 
 }
 ```
-## R.layout.login在哪里指定？ViewModel又在哪里初始化？AccountViewModel就2行代码？是的，极简框架，就这么简单！
+## R.layout.login在哪里指定？
+## ViewModel又在哪里初始化？
+## AccountViewModel就1行代码？
+## 是的，极简框架，就这么简单！
 
 
