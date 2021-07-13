@@ -5,7 +5,7 @@
 ![结构](https://user-images.githubusercontent.com/4067327/125152474-577f7880-e17f-11eb-8e94-8813379e2d53.jpg)
 
 # 有多精简？以登录为例：
-## 登录接口定义：
+## 一、登录接口定义：
 ```
 interface ApiService {
     @MyRetrofitGo(myTag = "登录", myLoading = true,myFailToast = true)
@@ -16,13 +16,13 @@ interface ApiService {
     ): Data<BeanUser>
 }
 ```
-## 登录ViewMode：
+## 二、登录ViewMode：
 ```
 class AccountViewModel : MyBaseViewModel() {
     fun login(account: String, pass: String) = go { API.login(account, pass) }
 }
 ```
-## 登录Activity：
+## 三、登录Activity：
 
 ```
 @My(myToolbarTitle = "登录")
