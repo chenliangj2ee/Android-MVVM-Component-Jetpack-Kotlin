@@ -6,7 +6,7 @@
 
 # 有多精简？以登录为例：
 ## 登录接口定义：
-'''
+```
 interface ApiService {
     @MyRetrofitGo(myTag = "登录", myLoading = true,myFailToast = true)
     @POST("home/login")
@@ -15,7 +15,7 @@ interface ApiService {
         @Query("password") password: String
     ): Data<BeanUser>
 }
-'''
+```
 ## 登录ViewMode：
 ```
 class AccountViewModel : MyBaseViewModel() {
