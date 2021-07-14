@@ -62,7 +62,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 }
 ```
 * **R.layout.login在哪里指定？**
-* **ViewModel又在哪里初始化？**
+* **ViewModel在哪里初始化？**
 * **AccountViewModel就1行代码？**
 * **是的，极简框架，就这么简单！**
 
@@ -80,7 +80,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
             .n { toast("取消被点击") }
             .show(this)
 ```
-### 自定义文案dialog：
+### 默认dialog【自定义文案】：
 ```
         MyDialog().message("确定提交订单？")
             .y("提交") { toast("提交被点击") }
@@ -104,7 +104,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 
 ![Video_20210714_084658_619](https://user-images.githubusercontent.com/4067327/125624542-3cd7197a-42e0-471f-b0eb-b7afd593e197.gif)
 
-# 五、更精简的RecyclerView列表分页功能，2行代码，包含了下拉刷新，加载更多，下一页预加载，切支持多TypeItem：
+# 五、更精简的RecyclerView列表分页功能，2行代码，包含了下拉刷新，加载更多，下一页预加载，且支持多TypeItem：
 ```
    refreshRecycler.bindData<BeanItem> { (it.binding as ItemRecyclerviewBinding).item = it }
    refreshRecycler.loadData { httpGetData() }
