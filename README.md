@@ -6,15 +6,15 @@
 ![结构](https://user-images.githubusercontent.com/4067327/125152474-577f7880-e17f-11eb-8e94-8813379e2d53.jpg)
 # 特点：
 * **彻底组件化，且更简洁，Module具有独立的Application、AndroidMinifast、资源文件等；Application和Library的切换更加快捷；**
-* **超级简洁、且多功能的网络层封装，自带2级缓存，App端内嵌了接口日志查看组件；**
-* **更简洁的组件使用，更少的代码实现最全的功能；**
-* **最新的技术实现方案，Retrofit2、OkHttp3、ViewModel,DataBinding，LiveData等jitpack组件，以及Kotlin协程技术方案**
+* **超级简洁、且多功能的网络层封装，自带2级缓存，App端内嵌了日志查看，测试人员，接口错误，该知道找谁了吧；**
+* **更简洁的组件使用，更少的代码实现最全的功能，灵活扩展，随时扩展新的组件；**
+* **最新的技术实现方案，Retrofit2、OkHttp3、ViewModel、DataBinding、LiveData等jitpack组件，以及Kotlin协程技术方案**
 
 # 组件化说明
 * **每个module都有独自的AndroidMinifast.xml文件，各自模块的权限，activity，service等声明，均在各自module声明；**
 * **每个module都有独自的Application，启动就初始化的代码均放在该Module的application里，可以直接脱离主app直接运行；**
 * **每个module都有独自的ApiService，且需在各自的Application中注册，以保证module在application模式下可以直接运行；**
-# 有多精简？以登录为例：
+# 有多精简？先举了栗子，以登录为栗：
 ## 一、登录接口定义：
 ```
 interface ApiService {
@@ -35,7 +35,7 @@ class AccountViewModel : MyBaseViewModel() {
 ## 三、登录Activity：
 
 ```
-@My(myToolbarTitle = "登录")
+@My(myToolbarTitle = "登陆")
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {
 
     var user = BeanUser()
@@ -108,9 +108,13 @@ fun eventRegister(user: BeanUser) {
             .n("关闭") { toast("关闭被点击") }
             .show(this)
 ```
-### 自定义dialog【myDialogGravity指定位置；myDialogTransparent指定是否透明】：
+### 自定义dialog：
+* **myDialogGravity：指定位置**
+* **myDialogAnimation：指定是否启用动画[Gravity.BOTTOM:底部向上动画，其他；伸缩、透明度动画]**
+* **myDialogAnimationTime：指定动画时长**
+* **myDialogTransparent：指定是否透明**
 ```
-     @My(myDialogGravity = Gravity.BOTTOM, myDialogTransparent = true)
+     @My(myDialogGravity = Gravity.BOTTOM, myDialogTransparent = true ，myDialogAnimation = true,*myDialogAnimationTime = 300)
      class DialogDemo : MyBaseDialog<DialogLayoutBinding>() {
         override fun initCreate() {
             mRootView.confirm.click { dismiss() }
