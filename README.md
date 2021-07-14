@@ -1,4 +1,4 @@
-# MVVM-Component
+# Android-MVVM-Component-Jitpack-Kotlin
 ## 超级简洁、彻底组件化的轻量级Android Kotlin Jitpack MVVM框架----持续更新----未完结
 
 # 结构
