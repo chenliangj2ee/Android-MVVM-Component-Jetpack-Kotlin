@@ -75,9 +75,8 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
             .n("关闭") { toast("取消被点击") }
             .show(this)
 ```
-### 自定义dialog：
+### 自定义dialog【myDialogGravity指定位置；myDialogTransparent指定是否透明】：
 ```
-     自定义Dialog：myDialogGravity指定位置；myDialogTransparent指定是否透明
      @My(myDialogGravity = Gravity.BOTTOM, myDialogTransparent = true)
      class DialogDemo : MyBaseDialog<DialogLayoutBinding>() {
         override fun initCreate() {
