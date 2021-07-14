@@ -69,8 +69,9 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 *  **组件之间的跳转**
 ```
  goto("/app/main", "username", "tom", "age", 15)
- goto("/app/main", "username", "id","UID121231","tom", "age", 15 ,"sex",2)
+ goto("/app/main", "username","tom",  "id","UID121231","age", 15 ,"sex",2)
  goto("/app/main", "user",user)
+ goto("/app/main", , "user",user,"param1", "value1","param2",vlue2, "param3", true ,"param4",2F,......)//想传递几个值，后面跟上即可
 ```
 *  **组件之间的消息传递**
 ```
