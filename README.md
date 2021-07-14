@@ -84,7 +84,7 @@ fun eventRegister(user: BeanUser) {
       //接收到user
 }
 ```
-# 四、组件的使用，更简单，例如Dialog：
+# 五、View组件的使用，更简单，例如Dialog：
 ### 默认dialog：
 ```
         MyDialog().message("确定删除用户？")
@@ -122,7 +122,7 @@ fun eventRegister(user: BeanUser) {
 
 ![Video_20210714_084658_619](https://user-images.githubusercontent.com/4067327/125624542-3cd7197a-42e0-471f-b0eb-b7afd593e197.gif)
 
-# 五、更精简的RecyclerView列表分页功能，2行代码，包含了下拉刷新，加载更多，下一页预加载，且支持多TypeItem：
+# 六、更精简的RecyclerView列表分页功能，2行代码，包含了下拉刷新，加载更多，下一页预加载，且支持多TypeItem：
 ```
    refreshRecycler.bindData<BeanItem> { (it.binding as ItemRecyclerviewBinding).item = it }
    refreshRecycler.loadData { httpGetData() }
