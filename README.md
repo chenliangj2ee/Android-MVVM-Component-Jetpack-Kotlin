@@ -121,8 +121,9 @@ fun eventRegister(user: BeanUser) {
         }
      }
 ```
+![Video_20210715_121413_214](https://user-images.githubusercontent.com/4067327/125656327-2da3c27e-37b8-4f9f-a5b3-9374696569c5.gif)
 
-![Video_20210714_084658_619](https://user-images.githubusercontent.com/4067327/125624542-3cd7197a-42e0-471f-b0eb-b7afd593e197.gif)
+
 
 # 六、更精简的RecyclerView列表分页功能，2行代码，包含了下拉刷新，加载更多，下一页预加载，且支持多TypeItem：
 ```
