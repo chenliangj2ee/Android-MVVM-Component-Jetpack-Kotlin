@@ -108,9 +108,13 @@ fun eventRegister(user: BeanUser) {
             .n("关闭") { toast("关闭被点击") }
             .show(this)
 ```
-### 自定义dialog【myDialogGravity指定位置；myDialogTransparent指定是否透明】：
+### 自定义dialog：
+* **myDialogGravity：指定位置**
+* **myDialogAnimation：指定是否启用动画[Gravity.BOTTOM:底部向上动画，其他；伸缩、透明度动画]**
+* **myDialogAnimationTime：指定动画时长**
+* **myDialogTransparent：指定是否透明**
 ```
-     @My(myDialogGravity = Gravity.BOTTOM, myDialogTransparent = true)
+     @My(myDialogGravity = Gravity.BOTTOM, myDialogTransparent = true ，myDialogAnimation = true,*myDialogAnimationTime = 300)
      class DialogDemo : MyBaseDialog<DialogLayoutBinding>() {
         override fun initCreate() {
             mRootView.confirm.click { dismiss() }
