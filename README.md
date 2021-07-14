@@ -8,7 +8,7 @@
 * **彻底组件化，且更简洁，Module具有独立的Application、AndroidMinifast、资源文件等；Application和Library的切换更加快捷；**
 * **超级简洁、且多功能的网络层封装，自带2级缓存，App端内嵌了日志查看，测试人员，接口错误，该知道找谁了吧；**
 * **更简洁的组件使用，更少的代码实现最全的功能，灵活扩展，随时扩展新的组件；**
-* **最新的技术实现方案，Retrofit2、OkHttp3、ViewModel,DataBinding，LiveData等jitpack组件，以及Kotlin协程技术方案**
+* **最新的技术实现方案，Retrofit2、OkHttp3、ViewModel、DataBinding、LiveData等jitpack组件，以及Kotlin协程技术方案**
 
 # 组件化说明
 * **每个module都有独自的AndroidMinifast.xml文件，各自模块的权限，activity，service等声明，均在各自module声明；**
