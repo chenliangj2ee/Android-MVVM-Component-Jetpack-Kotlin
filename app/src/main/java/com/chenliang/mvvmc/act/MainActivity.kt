@@ -46,4 +46,8 @@ class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
     fun toolbarRefreshFragment(v: View) {
         goto(FragmentToolBarRefreshDemoActivity::class.java)
     }
+
+    fun viewPageFragmentDemoActivity(v: View) {
+        goto(ViewPageFragmentDemoActivity::class.java)
+    }
 }

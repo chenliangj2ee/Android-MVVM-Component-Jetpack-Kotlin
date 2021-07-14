@@ -19,5 +19,8 @@ class FragmentToolbarRefreshDemo : MyBaseFragment<FragmentToolbarNoBinding, Defa
     override fun initOnCreateView() {
     }
 
+    override fun refresh() {
+        super.refresh()
+    }
 
 }

@@ -94,11 +94,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
             )
         )
 
-        postDelayed(3000){
-            mRefresh.setEnableRefresh(true)
-            mRefresh.setEnableLoadMore(true)
-            toast("setEnableRefresh")
-        }
+
 
     }
 

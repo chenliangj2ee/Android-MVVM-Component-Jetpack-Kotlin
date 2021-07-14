@@ -55,8 +55,8 @@ class MyViewPager(context: Context, attrs: AttributeSet) : ViewPager(context, at
     /**
      * tab被选中回调方法
      */
-    var tabSelectedFun: (position :Int) -> Unit = { Unit }
-    fun onTabSelected(func: (position :Int) -> Unit) {
+    var tabSelectedFun: (position: Int) -> Unit = { Unit }
+    fun onTabSelected(func: (position: Int) -> Unit) {
         tabSelectedFun = func
     }
 
@@ -88,6 +88,17 @@ class MyViewPager(context: Context, attrs: AttributeSet) : ViewPager(context, at
      * 设置TabLayout
      */
     fun setTabLayout(tabLayout: TabLayout, titles: ArrayList<String>) {
+        this.tabLayout = tabLayout
+        titles.forEach { tabLayout.addTab(tabLayout.newTab().setText(it)) }
+        this.titles.add(titles)
+        initTabLayoutListener()
+    }
+
+
+    /**
+     * 设置TabLayout
+     */
+    fun setTabLayout(tabLayout: TabLayout, vararg titles: String) {
         this.tabLayout = tabLayout
         titles.forEach { tabLayout.addTab(tabLayout.newTab().setText(it)) }
         this.titles.add(titles)
@@ -141,7 +152,6 @@ class MyViewPager(context: Context, attrs: AttributeSet) : ViewPager(context, at
     override fun setCurrentItem(item: Int) {
         super.setCurrentItem(item, false)
     }
-
 
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {

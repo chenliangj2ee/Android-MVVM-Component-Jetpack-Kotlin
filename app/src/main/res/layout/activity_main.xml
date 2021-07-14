@@ -47,6 +47,11 @@
                 android:layout_height="wrap_content"
                 android:onClick="toolbarRefreshFragment"
                 android:text="有标题、自带下拉刷新Fragment" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="viewPageFragmentDemoActivity"
+                android:text="Viewpager、tab切换Fragment"/>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

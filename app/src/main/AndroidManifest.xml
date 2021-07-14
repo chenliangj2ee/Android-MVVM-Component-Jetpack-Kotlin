@@ -29,6 +29,7 @@
         <activity android:name=".demo.RefreshRecyclerViewActivity" />
         <activity android:name=".demo.FragmentNoTBRefreshDemoActivity" />
         <activity android:name=".demo.FragmentToolBarRefreshDemoActivity" />
+        <activity android:name=".demo.ViewPageFragmentDemoActivity" />
     </application>
 
 </manifest>
