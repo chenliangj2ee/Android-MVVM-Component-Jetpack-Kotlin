@@ -11,9 +11,9 @@
 * **最新的技术实现方案，Retrofit2、OkHttp3、ViewModel等jitpack组件，以及Kotlin协程技术方案**
 
 # 组件化说明
-* **每个module都自己独自的AndroidMinifast.xml文件，各自模块的权限，activity，service等声明，均在各自module声明；**
-* **每个module都有自己的Application，各自模块需要启动就初始化的代码均放在自己的application里，可以直接脱离主app直接运行；**
-* **每个module都有自己的ApiService，且需在各自的Application中注册，以保证module在application模式下可以直接运行；**
+* **每个module都有独自的AndroidMinifast.xml文件，各自模块的权限，activity，service等声明，均在各自module声明；**
+* **每个module都有独自的Application，启动就初始化的代码均放在该Moudle的application里，可以直接脱离主app直接运行；**
+* **每个module都有独自的ApiService，且需在各自的Application中注册，以保证module在application模式下可以直接运行；**
 # 有多精简？以登录为例：
 ## 一、登录接口定义：
 ```
