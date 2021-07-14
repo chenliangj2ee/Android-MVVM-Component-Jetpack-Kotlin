@@ -77,13 +77,13 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 ### 自定义文案dialog：
 ```
         MyDialog().message("确定提交订单？")
-            .y("提交") { toast("确定被点击") }
-            .n("关闭") { toast("取消被点击") }
+            .y("提交") { toast("提交被点击") }
+            .n("关闭") { toast("关闭被点击") }
             .show(this)
         //或者
         dialog("确定删除用户？")
-            .y("提交") { toast("确定被点击") }
-            .n("关闭") { toast("取消被点击") }
+            .y("提交") { toast("提交被点击") }
+            .n("关闭") { toast("关闭被点击") }
             .show(this)
 ```
 ### 自定义dialog【myDialogGravity指定位置；myDialogTransparent指定是否透明】：
