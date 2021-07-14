@@ -4,7 +4,7 @@
 # 结构
 ![结构](https://user-images.githubusercontent.com/4067327/125152474-577f7880-e17f-11eb-8e94-8813379e2d53.jpg)
 # 特点：
-* **彻底组件化，Moudle具有独立的Application、AndroidMinifast、资源文件等；Application和Library的切换更加快捷；**
+* **彻底组件化，且更简洁，Moudle具有独立的Application、AndroidMinifast、资源文件等；Application和Library的切换更加快捷；**
 * **超级简洁、且多功能的网络层封装，自带2级缓存，App端内嵌了接口日志查看组件；**
 * **更简洁的组件使用，更少的代码实现最全的功能；**
 * **最新的技术实现方案，Retrofit2、OkHttp3、ViewModel等jitpack组件，以及Kotlin协程技术方案**
