@@ -60,4 +60,19 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 ## AccountViewModel就1行代码？
 ## 是的，极简框架，就这么简单！
 
+# 组件的使用，更简单，例如Dialog：
+```
+     MyDialog().message("确定删除用户？")
+            .y { toast("确定被点击") }
+            .n { toast("取消被点击") }
+            .show(this)
+            
+    或自定义文案
+    MyDialog().message("确定提交订单？")
+            .y("提交") { toast("确定被点击") }
+            .n("关闭") { toast("取消被点击") }
+            .show(this)
+```
+
+
 
