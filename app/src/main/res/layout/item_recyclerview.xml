@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="user"
-            type="com.chenliang.account.bean.BeanUser" />
+            name="item"
+            type="com.chenliang.mvvmc.bean.BeanItem" />
     </data>
 
     <LinearLayout
@@ -15,7 +15,7 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:text="item" />
+            android:layout_height="150dp"
+            android:text="@{item.title}" />
     </LinearLayout>
 </layout>

@@ -220,7 +220,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
     private var handler = Handler()
 
     var handlerRunnable = ArrayList<Runnable>()
-    open fun delayed(delay: Long, func: () -> Unit) {
+    open fun postDelayed(delay: Long, func: () -> Unit) {
         var run = Runnable {
             func()
         }

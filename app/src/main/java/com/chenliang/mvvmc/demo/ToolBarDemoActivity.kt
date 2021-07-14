@@ -5,9 +5,10 @@ import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.mvvmc.R
 import com.chenliang.mvvmc.databinding.ActivityMainBinding
+import com.chenliang.mvvmc.databinding.ActivityToolbarBinding
 
-@My(myToolbarTitle = "主页" )
-class ToolBarDemoActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
+@My(myToolbarTitle = "显示Toolbar" )
+class ToolBarDemoActivity : MyBaseActivity<ActivityToolbarBinding, DefaultViewModel>() {
     override fun initCreate() {
 
     }

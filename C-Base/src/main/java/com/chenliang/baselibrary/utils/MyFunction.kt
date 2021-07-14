@@ -70,8 +70,7 @@ fun Any.toast(msg: String) {
 }
 
 fun Any.logJson() {
-    Log.i("MyLog", Gson().toJson(this))
-    Log.i(this::class.java.simpleName, Gson().toJson(this))
+    log(Gson().toJson(this))
 }
 
 fun Any.log(message: String) {
@@ -392,16 +391,8 @@ fun Any.anrCheck(time: Int, func: () -> Unit) {
     func()
     var end = System.currentTimeMillis();
     if (end - start > time) {
-        logE("--------------------------------------------------------------------------------------")
-        logE("--                                                                                  --")
-        logE("--                                                                                  --")
-        logE("--                                                                                  --")
-        logE("--                              耗时操作:${end - start}毫秒                            ")
-        logE("--                                                                                  --")
-        logE("--                                                                                  --")
-        logE("--                                                                                  --")
-        logE("--------------------------------------------------------------------------------------")
-        throw Exception("${this::class.simpleName} initCreate耗时太长，请优化...")
+        logE("耗时操作:${end - start}毫秒 ")
+//        throw Exception("${this::class.simpleName} initCreate耗时太长，请优化...")
     }
 }
 

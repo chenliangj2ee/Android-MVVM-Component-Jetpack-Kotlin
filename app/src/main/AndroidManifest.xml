@@ -23,31 +23,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".act.MainActivity" />
-
-        <!--        <activity-->
-        <!--            android:name=".demo.RefreshDemoActivity"-->
-        <!--            android:label="刷新Demo">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN" />-->
-        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
-        <!--        <activity-->
-        <!--            android:name=".demo.ToolBarDemoActivity"-->
-        <!--            android:label="ToolBarDemo">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN" />-->
-        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
-        <!--        <activity-->
-        <!--            android:name=".demo.RefreshRecyclerViewActivity"-->
-        <!--            android:label="分页列表">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN" />-->
-        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
+        <activity android:name=".demo.DefaultDemoActivity" />
+        <activity android:name=".demo.RefreshDemoActivity" />
+        <activity android:name=".demo.ToolBarDemoActivity" />
+        <activity android:name=".demo.RefreshRecyclerViewActivity" />
+        <activity android:name=".demo.FragmentNoTBRefreshDemoActivity" />
+        <activity android:name=".demo.FragmentToolBarRefreshDemoActivity" />
     </application>
 
 </manifest>

@@ -2,17 +2,52 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Main"
-            android:textSize="40sp"
-            tools:ignore="MissingConstraints" />
+            android:orientation="vertical">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="defaultActivity"
+                android:text="默认Activity" />
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="toolbarActivity"
+                android:text="有标题Activity" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="refreshActivity"
+                android:text="自带下拉刷新Activity" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="refreshRecyclerViewActivity"
+                android:text="分页" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="noToolbarRefreshFragment"
+                android:text="无标题、自带下拉刷新Fragment" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="toolbarRefreshFragment"
+                android:text="有标题、自带下拉刷新Fragment" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>

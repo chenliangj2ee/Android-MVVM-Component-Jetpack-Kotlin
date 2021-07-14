@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.chenliang.baselibrary.utils.log
 
 /**
  * chenliang
@@ -46,10 +47,9 @@ open class MyBaseAdapter<D : MyBaseBean>(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-//        Log.i("MyLog", "onBindViewHolder....$position")
         this.position = position
         if (position >= data.size - 10 && !loading) {
-            Log.i("MyLog", "自动加载....$position")
+            log("自动加载....$position")
             loading = true
             loadFun!!()
         }

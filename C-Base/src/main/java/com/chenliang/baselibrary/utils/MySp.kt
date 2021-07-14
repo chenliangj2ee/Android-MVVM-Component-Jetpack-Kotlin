@@ -17,7 +17,7 @@ internal object MySp {
         key: String,
         value: String
     ) {
-        Log.i("MySp", "put key:$key  value:$value")
+        log("put key:$key  value:$value")
         val sp =
             context.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val edit = sp.edit()
@@ -29,7 +29,7 @@ internal object MySp {
         val sp =
             context.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val result = sp.getString(key, "")
-        Log.i("MySp", "get key:$key  value:$result")
+        log("get key:$key  value:$result")
         return result
     }
 

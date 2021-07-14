@@ -1,6 +1,7 @@
 package com.chenliang.baselibrary.utils
 
 import android.content.Context
+import com.chenliang.baselibrary.R
 
 /**
  *
@@ -28,6 +29,8 @@ object MyKotlinClass {
         val bingingNames =
             bingingName.split("\\.".toRegex()).toTypedArray()
         val name = bingingNames[bingingNames.size - 1].replace("_binding", "")
-        return context.resources.getIdentifier(name, "layout", context.packageName)
+        var id=context.resources.getIdentifier(name, "layout", context.packageName)
+        log("解析$bingingName---->name: $name    id:$id")
+        return id
     }
 }

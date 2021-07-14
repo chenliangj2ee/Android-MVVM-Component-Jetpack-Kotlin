@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.util.Log
 import com.google.gson.Gson
 import com.chenliang.baselibrary.BaseInit
+import com.chenliang.baselibrary.utils.log
 import java.lang.reflect.Type
 import java.util.*
 
@@ -17,7 +18,7 @@ internal object MyHttpDB {
         key: String,
         value: String
     ) {
-        Log.i("SPUtils", "put key:$key  value:$value")
+        log("put key:$key  value:$value")
         val sp =
             context.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val edit = sp.edit()
@@ -29,7 +30,7 @@ internal object MyHttpDB {
         val sp =
             context.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val result = sp.getString(key, "")
-        Log.i("SPUtils", "get key:$key  value:$result")
+        log("get key:$key  value:$result")
         return result
     }
 
@@ -40,7 +41,7 @@ internal object MyHttpDB {
 
         var res = datasMap[key]
         if (res != null) {
-            Log.i("MyLog", "使用内存缓存")
+            log("使用内存缓存")
             return res as T
         }
 
@@ -52,7 +53,7 @@ internal object MyHttpDB {
             )
         }
         if (res != null) {
-            Log.i("MyLog", "使用文件缓存")
+            log("使用文件缓存")
             datasMap[key] = res
         }
         return res
@@ -66,7 +67,7 @@ internal object MyHttpDB {
         if (BaseInit.con == null || bean == null || key == null)
             return
         datasMap[key] = bean
-        Log.i("MyLog", "更新数据到内存缓存")
+        log("更新数据到内存缓存")
         if (datasMap.size > 100)
             datasMap.clear()
         putString(
@@ -74,7 +75,7 @@ internal object MyHttpDB {
             key,
             Gson().toJson(bean)
         )
-        Log.i("MyLog", "更新数据到文件缓存")
+        log("更新数据到文件缓存")
     }
 
 

@@ -13,7 +13,7 @@ import com.chenliang.mvvmc.databinding.ActivitySplashBinding
 class SplashActivity : MyBaseActivity<ActivitySplashBinding, DefaultViewModel>() {
 
     override fun initCreate() {
-        delayed(1000) { next() }
+        postDelayed(1000) { next() }
     }
 
     fun next() {
