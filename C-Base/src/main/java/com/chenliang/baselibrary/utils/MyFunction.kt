@@ -74,46 +74,58 @@ fun Any.logJson() {
 }
 
 fun Any.log(message: String) {
-    val className =  Thread.currentThread().stackTrace[3].className
-    val fileName =  Thread.currentThread().stackTrace[3].fileName
-    val methodName =   Thread.currentThread().stackTrace[3].methodName
-    val lineNumber =   Thread.currentThread().stackTrace[3].lineNumber
-    Log.i("MyLog", "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
-            "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————")
+    val className = Thread.currentThread().stackTrace[3].className
+    val fileName = Thread.currentThread().stackTrace[3].fileName
+    val methodName = Thread.currentThread().stackTrace[3].methodName
+    val lineNumber = Thread.currentThread().stackTrace[3].lineNumber
+    Log.i(
+        "MyLog",
+        "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
+                "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
+    )
     Log.i(this::class.java.simpleName, message)
 }
 
 fun Any.log(tag: String, message: String) {
     Log.i(tag, message)
 
-    val className =  Thread.currentThread().stackTrace[3].className
-    val fileName =  Thread.currentThread().stackTrace[3].fileName
-    val methodName =   Thread.currentThread().stackTrace[3].methodName
-    val lineNumber =   Thread.currentThread().stackTrace[3].lineNumber
-    Log.i("MyLog", "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
-            "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————")
+    val className = Thread.currentThread().stackTrace[3].className
+    val fileName = Thread.currentThread().stackTrace[3].fileName
+    val methodName = Thread.currentThread().stackTrace[3].methodName
+    val lineNumber = Thread.currentThread().stackTrace[3].lineNumber
+    Log.i(
+        "MyLog",
+        "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
+                "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
+    )
 
 }
 
 fun Any.logE(message: String) {
-    val className =  Thread.currentThread().stackTrace[3].className
-    val fileName =  Thread.currentThread().stackTrace[3].fileName
-    val methodName =   Thread.currentThread().stackTrace[3].methodName
-    val lineNumber =   Thread.currentThread().stackTrace[3].lineNumber
-    Log.e("MyLog", "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
-            "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————")
+    val className = Thread.currentThread().stackTrace[3].className
+    val fileName = Thread.currentThread().stackTrace[3].fileName
+    val methodName = Thread.currentThread().stackTrace[3].methodName
+    val lineNumber = Thread.currentThread().stackTrace[3].lineNumber
+    Log.e(
+        "MyLog",
+        "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
+                "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
+    )
 
     Log.e(this::class.java.simpleName, message)
 }
 
 fun Any.logE(tag: String, message: String) {
     Log.e(tag, message)
-    val className =  Thread.currentThread().stackTrace[3].className
-    val fileName =  Thread.currentThread().stackTrace[3].fileName
-    val methodName =   Thread.currentThread().stackTrace[3].methodName
-    val lineNumber =   Thread.currentThread().stackTrace[3].lineNumber
-    Log.e("MyLog", "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
-            "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————")
+    val className = Thread.currentThread().stackTrace[3].className
+    val fileName = Thread.currentThread().stackTrace[3].fileName
+    val methodName = Thread.currentThread().stackTrace[3].methodName
+    val lineNumber = Thread.currentThread().stackTrace[3].lineNumber
+    Log.e(
+        "MyLog",
+        "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
+                "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
+    )
 
 }
 
@@ -394,5 +406,9 @@ fun Any.anrCheck(time: Int, func: () -> Unit) {
         logE("耗时操作:${end - start}毫秒 ")
 //        throw Exception("${this::class.simpleName} initCreate耗时太长，请优化...")
     }
+}
+
+fun Context.dialog(message: String): MyDialog {
+    return MyDialog().message(message)
 }
 

@@ -8,10 +8,12 @@ import android.view.Gravity
 
 @Target(AnnotationTarget.CLASS)
 annotation class My(
-    val myToolbarTitle: String = "",//标题
-    val myFullScreen: Boolean = false,//是否全屏
-    val myRefresh: Boolean = false,//是否启用下拉刷新
+    val myToolbarTitle: String = "",//Activity fragment标题
+    val myFullScreen: Boolean = false,//Activity是否全屏
+    val myRefresh: Boolean = false,//Activity fragment是否启用下拉刷新
     val myDialogGravity: Int = Gravity.CENTER,//dialog默认居中显示
+    val myDialogAnimation: Boolean = false,//dialog默认居中显示
+    val myDialogAnimationTime: Long = 400,//dialog默认居中显示
     val myDialogTransparent: Boolean = false
 
 )
@@ -61,4 +63,22 @@ fun dialogTransparent(cla: Any): Boolean {
     val clazz = cla::class.java
     val annotation = clazz.getAnnotation(My::class.java) ?: return false
     return annotation.myDialogTransparent
+}
+
+/**
+ * 获取Dialog是否启用动画
+ */
+fun myDialogAnimation(cla: Any): Boolean {
+    val clazz = cla::class.java
+    val annotation = clazz.getAnnotation(My::class.java) ?: return false
+    return annotation.myDialogAnimation
+}
+
+/**
+ * 获取Dialog动画时长
+ */
+fun myDialogAnimationTime(cla: Any): Long {
+    val clazz = cla::class.java
+    val annotation = clazz.getAnnotation(My::class.java) ?: return 400
+    return annotation.myDialogAnimationTime
 }

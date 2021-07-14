@@ -12,11 +12,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:minHeight="80dp"
+            android:minHeight="100dp"
             android:padding="10dp"
-            android:text="dddd"
-            android:textColor="#888"
-            android:textSize="14sp" />
+            android:text="确定删除吗?"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
@@ -32,11 +33,11 @@
                 android:id="@+id/cancel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="取消" />
+                android:text="取消"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="1px"
@@ -48,11 +49,12 @@
                 android:id="@+id/confirm"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="确定" />
+                android:text="确定"
+                android:textColor="#1E33ED"
+                android:textSize="14sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 

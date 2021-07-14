@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.dialog_layout.view.*
  * @date: 2021/07/14
  */
 
-@My(myDialogGravity = Gravity.BOTTOM,myDialogTransparent = true)
+@My(myDialogGravity = Gravity.BOTTOM,myDialogTransparent = true,myDialogAnimation = true,myDialogAnimationTime = 200)
 class DialogDemo : MyBaseDialog<DialogLayoutBinding>() {
     override fun initCreate() {
         mRootView.confirm.click { dismiss() }

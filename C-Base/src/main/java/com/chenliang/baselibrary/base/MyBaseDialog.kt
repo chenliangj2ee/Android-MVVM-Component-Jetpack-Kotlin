@@ -1,19 +1,22 @@
 package com.chenliang.baselibrary.base
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.view.Gravity
+import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.BounceInterpolator
+import android.view.animation.CycleInterpolator
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import com.chenliang.baselibrary.R
-import com.chenliang.baselibrary.annotation.My
-import com.chenliang.baselibrary.annotation.dialogGravity
-import com.chenliang.baselibrary.annotation.dialogTransparent
+import com.chenliang.baselibrary.annotation.*
 import com.chenliang.baselibrary.utils.MyKotlinClass
 import com.chenliang.baselibrary.utils.dip2px
 
-@My()
 abstract class MyBaseDialog<Binding : ViewDataBinding> : DialogFragment() {
     lateinit var mBinding: Binding
     lateinit var mRootView: LinearLayout
@@ -49,7 +52,39 @@ abstract class MyBaseDialog<Binding : ViewDataBinding> : DialogFragment() {
 
         bindView()
         initCreate()
+        if (myDialogAnimation(this)) {
+            if (dialogGravity(this) == Gravity.BOTTOM) {
+                initAnimationTranslation(mRootView)
+            } else {
+                initAnimationScaleX(mRootView)
+            }
+        }
+
+
         return mRootView
+    }
+
+    /**
+     * 缩放、透明度动画
+     */
+    private fun initAnimationScaleX(view: View) {
+        var scaleX = ObjectAnimator.ofFloat(view, "scaleX", 0.5F, 1F)
+        var scaleY = ObjectAnimator.ofFloat(view, "scaleY", 0.5F, 1F)
+        var alpha = ObjectAnimator.ofFloat(view, "alpha", 0.5F, 1F)
+        var scaleSet = AnimatorSet()
+        scaleSet.duration =  myDialogAnimationTime(this)
+        scaleSet.playTogether(scaleX, scaleY, alpha)
+        scaleSet.interpolator = AccelerateDecelerateInterpolator()
+        scaleSet.start()
+    }
+    /**
+     * 从下到上移动动画
+     */
+    private fun initAnimationTranslation(view: View) {
+        var translationY = ObjectAnimator.ofFloat(view, "translationY", 300F, 0F)
+        translationY.interpolator = AccelerateDecelerateInterpolator()
+        translationY.duration = myDialogAnimationTime(this)
+        translationY.start()
     }
 
     private fun bindView() {
