@@ -72,11 +72,23 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
             .y("提交") { toast("确定被点击") }
             .n("关闭") { toast("取消被点击") }
             .show(this)
+            
+            
+     自定义Dialog：myDialogGravity指定位置；myDialogTransparent指定是否透明
+     @My(myDialogGravity = Gravity.BOTTOM, myDialogTransparent = true)
+     class DialogDemo : MyBaseDialog<DialogLayoutBinding>() {
+        override fun initCreate() {
+            mRootView.confirm.click { dismiss() }
+        }
+}
 ```
+![Video_20210714_084658_619](https://user-images.githubusercontent.com/4067327/125624542-3cd7197a-42e0-471f-b0eb-b7afd593e197.gif)
+
 # 五、更精简的RecyclerView列表分页功能，2行代码，包含了下拉刷新，加载更多，下一页预加载，切支持多TypeItem：
 ```
    refreshRecycler.bindData<BeanItem> { (it.binding as ItemRecyclerviewBinding).item = it }
    refreshRecycler.loadData { httpGetData() }
 ```
+![Video_20210714_084908_861](https://user-images.githubusercontent.com/4067327/125624671-a129958c-5f45-4519-832a-35250ea0a932.gif)
 
 
