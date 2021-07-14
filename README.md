@@ -65,7 +65,25 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 * **ViewModel在哪里初始化？**
 * **AccountViewModel就1行代码？**
 * **是的，极简框架，就这么简单！**
+# 四、组件之间的跳转与消息传递
+*  **组件之间的跳转**
+```
+ goto("/app/main", "username", "tom", "age", 15)
+ goto("/app/main", "username", "id","UID121231","tom", "age", 15 ,"sex",2)
+ goto("/app/main", "user",user)
+```
+*  **组件之间的消息传递**
+```
+//发送数据
+var user=BeanUser("tom",12)
+user.postSelf(1002)
 
+//接受数据
+@Subscribe(code = 1002)
+fun eventRegister(user: BeanUser) {
+      //接收到user
+}
+```
 # 四、组件的使用，更简单，例如Dialog：
 ### 默认dialog：
 ```
