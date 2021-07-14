@@ -77,7 +77,6 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 ```
    refreshRecycler.bindData<BeanItem> { (it.binding as ItemRecyclerviewBinding).item = it }
    refreshRecycler.loadData { httpGetData() }
-
 ```
 
 
