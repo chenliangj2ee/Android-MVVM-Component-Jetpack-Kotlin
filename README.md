@@ -37,26 +37,22 @@ class AccountViewModel : MyBaseViewModel() {
 ```
 @My(myToolbarTitle = "登录")
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {
-    var user = BeanUser()
-    override fun initCreate() {
-        mBinding.user = user
-        mBinding.act = this
-    }
 
-    fun registerAction() {
-        goto(RegisterActivity::class.java)
-    }
+    var user = BeanUser()
+    
+    override fun initCreate() { mBinding.user = user  }
+
+    fun registerAction() {  goto(RegisterActivity::class.java)  }
 
     fun loginAction() {
-        with(user) {
-            if (hasNull(name, "请输入账号", password, "请输入密码")) return
+            if (hasNull(user.name, "请输入账号",user.password, "请输入密码"))
+                return
             mViewModel.login(name, password).obs(this@LoginActivity) {  it.y { loginSuccess(it.data!!) }  }
-        }
     }
 
     private fun loginSuccess(user: BeanUser) {
         user.save()
-        goto("/app/main", "username", "tom", "age", 15)
+        goto("/app/main", "user",user)
         finish()
     }
 
