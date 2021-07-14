@@ -1,29 +1,38 @@
 package com.chenliang.baselibrary.base
 
-import android.view.View
+import android.view.Gravity
+import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import androidx.appcompat.app.AppCompatActivity
+import com.chenliang.baselibrary.R
+import com.chenliang.baselibrary.annotation.My
+import com.chenliang.baselibrary.annotation.dialogGravity
+import com.chenliang.baselibrary.annotation.dialogTransparent
+import com.chenliang.baselibrary.utils.MyKotlinClass
 import com.chenliang.baselibrary.utils.dip2px
 
+@My()
 abstract class MyBaseDialog<Binding : ViewDataBinding> : DialogFragment() {
-    lateinit var binding: Binding
-    private lateinit var layout: View
+    lateinit var mBinding: Binding
+    lateinit var mRootView: LinearLayout
 
     override fun onStart() {
         super.onStart()
         val dm = android.util.DisplayMetrics()
         activity?.windowManager?.defaultDisplay?.getMetrics(dm)
-        dialog?.window?.setLayout(  dm.widthPixels - 60.dip2px(),
+        dialog?.window?.setLayout(
+            dm.widthPixels - 60.dip2px(),
             android.view.ViewGroup.LayoutParams.WRAP_CONTENT
         )
+        dialog?.window?.setGravity(dialogGravity(this))
     }
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         dialog?.window?.requestFeature(android.view.Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
-        isCancelable = false
+        isCancelable = true
     }
 
     override fun onCreateView(
@@ -32,14 +41,41 @@ abstract class MyBaseDialog<Binding : ViewDataBinding> : DialogFragment() {
         savedInstanceState: android.os.Bundle?
     ): android.view.View? {
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        binding = DataBindingUtil.inflate(inflater, layoutId(), container, false);
-        layout = binding.root
+        mRootView = layoutInflater.inflate(R.layout.base_dialog_content, null) as LinearLayout
+
+        if (!dialogTransparent(this)) {
+            mRootView.setBackgroundResource(R.drawable.base_selector_dialog_bg)
+        }
+
+        bindView()
         initCreate()
-        return layout
+        return mRootView
+    }
+
+    private fun bindView() {
+        var content = layoutInflater.inflate(layoutId(), null)
+        mBinding = DataBindingUtil.bind<Binding>(content)!!
+        mRootView.addView(
+            content,
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+        )
+
     }
 
     abstract fun initCreate()
-    abstract fun layoutId(): Int
+    private fun layoutId(): Int {
+        return MyKotlinClass.getLayoutIdByBinding(
+            requireContext(),
+            this::class.java.genericSuperclass.toString().split("<")[1].split(",")[0].replace(
+                ">",
+                ""
+            )
+        )
+    }
+
     fun show(con: AppCompatActivity) {
 
         if (con.isDestroyed || isAdded)
