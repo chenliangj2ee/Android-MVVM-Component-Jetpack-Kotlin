@@ -60,7 +60,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 ## AccountViewModel就1行代码？
 ## 是的，极简框架，就这么简单！
 
-# 组件的使用，更简单，例如Dialog：
+# 四、组件的使用，更简单，例如Dialog：
 ```
      MyDialog().message("确定删除用户？")
             .y { toast("确定被点击") }
@@ -73,6 +73,11 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
             .n("关闭") { toast("取消被点击") }
             .show(this)
 ```
+# 五、更精简的分页列表，2行代码，包含了下拉刷新，加载更多，下一页预加载，切支持多TypeItem：
+```
+   refreshRecycler.bindData<BeanItem> { (it.binding as ItemRecyclerviewBinding).item = it }
+   refreshRecycler.loadData { httpGetData() }
 
+```
 
 
