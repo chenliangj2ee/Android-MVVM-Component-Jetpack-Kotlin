@@ -5,14 +5,14 @@
 # 结构
 ![结构](https://user-images.githubusercontent.com/4067327/125152474-577f7880-e17f-11eb-8e94-8813379e2d53.jpg)
 # 特点：
-* **彻底组件化，且更简洁，Moudle具有独立的Application、AndroidMinifast、资源文件等；Application和Library的切换更加快捷；**
+* **彻底组件化，且更简洁，Module具有独立的Application、AndroidMinifast、资源文件等；Application和Library的切换更加快捷；**
 * **超级简洁、且多功能的网络层封装，自带2级缓存，App端内嵌了接口日志查看组件；**
 * **更简洁的组件使用，更少的代码实现最全的功能；**
 * **最新的技术实现方案，Retrofit2、OkHttp3、ViewModel等jitpack组件，以及Kotlin协程技术方案**
 
 # 组件化说明
 * **每个module都有独自的AndroidMinifast.xml文件，各自模块的权限，activity，service等声明，均在各自module声明；**
-* **每个module都有独自的Application，启动就初始化的代码均放在该Moudle的application里，可以直接脱离主app直接运行；**
+* **每个module都有独自的Application，启动就初始化的代码均放在该Module的application里，可以直接脱离主app直接运行；**
 * **每个module都有独自的ApiService，且需在各自的Application中注册，以保证module在application模式下可以直接运行；**
 # 有多精简？以登录为例：
 ## 一、登录接口定义：
