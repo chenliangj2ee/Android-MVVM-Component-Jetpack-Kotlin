@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.chenliang.mvvmc.demo.MyButton
+                android:id="@+id/button"
+                android:layout_width="90dp"
+                android:layout_margin="50dp"
+                android:layout_height="90dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

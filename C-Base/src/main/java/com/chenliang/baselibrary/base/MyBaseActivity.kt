@@ -31,12 +31,16 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
     lateinit var mRefresh: SmartRefreshLayout
     lateinit var mBinding: BINDING
     lateinit var mViewModel: VM
+    var mW: Int = 0
+    var mH: Int = 0
     open lateinit var mHttpEvent: MyHttpEvent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         log("MyActivityManager", "启动》》》${javaClass.name}")
         setContentView(R.layout.base_activity_content)
+        mW = MyScreen.getScreenWidth(this)
+        mH = MyScreen.getScreenHeight(this)
         RxBus.get().register(this)
         mHttpEvent = MyHttpEvent(this)
         mViewModel = MyKotlinClass.createByName<VM>(
