@@ -10,9 +10,12 @@ import android.graphics.PixelFormat
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -281,7 +284,12 @@ fun String.format(pattern: String) = this.apply {
 /**
  * 手机号格式判断
  */
-fun String.isPhone() = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$").matcher(this).matches()
+fun String.isMobilePhone() = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$").matcher(this).matches()
+
+/**
+ * 手机号格式判断
+ */
+fun String.isNumber() = Pattern.compile("^[0-9]*\$").matcher(this).matches()
 
 /**
  * 邮箱格式判断
@@ -289,6 +297,47 @@ fun String.isPhone() = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$").matcher(this)
 fun String.isEmail() =
     Pattern.compile("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]\$").matcher(this).matches()
 
+/**
+ * 长度为min-max的所有字符
+ */
+fun String.isLength(min: Int, max: Int) =
+    Pattern.compile("^.{$min,$max}\$").matcher(this).matches()
+
+/**
+ * 英文和数字
+ */
+fun String.isAZ09All() =
+    Pattern.compile("^[A-Za-z0-9]+\$").matcher(this).matches()
+
+/**
+ * 26个英文，包含大小写
+ */
+fun String.isAAaz() =
+    Pattern.compile("^[A-Za-z]+\$").matcher(this).matches()
+
+/**
+ * 26个大写英文
+ */
+fun String.isAZ() =
+    Pattern.compile("^[A-Z]+\$").matcher(this).matches()
+
+/**
+ * 26个小写英文
+ */
+fun String.isaz() =
+    Pattern.compile("^[a-z]+\$").matcher(this).matches()
+
+/**
+ * 座机号码
+ */
+fun String.isPhone() =
+    Pattern.compile("^(\\(\\d{3,4}-)|\\d{3.4}-)?\\d{7,8}\$").matcher(this).matches()
+
+/**
+ * 身份证
+ */
+fun String.isID() =
+    Pattern.compile("^\\d{15}\$)|(^\\d{18}\$)|(^\\d{17}(\\d|X|x)\$").matcher(this).matches()
 
 fun Drawable.bitmap(): Bitmap {
     val w: Int = this.intrinsicWidth
@@ -412,3 +461,121 @@ fun Context.dialog(message: String): MyDialog {
     return MyDialog().message(message)
 }
 
+
+fun String.check(vararg checks: Any): Boolean {
+    var size = checks.size - 1
+
+    for (index in 0..size step 2) {
+
+        var check = checks[index]
+        var message = checks[checks.indexOf(check) + 1] as String
+
+
+        when (check) {
+            is Int -> {
+                when (check) {
+                    MyCheck.empty -> {
+                        if (isNullOrEmpty()) {
+                            toast(message)
+                            return true
+                        }
+                    }
+                    MyCheck.mobilePhone -> {
+                        if (!isMobilePhone()) {
+                            toast(message)
+                            return true
+                        }
+                    }
+                    MyCheck.phone -> {
+                        if (!isPhone()) {
+                            toast(message)
+                            return true
+                        }
+                    }
+                    MyCheck.AZ -> {
+                        if (!isAZ()) {
+                            toast(message)
+                            return true
+                        }
+                    }
+                    MyCheck.az -> {
+                        if (!isaz()) {
+                            toast(message)
+                            return true
+                        }
+                    }
+                    MyCheck.AZaz -> {
+                        if (!isAAaz()) {
+                            toast(message)
+                            return true
+                        }
+                    }
+                    MyCheck.AZ09All -> {
+                        if (!isAZ09All()) {
+                            toast(message)
+                            return true
+                        }
+                    }
+                    MyCheck.number -> {
+                        if (!isNumber()) {
+                            toast(message)
+                            return true
+                        }
+                    }
+                    MyCheck.id -> {
+                        if (!isNumber()) {
+                            toast(message)
+                            return true
+                        }
+                    }
+
+                }
+            }
+            is ChenkLength -> {
+                if (length < check.min || length > check.max) {
+                    toast(message)
+                    return true
+                }
+            }
+
+        }
+    }
+
+    return false
+
+}
+
+fun String.insert(tag: String, vararg positions: Int): String {
+
+    var sb = StringBuffer(this.trim().replace(" ", "").replace(tag, ""))
+
+    var offset = 0
+    positions.forEach {
+        if (it + offset < sb.length)
+            sb.insert(it + offset, tag)
+        offset++
+    }
+    return sb.toString()
+}
+
+
+fun EditText.changed(func: (str: String) -> Unit) {
+
+    var listener=object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            this@changed.removeTextChangedListener(this)
+            func(text.toString())
+            this@changed.setSelection(text.toString().length)
+            this@changed.addTextChangedListener(this)
+        }
+    }
+
+    this.addTextChangedListener(listener)
+}

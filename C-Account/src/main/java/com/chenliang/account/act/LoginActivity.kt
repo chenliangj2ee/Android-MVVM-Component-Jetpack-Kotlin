@@ -6,9 +6,9 @@ import com.chenliang.account.vm.AccountViewModel
 import com.chenliang.baselibrary.annotation.My
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.base.obs
-import com.chenliang.baselibrary.utils.goto
-import com.chenliang.baselibrary.utils.hasNull
+import com.chenliang.baselibrary.utils.*
 import gorden.rxbus2.Subscribe
+import kotlinx.android.synthetic.main.account_act_login.*
 
 @My(myToolbarTitle = "登录")
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {
@@ -16,20 +16,25 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
     override fun initCreate() {
         mBinding.user = user
         mBinding.act = this
+        //监听编辑框输入状态，手机号设置成130 7876 7657格式
+        account.changed { account.setText(it.insert("-", 3, 7)) }
     }
 
+    //去注册
     fun registerAction() {
         goto(RegisterActivity::class.java)
     }
 
     fun loginAction() {
-        with(user) {
-            if (hasNull(name, "请输入账号", password, "请输入密码")) return
-            mViewModel.login(name, password).obs(this@LoginActivity) {
-                it.code=0//模拟登录成功
-                it.data=user//模拟登录成功
-                it.y { loginSuccess(it.data!!) }
-            }
+        //登录验证
+        if (user.name.check(MyCheck.empty, "请输入账号", MyCheck.mobilePhone, "手机号格式不正确") ||
+            user.password.check(MyCheck.empty, "请输入密码", MyCheck.LENGTH(6, 12), "密码长度在6-12之间")
+        ) return
+        //登录接口
+        mViewModel.login(user.name, user.password).obs(this@LoginActivity) {
+            it.code = 0//模拟登录成功
+            it.data = user//模拟登录成功
+            it.y { loginSuccess(it.data!!) }
         }
     }
 
@@ -39,9 +44,11 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
         finish()
     }
 
+    //注册后，登录界面回显账号信息
     @Subscribe(code = 100)
-      fun eventRegister(user: BeanUser) {
-        this.user=user
+    fun eventRegister(user: BeanUser) {
+        this.user = user
+        user.password = ""
         mBinding.user = user
     }
 
