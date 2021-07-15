@@ -17,7 +17,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
         mBinding.user = user
         mBinding.act = this
         //监听编辑框输入状态，手机号设置成130 7876 7657格式
-        account.changed { account.setText(it.insert("-", 3, 7)) }
+        account.changed { account.setText(it.insert(" ", 3, 7)) }
     }
 
     //去注册

@@ -3,6 +3,7 @@ package com.chenliang.baselibrary.base
 import android.util.Log
 import androidx.lifecycle.*
 import com.chenliang.baselibrary.annotation.MyRetrofitGoValue
+import com.chenliang.baselibrary.annotation.defaultValueReflex
 import com.chenliang.baselibrary.net.BaseResponse
 import com.chenliang.baselibrary.net.utils.MyApiReflex
 import com.chenliang.baselibrary.net.utils.MyHttpDB
@@ -77,6 +78,10 @@ open class MyBaseViewModel : ViewModel() {
             } catch (e: Exception) {
                 apiException<T>(e)
             }
+
+            //使用默认值
+            defaultValueReflex(responseBean!!)
+
             BaseBeanLog().send(myRetrofitGoValue!!.tag, path, responseBean!!)
             viewModelScope.launch(Dispatchers.Main) {
                 data.value = responseBean as BaseResponse<Any>

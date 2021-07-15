@@ -454,6 +454,8 @@ fun Any.anrCheck(time: Int, func: () -> Unit) {
     if (end - start > time) {
         logE("耗时操作:${end - start}毫秒 ")
 //        throw Exception("${this::class.simpleName} initCreate耗时太长，请优化...")
+    } else {
+        log("操作时长:${end - start}毫秒 ")
     }
 }
 
@@ -463,6 +465,9 @@ fun Context.dialog(message: String): MyDialog {
 
 
 fun String.check(vararg checks: Any): Boolean {
+
+    var text = this.trim().replace(" ", "")
+
     var size = checks.size - 1
 
     for (index in 0..size step 2) {
@@ -475,55 +480,55 @@ fun String.check(vararg checks: Any): Boolean {
             is Int -> {
                 when (check) {
                     MyCheck.empty -> {
-                        if (isNullOrEmpty()) {
+                        if (text.isNullOrEmpty()) {
                             toast(message)
                             return true
                         }
                     }
                     MyCheck.mobilePhone -> {
-                        if (!isMobilePhone()) {
+                        if (!text.isMobilePhone()) {
                             toast(message)
                             return true
                         }
                     }
                     MyCheck.phone -> {
-                        if (!isPhone()) {
+                        if (!text.isPhone()) {
                             toast(message)
                             return true
                         }
                     }
                     MyCheck.AZ -> {
-                        if (!isAZ()) {
+                        if (!text.isAZ()) {
                             toast(message)
                             return true
                         }
                     }
                     MyCheck.az -> {
-                        if (!isaz()) {
+                        if (!text.isaz()) {
                             toast(message)
                             return true
                         }
                     }
                     MyCheck.AZaz -> {
-                        if (!isAAaz()) {
+                        if (!text.isAAaz()) {
                             toast(message)
                             return true
                         }
                     }
                     MyCheck.AZ09All -> {
-                        if (!isAZ09All()) {
+                        if (!text.isAZ09All()) {
                             toast(message)
                             return true
                         }
                     }
                     MyCheck.number -> {
-                        if (!isNumber()) {
+                        if (!text.isNumber()) {
                             toast(message)
                             return true
                         }
                     }
                     MyCheck.id -> {
-                        if (!isNumber()) {
+                        if (!text.isNumber()) {
                             toast(message)
                             return true
                         }
@@ -532,7 +537,7 @@ fun String.check(vararg checks: Any): Boolean {
                 }
             }
             is ChenkLength -> {
-                if (length < check.min || length > check.max) {
+                if (text.length < check.min || text.length > check.max) {
                     toast(message)
                     return true
                 }
@@ -561,7 +566,7 @@ fun String.insert(tag: String, vararg positions: Int): String {
 
 fun EditText.changed(func: (str: String) -> Unit) {
 
-    var listener=object : TextWatcher {
+    var listener = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
 
         }

@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chenliang.baselibrary.net.utils.MyApiReflex
-import com.chenliang.baselibrary.utils.log
 import kotlin.concurrent.thread
 
 object BaseInit {
@@ -22,8 +21,10 @@ object BaseInit {
     }
 
     fun registerApi(vararg classes: Class<*>) {
-        for (item in classes) {
-            MyApiReflex.register(item)
+        thread {
+            for (item in classes) {
+                MyApiReflex.register(item)
+            }
         }
 
     }
