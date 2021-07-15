@@ -30,7 +30,13 @@
         <activity android:name=".demo.FragmentNoTBRefreshDemoActivity" />
         <activity android:name=".demo.FragmentToolBarRefreshDemoActivity" />
         <activity android:name=".demo.ViewPageFragmentDemoActivity" />
-        <activity android:name=".demo.AnimationActivity" />
+        <activity android:name=".demo.AnimationActivity" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

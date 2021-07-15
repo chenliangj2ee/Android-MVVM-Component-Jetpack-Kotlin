@@ -14,6 +14,7 @@
             <com.chenliang.mvvmc.demo.MyButton
                 android:id="@+id/button"
                 android:layout_width="90dp"
+                android:background="#f00"
                 android:layout_margin="50dp"
                 android:layout_height="90dp" />
 

@@ -44,9 +44,14 @@ class MyButton : View {
         var scaleX = ObjectAnimator.ofFloat(this, "scaleX", 1f, scale.toFloat())
         var scaleY = ObjectAnimator.ofFloat(this, "scaleY", 1f, scale.toFloat())
 
-        var an=AnimatorSet()
-        an.playTogether(scaleX,scaleY)
-        an.duration=5000
+
+        var cxx = ObjectAnimator.ofFloat(this, "cx", cx.toFloat(), (mW / 2).toFloat())
+        var cyy = ObjectAnimator.ofFloat(this, "cy", cy.toFloat(), (mH / 2).toFloat())
+
+
+        var an = AnimatorSet()
+        an.playTogether(scaleX, scaleY,cxx,cyy)
+        an.duration = 5000
         an.start()
     }
 }
