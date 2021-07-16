@@ -86,7 +86,7 @@ open class MyBaseViewModel : ViewModel() {
             viewModelScope.launch(Dispatchers.Main) {
                 data.value = responseBean as BaseResponse<Any>
 
-                if (myRetrofitGoValue.failToast) {
+                if (myRetrofitGoValue.failToast&&responseBean.code!=0) {
                     toast(responseBean.message)
                 }
 
