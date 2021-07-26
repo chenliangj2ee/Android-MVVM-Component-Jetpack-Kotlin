@@ -9,6 +9,7 @@ import android.graphics.Matrix
 import android.graphics.PixelFormat
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
@@ -24,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.R
+import com.chenliang.baselibrary.base.MyBaseActivity
 import com.google.gson.Gson
 import com.tbruyelle.rxpermissions3.RxPermissions
 import gorden.rxbus2.RxBus
@@ -31,6 +33,7 @@ import kotlinx.android.synthetic.main.base_toast.view.*
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.regex.Pattern
+
 
 /**
  *
@@ -363,7 +366,7 @@ fun Bitmap.toZoomImage(w: Int, h: Int): Bitmap {
     return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
 }
 
-fun <T> Context.goto(cls: Class<T>, vararg values: Any) {
+fun <T> Context.goto(cls: Class<T>, vararg values: Any): Any? {
 
     var size = values.size - 1
 
@@ -371,30 +374,54 @@ fun <T> Context.goto(cls: Class<T>, vararg values: Any) {
         throw Exception("${this::class.simpleName} goto(path,values) values参数必须为偶数对...")
     }
 
-    var intent = Intent(this, cls)
+    if (Activity::class.java.isAssignableFrom(cls)) {
+        var intent = Intent(this, cls)
 
-    for (index in 0..size step 2) {
-        var key = values[index]
-        var value = values[values.indexOf(key) + 1]
-        when (value) {
-            is Int -> intent.putExtra(key.toString(), value)
-            is Long -> intent.putExtra(key.toString(), value)
-            is String -> intent.putExtra(key.toString(), value)
-            is Boolean -> intent.putExtra(key.toString(), value)
-            is Double -> intent.putExtra(key.toString(), value)
-            is Float -> intent.putExtra(key.toString(), value)
-            is Serializable -> intent.putExtra(key.toString(), value)
+        for (index in 0..size step 2) {
+            var key = values[index]
+            var value = values[values.indexOf(key) + 1]
+            when (value) {
+                is Int -> intent.putExtra(key.toString(), value)
+                is Long -> intent.putExtra(key.toString(), value)
+                is String -> intent.putExtra(key.toString(), value)
+                is Boolean -> intent.putExtra(key.toString(), value)
+                is Double -> intent.putExtra(key.toString(), value)
+                is Float -> intent.putExtra(key.toString(), value)
+                is Serializable -> intent.putExtra(key.toString(), value)
+            }
         }
+
+        startActivity(intent)
+        if (this is Activity) {
+            overridePendingTransition(R.anim.base_right_in, R.anim.base_left_out)
+        }
+        return null
+    } else {
+        var fragment = cls.newInstance() as Fragment
+        var bundle = Bundle()
+
+        for (index in 0..size step 2) {
+            var key = values[index]
+            var value = values[values.indexOf(key) + 1]
+            when (value) {
+                is Int -> bundle.putInt(key.toString(), value)
+                is Long -> bundle.putLong(key.toString(), value)
+                is String -> bundle.putString(key.toString(), value)
+                is Boolean -> bundle.putBoolean(key.toString(), value)
+                is Double -> bundle.putDouble(key.toString(), value)
+                is Float -> bundle.putFloat(key.toString(), value)
+                is Serializable -> bundle.putSerializable(key.toString(), value)
+            }
+        }
+
+        fragment.arguments = bundle
+        return fragment
     }
 
 
-    startActivity(intent)
-    if (this is Activity) {
-        overridePendingTransition(R.anim.base_right_in, R.anim.base_left_out)
-    }
 }
 
-fun Any.goto(path: String, vararg values: Any) {
+fun Any.goto(path: String, vararg values: Any): Any? {
 
     var size = values.size - 1
     if (values.size % 2 != 0) {
@@ -418,9 +445,9 @@ fun Any.goto(path: String, vararg values: Any) {
         }
     }
     if (this is Context) {
-        post.navigation(this)
+        return post.navigation(this)
     } else {
-        post.navigation()
+        return post.navigation()
     }
 
 }

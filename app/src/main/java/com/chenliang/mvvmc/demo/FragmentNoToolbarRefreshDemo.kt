@@ -1,8 +1,10 @@
 package com.chenliang.mvvmc.demo
 
 import com.chenliang.baselibrary.annotation.My
+import com.chenliang.baselibrary.annotation.MyIntent
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseFragment
+import com.chenliang.baselibrary.utils.log
 import com.chenliang.mvvmc.databinding.FragmentToolbarNoBinding
 
 /**
@@ -14,7 +16,10 @@ import com.chenliang.mvvmc.databinding.FragmentToolbarNoBinding
  */
 @My(myRefresh = true)
 class FragmentNoToolbarRefreshDemo : MyBaseFragment<FragmentToolbarNoBinding, DefaultViewModel>() {
-    override fun initOnCreateView() {
 
+    @MyIntent
+    lateinit var type:String
+    override fun initOnCreateView() {
+        log("fragment传参：type----------------$type")
     }
 }
