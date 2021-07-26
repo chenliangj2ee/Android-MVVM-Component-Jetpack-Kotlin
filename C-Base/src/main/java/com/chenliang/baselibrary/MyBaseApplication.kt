@@ -3,7 +3,6 @@ package com.chenliang.baselibrary
 import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
-import com.chenliang.baselibrary.utils.log
 import java.lang.reflect.Method
 
 /**
@@ -14,16 +13,10 @@ import java.lang.reflect.Method
  * @date: 2021/7/12
  */
 abstract class MyBaseApplication : Application() {
-
-
     var moduleApps = ArrayList<Application>()
-
-
     override fun onCreate() {
         super.onCreate()
-        moduleApps.forEach {
-            it.onCreate()
-        }
+        moduleApps.forEach { it.onCreate() }
     }
 
     override fun attachBaseContext(base: Context?) {
@@ -37,7 +30,7 @@ abstract class MyBaseApplication : Application() {
             return
         BaseInit.init(this)
         var info = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-        if(info.metaData==null)
+        if (info.metaData == null)
             return
         var apps = info.metaData.keySet()
         apps.forEach {
@@ -45,35 +38,21 @@ abstract class MyBaseApplication : Application() {
                 var cla = Class.forName(it.toString())
                 var app = cla.newInstance()
                 if (app is Application && cla.name != this::class.java.name) {
-                    createModuleApp(cla)
+                    initModuleAppAttach(app)
                 }
 
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
-
         }
     }
 
-    private fun <T> createModuleApp(clasz: Class<T>) {
-        var app: T? = null
-        try {
-            val classLoader: ClassLoader = this.classLoader
-            if (classLoader != null) {
-                val mClass = classLoader.loadClass(clasz.name)
-                if (mClass != null)
-                    app = mClass.newInstance() as T?
-            }
-            val method: Method? =
-                Application::class.java.getDeclaredMethod("attach", Context::class.java)
-            if (method != null) {
-                method.isAccessible = true
-                method.invoke(app, baseContext)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+    private fun initModuleAppAttach(app: Application) {
+        val method: Method? = Application::class.java.getDeclaredMethod("attach", Context::class.java)
+        if (method != null) {
+            method.isAccessible = true
+            method.invoke(app, baseContext)
+            moduleApps.add(app)
         }
-        moduleApps.add(app as Application)
     }
-
 }
