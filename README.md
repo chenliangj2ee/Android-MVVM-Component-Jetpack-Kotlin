@@ -75,8 +75,10 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
  //目标页参数接收
  @MyIntent(myKey = "user")//指定key:user
  lateinit var user: BeanUser
+
  @MyIntent(myKey = "param1")//指定key:param1
  lateinit var param1: String
+
  @MyIntent//默认key为变量名称
  lateinit var param2: String
 
