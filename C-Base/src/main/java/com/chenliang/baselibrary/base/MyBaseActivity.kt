@@ -17,6 +17,7 @@ import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.annotation.activityFullScreen
 import com.chenliang.baselibrary.annotation.activityRefresh
 import com.chenliang.baselibrary.annotation.activityTitle
+import com.chenliang.baselibrary.annotation.initValueFromIntent
 import com.chenliang.baselibrary.net.utils.MyHttpEvent
 import com.chenliang.baselibrary.utils.*
 import com.chenliang.baselibrary.view.MyToolBar
@@ -39,6 +40,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
         super.onCreate(savedInstanceState)
         log("MyActivityManager", "启动》》》${javaClass.name}")
         setContentView(R.layout.base_activity_content)
+        initValueFromIntent(this)
         mW = MyScreen.getScreenWidth(this)
         mH = MyScreen.getScreenHeight(this)
         RxBus.get().register(this)

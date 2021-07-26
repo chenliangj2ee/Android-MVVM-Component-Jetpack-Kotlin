@@ -71,6 +71,11 @@
                 android:layout_height="wrap_content"
                 android:onClick="customDialogAction"
                 android:text="自定义dialog" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="evnetCallBackAction"
+                android:text="Event回调" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

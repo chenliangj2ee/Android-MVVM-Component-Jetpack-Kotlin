@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModel
 import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.annotation.activityRefresh
 import com.chenliang.baselibrary.annotation.activityTitle
+import com.chenliang.baselibrary.annotation.initValueFromIntent
 import com.chenliang.baselibrary.utils.*
 import com.chenliang.baselibrary.view.MyToolBar
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -38,6 +39,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
         mViewModel = MyKotlinClass.createByName<VM>(
             this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")
         )!!
+        initValueFromIntent(this)
         initToolbar()
         bindView()
 

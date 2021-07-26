@@ -1,5 +1,7 @@
 package com.chenliang.mvvmc.act
 
+import android.content.Intent
+import android.telecom.Call
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.chenliang.baselibrary.annotation.My
@@ -8,6 +10,7 @@ import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.*
 import com.chenliang.mvvmc.databinding.ActivityMainBinding
 import com.chenliang.mvvmc.demo.*
+import gorden.rxbus2.Subscribe
 
 /**
  * 主页
@@ -80,4 +83,17 @@ class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
         var dialog = DialogDemo()
         dialog.show(this)
     }
+
+    fun evnetCallBackAction(v: View) {
+        goto(EventCallBackActivity::class.java)
+    }
+
+    @Subscribe(code = 100)
+    fun eventCallBack(call: Callback<String>) {
+        toast("消息收到")
+        var intent = Intent()
+        intent.putExtra("message", "消息回执")
+        call.func?.let { it(intent) }
+    }
+
 }

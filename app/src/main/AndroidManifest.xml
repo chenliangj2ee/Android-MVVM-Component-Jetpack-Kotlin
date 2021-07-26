@@ -31,6 +31,7 @@
         <activity android:name=".demo.FragmentToolBarRefreshDemoActivity" />
         <activity android:name=".demo.ViewPageFragmentDemoActivity" />
         <activity android:name=".demo.AnimationActivity" />
+        <activity android:name=".demo.EventCallBackActivity" />
 
     </application>
 

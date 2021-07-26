@@ -22,7 +22,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 
     //去注册
     fun registerAction() {
-        goto(RegisterActivity::class.java)
+        goto(RegisterActivity::class.java, "user", user)
     }
 
     fun loginAction() {
