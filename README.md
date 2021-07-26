@@ -65,17 +65,19 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 # 四、组件之间的跳转与消息传递
 *  **组件之间的跳转与参数传递**
 ```
+ //页面跳转到目标页
  goto("/app/main", "username", "tom", "age", 15)
  goto("/app/main", "username","tom",  "id","UID121231","age", 15 ,"sex",2)
  goto("/app/main", "user",user)
  goto("/app/main", , "user",user,"param1", "value1","param2",vlue2, "param3", true ,"param4",2F,......)//想传递几个值，后面跟上即可
 
 
+ //目标页参数接收
  @MyIntent(myKey = "user")//指定key:user
  lateinit var user: BeanUser
  @MyIntent(myKey = "param1")//指定key:param1
  lateinit var param1: String
- @MyIntent//默认key变量名称
+ @MyIntent//默认key为变量名称
  lateinit var param2: String
 
 ```
