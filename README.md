@@ -65,11 +65,12 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 # 四、组件之间的跳转与消息传递
 *  **组件之间的跳转与参数传递**
 ```
- //页面跳转到目标页
+ //跨组件--->跳转到目标页【跨组件，建议使用path跳转，当然，也可以使用class跳转】
  goto("/app/main", "username", "tom", "age", 15)
- goto("/app/main", "username","tom",  "id","UID121231","age", 15 ,"sex",2)
- goto("/app/main", "user",user)
- goto("/app/main", , "user",user,"param1", "value1","param2",vlue2, "param3", true ,"param4",2F,......)//想传递几个值，后面跟上即可
+ goto("/app/fragment", "user",user)
+ //组件内--->跳转到目标页【组件内，建议使用class跳转，当然，也可以使用path跳转】
+ goto(MainActivity::class.java, "username","tom",  "id","UID121231","age", 15 ,"sex",2)
+ goto(UserFragment::class.java, , "user",user,"param1", "value1","param2",vlue2, "param3", true ,"param4",2F,......)//想传递几个值，后面跟上即可
 
 
  //目标页参数接收
