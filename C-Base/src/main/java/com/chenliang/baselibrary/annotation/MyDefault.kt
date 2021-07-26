@@ -1,8 +1,6 @@
 package com.chenliang.baselibrary.annotation
 
 import com.chenliang.baselibrary.base.MyBaseBean
-import com.chenliang.baselibrary.utils.anrCheck
-import com.chenliang.baselibrary.utils.log
 
 /**
  *
@@ -33,7 +31,7 @@ fun defaultValueReflex(any: Any) {
         f.isAccessible = true
         var fieldValue = f.get(any)
         var fieldType = f.type
-        if (String::class.java.name == fieldType.name) {
+        if (String::class.java.isAssignableFrom(fieldType)) {
             if (fieldValue == null) {
                 var myDefault = f.getAnnotation(MyDefault::class.java)
                 if (myDefault?.myValue != null) {
