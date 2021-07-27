@@ -37,7 +37,7 @@ class AccountViewModel : MyBaseViewModel() {
 ## 三、登录Activity：
 
 ```
-@My(myToolbarTitle = "登陆")
+@MyClass(myToolbarTitle = "登陆")
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {
 
     var user = BeanUser()
@@ -76,13 +76,13 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 
 
  //目标页参数接收
- @MyIntent(myKey = "user")//指定key:user
+ @MyField(myKey = "user")//指定key:user
  lateinit var user: BeanUser
 
- @MyIntent(myKey = "param1")//指定key:param1
+ @MyField(myKey = "param1")//指定key:param1
  lateinit var param1: String
 
- @MyIntent//默认key为变量名称
+ @MyField//默认key为变量名称
  lateinit var param2: String
 
 ```
@@ -131,7 +131,7 @@ fun eventRegister(user: BeanUser) {
 * **myDialogAnimationTime：指定动画时长**
 * **myDialogTransparent：指定是否透明**
 ```
-     @My(myDialogGravity = Gravity.BOTTOM, myDialogTransparent = true ，myDialogAnimation = true,*myDialogAnimationTime = 300)
+     @MyClass(myDialogGravity = Gravity.BOTTOM, myDialogTransparent = true ，myDialogAnimation = true,*myDialogAnimationTime = 300)
      class DialogDemo : MyBaseDialog<DialogLayoutBinding>() {
         override fun initCreate() {
             mRootView.confirm.click { dismiss() }
