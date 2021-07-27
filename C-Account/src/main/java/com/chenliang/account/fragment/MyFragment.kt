@@ -2,7 +2,7 @@ package com.chenliang.account.fragment
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.chenliang.account.databinding.AccountFgMyBinding
-import com.chenliang.baselibrary.annotation.MyIntent
+import com.chenliang.baselibrary.annotation.MyField
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseFragment
 
@@ -17,7 +17,7 @@ import com.chenliang.baselibrary.base.MyBaseFragment
 @Route(path = "/account/my")
 class MyFragment : MyBaseFragment<AccountFgMyBinding, DefaultViewModel>() {
 
-    @MyIntent
+    @MyField
     lateinit var value: String
 
     override fun initOnCreateView() {

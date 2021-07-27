@@ -5,15 +5,16 @@ import android.animation.ObjectAnimator
 import android.view.Gravity
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.BounceInterpolator
-import android.view.animation.CycleInterpolator
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import com.chenliang.baselibrary.R
-import com.chenliang.baselibrary.annotation.*
+import com.chenliang.baselibrary.annotation.dialogGravity
+import com.chenliang.baselibrary.annotation.dialogTransparent
+import com.chenliang.baselibrary.annotation.myDialogAnimation
+import com.chenliang.baselibrary.annotation.myDialogAnimationTime
 import com.chenliang.baselibrary.utils.MyKotlinClass
 import com.chenliang.baselibrary.utils.dip2px
 

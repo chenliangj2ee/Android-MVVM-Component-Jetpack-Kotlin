@@ -3,7 +3,7 @@ package com.chenliang.mvvmc.act
 import android.content.Intent
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.chenliang.baselibrary.annotation.My
+import com.chenliang.baselibrary.annotation.MyClass
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.*
@@ -15,7 +15,7 @@ import gorden.rxbus2.Subscribe
  * 主页
  */
 @Route(path = "/app/main")
-@My(myToolbarTitle = "主页")
+@MyClass(myToolbarTitle = "主页")
 class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
 
     override fun initCreate() {

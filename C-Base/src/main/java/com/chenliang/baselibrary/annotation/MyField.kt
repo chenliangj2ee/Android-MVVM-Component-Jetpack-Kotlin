@@ -9,7 +9,7 @@ import java.io.Serializable
  */
 
 @Target(AnnotationTarget.FIELD)
-annotation class MyIntent(
+annotation class MyField(
     val myKey: String = ""
 )
 
@@ -18,7 +18,7 @@ annotation class MyIntent(
  */
 fun myIntentKey(cla: Any): String {
     val clazz = cla::class.java
-    val annotation = clazz.getAnnotation(MyIntent::class.java) ?: return ""
+    val annotation = clazz.getAnnotation(MyField::class.java) ?: return ""
     return annotation.myKey
 }
 
@@ -35,7 +35,7 @@ fun initValueFromIntent(any: Any) {
             if (fieldValue == null) {
                 var fieldName = f.name
                 var fieldType = f.type
-                var anno = f.getAnnotation(MyIntent::class.java)
+                var anno = f.getAnnotation(MyField::class.java)
                 var intentKey = fieldName
                 if (anno?.myKey != "") {
                     intentKey = anno?.myKey

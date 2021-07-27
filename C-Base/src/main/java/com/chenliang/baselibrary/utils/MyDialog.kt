@@ -1,6 +1,6 @@
 package com.chenliang.baselibrary.utils
 
-import com.chenliang.baselibrary.annotation.My
+import com.chenliang.baselibrary.annotation.MyClass
 import com.chenliang.baselibrary.base.MyBaseDialog
 import com.chenliang.baselibrary.databinding.BaseDialogDefaultLayoutBinding
 import kotlinx.android.synthetic.main.base_dialog_default_layout.view.*
@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.base_dialog_default_layout.view.*
  * @date: 2021/07/14
  */
 
-@My(myDialogAnimation = true)
+@MyClass(myDialogAnimation = true)
 class MyDialog : MyBaseDialog<BaseDialogDefaultLayoutBinding>() {
 
 

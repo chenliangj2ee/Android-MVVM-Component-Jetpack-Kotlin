@@ -1,12 +1,12 @@
 package com.chenliang.mvvmc.demo
 
-import com.chenliang.baselibrary.annotation.My
+import com.chenliang.baselibrary.annotation.MyClass
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.log
 import com.chenliang.mvvmc.databinding.ActivityRefreshBinding
 
-@My(myRefresh = true,myToolbarTitle = "下拉刷新")
+@MyClass(myRefresh = true,myToolbarTitle = "下拉刷新")
 class RefreshDemoActivity : MyBaseActivity<ActivityRefreshBinding, DefaultViewModel>() {
     override fun initCreate() {
     }

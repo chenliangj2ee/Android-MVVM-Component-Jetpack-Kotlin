@@ -7,7 +7,7 @@ import android.view.Gravity
  */
 
 @Target(AnnotationTarget.CLASS)
-annotation class My(
+annotation class MyClass(
     val myToolbarTitle: String = "",//Activity fragment标题
     val myFullScreen: Boolean = false,//Activity是否全屏
     val myRefresh: Boolean = false,//Activity fragment是否启用下拉刷新
@@ -24,7 +24,7 @@ annotation class My(
  */
 fun activityTitle(cla: Any): String {
     val clazz = cla::class.java
-    val annotation = clazz.getAnnotation(My::class.java) ?: return ""
+    val annotation = clazz.getAnnotation(MyClass::class.java) ?: return ""
     return annotation.myToolbarTitle
 }
 
@@ -34,7 +34,7 @@ fun activityTitle(cla: Any): String {
  */
 fun activityRefresh(cla: Any): Boolean {
     val clazz = cla::class.java
-    val annotation = clazz.getAnnotation(My::class.java) ?: return false
+    val annotation = clazz.getAnnotation(MyClass::class.java) ?: return false
     return annotation.myRefresh
 }
 
@@ -43,7 +43,7 @@ fun activityRefresh(cla: Any): Boolean {
  */
 fun activityFullScreen(cla: Any): Boolean {
     val clazz = cla::class.java
-    val annotation = clazz.getAnnotation(My::class.java) ?: return false
+    val annotation = clazz.getAnnotation(MyClass::class.java) ?: return false
     return annotation.myFullScreen
 }
 
@@ -52,7 +52,7 @@ fun activityFullScreen(cla: Any): Boolean {
  */
 fun dialogGravity(cla: Any): Int {
     val clazz = cla::class.java
-    val annotation = clazz.getAnnotation(My::class.java) ?: return Gravity.CENTER
+    val annotation = clazz.getAnnotation(MyClass::class.java) ?: return Gravity.CENTER
     return annotation.myDialogGravity
 }
 
@@ -61,7 +61,7 @@ fun dialogGravity(cla: Any): Int {
  */
 fun dialogTransparent(cla: Any): Boolean {
     val clazz = cla::class.java
-    val annotation = clazz.getAnnotation(My::class.java) ?: return false
+    val annotation = clazz.getAnnotation(MyClass::class.java) ?: return false
     return annotation.myDialogTransparent
 }
 
@@ -70,7 +70,7 @@ fun dialogTransparent(cla: Any): Boolean {
  */
 fun myDialogAnimation(cla: Any): Boolean {
     val clazz = cla::class.java
-    val annotation = clazz.getAnnotation(My::class.java) ?: return false
+    val annotation = clazz.getAnnotation(MyClass::class.java) ?: return false
     return annotation.myDialogAnimation
 }
 
@@ -79,6 +79,6 @@ fun myDialogAnimation(cla: Any): Boolean {
  */
 fun myDialogAnimationTime(cla: Any): Long {
     val clazz = cla::class.java
-    val annotation = clazz.getAnnotation(My::class.java) ?: return 400
+    val annotation = clazz.getAnnotation(MyClass::class.java) ?: return 400
     return annotation.myDialogAnimationTime
 }
