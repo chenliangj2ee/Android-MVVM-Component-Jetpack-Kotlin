@@ -1,6 +1,5 @@
 package com.chenliang.mvvmc.act
 
-import com.chenliang.account.act.LoginActivity
 import com.chenliang.account.bean.BeanUser
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
@@ -18,7 +17,7 @@ class SplashActivity : MyBaseActivity<ActivitySplashBinding, DefaultViewModel>()
 
     fun next() {
         if (BeanUser().get() == null) {
-            goto(LoginActivity::class.java)
+            goto("/account/login")
         } else {
             goto(MainActivity::class.java)
         }

@@ -75,7 +75,6 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
 
         mRefresh = SmartRefreshLayout(context)
         mRefresh.setEnableRefresh(activityRefresh(this))
-        mRefresh.setEnableRefresh(true)
         mRefresh.setEnableLoadMore(false)
         mRefresh.setRefreshHeader(ClassicsHeader(context))
         mRefresh.setOnRefreshListener {

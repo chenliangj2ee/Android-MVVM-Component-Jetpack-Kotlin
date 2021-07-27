@@ -26,6 +26,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.base.MyBaseActivity
+import com.chenliang.baselibrary.base.MyDefaultFragment
 import com.google.gson.Gson
 import com.tbruyelle.rxpermissions3.RxPermissions
 import gorden.rxbus2.RxBus
@@ -445,10 +446,20 @@ fun Any.goto(path: String, vararg values: Any): Any? {
         }
     }
     if (this is Context) {
-        return post.navigation(this)
+        var result = post.navigation(this)
+        if (result == null) {
+            result = MyDefaultFragment()
+        }
+        return result
     } else {
-        return post.navigation()
+        var result  = post.navigation()
+        if (result == null) {
+            result = MyDefaultFragment()
+        }
+        return result
     }
+
+
 
 }
 

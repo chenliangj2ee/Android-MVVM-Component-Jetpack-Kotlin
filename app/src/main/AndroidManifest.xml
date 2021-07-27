@@ -32,7 +32,7 @@
         <activity android:name=".demo.ViewPageFragmentDemoActivity" />
         <activity android:name=".demo.AnimationActivity" />
         <activity android:name=".demo.EventCallBackActivity" />
-
+        <activity android:name=".demo.LibraryFragmentActivity" />
     </application>
 
 </manifest>

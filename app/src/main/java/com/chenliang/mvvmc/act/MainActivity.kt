@@ -1,7 +1,6 @@
 package com.chenliang.mvvmc.act
 
 import android.content.Intent
-import android.telecom.Call
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.chenliang.baselibrary.annotation.My
@@ -96,4 +95,7 @@ class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
         call.func?.let { it(intent) }
     }
 
+    fun libraryFragmentAction(v: View) {
+        goto(LibraryFragmentActivity::class.java)
+    }
 }
