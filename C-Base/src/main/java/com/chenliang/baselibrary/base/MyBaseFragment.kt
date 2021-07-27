@@ -96,7 +96,6 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
         )
 
 
-
     }
 
     abstract fun initOnCreateView()
@@ -115,7 +114,10 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
 
     var currentFragment: Fragment? = null
 
-    fun replace(id: Int, f: Fragment) {
+    fun replace(id: Int, f: Any?) {
+        if (f == null)
+            return
+        f as Fragment
         if (f === currentFragment) return
         val mft: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
         if (currentFragment != null) mft?.hide(currentFragment!!)

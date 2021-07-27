@@ -9,7 +9,7 @@ import com.chenliang.mvvmc.databinding.ActivityLibraryFragmentBinding
 
 class LibraryFragmentActivity : MyBaseActivity<ActivityLibraryFragmentBinding, DefaultViewModel>() {
     override fun initCreate() {
-        replace(R.id.content, goto("/account/my", "value", "我来自App传参") as Fragment)
+        replace(R.id.content, goto("/account/my", "value", "我来自App传参"))
     }
 
 

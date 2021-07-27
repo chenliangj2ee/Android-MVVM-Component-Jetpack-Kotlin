@@ -181,7 +181,10 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
 
     var currentFragment: Fragment? = null
 
-    fun replace(id: Int, f: Fragment) {
+    fun replace(id: Int, f: Any?) {
+        if (f == null)
+            return
+        f as Fragment
         if (f === currentFragment) return
         val mft: FragmentTransaction = supportFragmentManager.beginTransaction()
         if (currentFragment != null) mft.hide(currentFragment!!)

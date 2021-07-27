@@ -452,13 +452,12 @@ fun Any.goto(path: String, vararg values: Any): Any? {
         }
         return result
     } else {
-        var result  = post.navigation()
+        var result = post.navigation()
         if (result == null) {
             result = MyDefaultFragment()
         }
         return result
     }
-
 
 
 }
