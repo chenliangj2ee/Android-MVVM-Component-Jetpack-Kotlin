@@ -38,22 +38,24 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        log("MyActivityManager", "启动》》》${javaClass.name}")
+        log("MyActivityManager", "启动-----------${javaClass.name}")
         setContentView(R.layout.base_activity_content)
-        initValueFromIntent(this)
+        initSelf()
+        initStatusBar()
+        initToolbar()
+        bindView()
+        anrCheck(200) { initCreate() }
+    }
+
+    private fun initSelf(){
         mW = MyScreen.getScreenWidth(this)
         mH = MyScreen.getScreenHeight(this)
         RxBus.get().register(this)
         mHttpEvent = MyHttpEvent(this)
+        initValueFromIntent(this)
         mViewModel = MyKotlinClass.createByName<VM>(
             this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")
         )!!
-
-        initStatusBar()
-        initToolbar()
-        bindView()
-
-        anrCheck(200) { initCreate() }
     }
 
     /**

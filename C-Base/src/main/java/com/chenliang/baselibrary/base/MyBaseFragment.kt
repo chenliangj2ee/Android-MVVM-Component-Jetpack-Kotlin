@@ -36,17 +36,19 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
     ): View? {
         log("MyActivityManager", "启动》》》${javaClass.name}")
         mRootView = layoutInflater.inflate(R.layout.base_fragment_content, null) as LinearLayout
-        mViewModel = MyKotlinClass.createByName<VM>(
-            this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")
-        )!!
-        initValueFromIntent(this)
+        initSelf();
         initToolbar()
         bindView()
 
         anrCheck { initOnCreateView() }
         return mRootView
     }
-
+    private fun initSelf(){
+        mViewModel = MyKotlinClass.createByName<VM>(
+            this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")
+        )!!
+        initValueFromIntent(this)
+    }
     private fun initToolbar() {
         mToolBar = MyToolBar(context)
         mRootView.addView(
