@@ -156,7 +156,7 @@ public object MyRoute {
 }
 
 ```
-
+![Video_20210714_084908_861](https://user-images.githubusercontent.com/4067327/125624671-a129958c-5f45-4519-832a-35250ea0a932.gif)
 # 八、更简单的SharedPreferences使用，在Base组件中配置MyConfig类,则会自动生成MySp类：
 ### MyConfit配置
 ```
@@ -232,6 +232,6 @@ public object MySp {
   public fun isFirst(): Boolean = MySpUtis.getBoolean("isFirst")
 }
 ```
-![Video_20210714_084908_861](https://user-images.githubusercontent.com/4067327/125624671-a129958c-5f45-4519-832a-35250ea0a932.gif)
+
 
 
