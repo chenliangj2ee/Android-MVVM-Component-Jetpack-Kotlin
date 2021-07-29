@@ -162,25 +162,25 @@ public object MyRoute {
 ### MyConfit配置
 ```
 class MyConfig {
-    @MySpAnno
+    @MySpConfig
     var isLogin = false;
 
-    @MySpAnno
+    @MySpConfig
     var token = ""
 
-    @MySpAnno
+    @MySpConfig
     var age = 0
 
-    @MySpAnno
+    @MySpConfig
     var size = 0L
 
-    @MySpAnno
+    @MySpConfig
     var mfloat = 0.0f
 
-    @MySpAnno
+    @MySpConfig
     var mDouble = 0.0.toDouble()
 
-    @MySpAnno
+    @MySpConfig
     var isFirst = false
  
 }
