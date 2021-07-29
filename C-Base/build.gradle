@@ -83,6 +83,7 @@ dependencies {
 
     //路由
     api 'com.alibaba:arouter-api:1.5.2'
+    kapt project(path: ':C-Compiler')
     //ARoute配置
     kapt  'com.alibaba:arouter-compiler:1.5.2'
 }

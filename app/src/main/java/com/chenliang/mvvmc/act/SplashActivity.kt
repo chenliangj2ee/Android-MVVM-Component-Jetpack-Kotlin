@@ -1,14 +1,17 @@
 package com.chenliang.mvvmc.act
 
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.chenliang.account.bean.BeanUser
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.goto
 import com.chenliang.mvvmc.databinding.ActivitySplashBinding
+import com.chenliang.processorCAccount.MyRoute
 
 /**
  * 启动页
  */
+@Route(path = "/app/Splash")
 class SplashActivity : MyBaseActivity<ActivitySplashBinding, DefaultViewModel>() {
 
     override fun initCreate() {
@@ -17,9 +20,9 @@ class SplashActivity : MyBaseActivity<ActivitySplashBinding, DefaultViewModel>()
 
     fun next() {
         if (BeanUser().get() == null) {
-            goto("/account/login")
+            goto(MyRoute.accountLogin)
         } else {
-            goto(MainActivity::class.java)
+            goto(com.chenliang.processorapp.MyRoute.appMain)
         }
         finish()
     }

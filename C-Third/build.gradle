@@ -42,6 +42,7 @@ android {
 
 dependencies {
     //ARoute配置
+    kapt project(path: ':C-Compiler')
     kapt 'com.alibaba:arouter-compiler:1.5.2'
     implementation project(path: ':C-Base')
 }
