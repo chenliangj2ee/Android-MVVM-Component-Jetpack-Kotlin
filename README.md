@@ -147,6 +147,7 @@ fun eventRegister(user: BeanUser) {
    refreshRecycler.bindData<BeanItem> { (it.binding as ItemRecyclerviewBinding).item = it }
    refreshRecycler.loadData { httpGetData() }
 ```
+![Video_20210714_084908_861](https://user-images.githubusercontent.com/4067327/125624671-a129958c-5f45-4519-832a-35250ea0a932.gif)
 # 七、各个组件根据@Aroute注解，统一自动生成配置文件MyRoute类：
 ```
 public object MyRoute {
@@ -156,7 +157,7 @@ public object MyRoute {
 }
 
 ```
-![Video_20210714_084908_861](https://user-images.githubusercontent.com/4067327/125624671-a129958c-5f45-4519-832a-35250ea0a932.gif)
+
 # 八、更简单的SharedPreferences使用，在Base组件中配置MyConfig类,则会自动生成MySp类：
 ### MyConfit配置
 ```
