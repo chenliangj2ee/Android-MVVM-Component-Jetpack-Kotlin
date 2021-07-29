@@ -87,7 +87,7 @@ object MySpUtis {
         val sp =
             BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val result = sp.getLong(key, 0)
-        log("get key:$key  value:$result")
+        log("get  key:$key  value:$result")
         return result
     }
 
