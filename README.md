@@ -147,6 +147,91 @@ fun eventRegister(user: BeanUser) {
    refreshRecycler.bindData<BeanItem> { (it.binding as ItemRecyclerviewBinding).item = it }
    refreshRecycler.loadData { httpGetData() }
 ```
+# 七、各个组件根据@Aroute注解，统一自动生成配置文件MyRoute类：
+```
+public object MyRoute {
+  public val accountLogin: String = "/account/login"
+
+  public val accountMy: String = "/account/my"
+}
+
+```
+
+# 八、更简单的SharedPreferences使用，在Base组件中配置MyConfig类,则会自动生成MySp类：
+### MyConfit配置
+```
+class MyConfig {
+    @MySpAnno
+    var isLogin = false;
+
+    @MySpAnno
+    var token = ""
+
+    @MySpAnno
+    var age = 0
+
+    @MySpAnno
+    var size = 0L
+
+    @MySpAnno
+    var mfloat = 0.0f
+
+    @MySpAnno
+    var mDouble = 0.0.toDouble()
+
+    @MySpAnno
+    var isFirst = false
+ 
+}
+
+```
+### 自动生成MySp类，可直接调用setXXX，getXXX方法保存和设置SharedPreferences数据
+
+```
+public object MySp {
+  public fun setLogin(login: Boolean): Unit {
+    MySpUtis.putBoolean("isLogin", login)
+  }
+
+  public fun isLogin(): Boolean = MySpUtis.getBoolean("isLogin")
+
+  public fun setToken(token: String): Unit {
+    MySpUtis.putString("token", token)
+  }
+
+  public fun getToken(): String = MySpUtis.getString("token")
+
+  public fun setAge(age: Int): Unit {
+    MySpUtis.putInt("age", age)
+  }
+
+  public fun getAge(): Int = MySpUtis.getInt("age")
+
+  public fun setSize(size: Long): Unit {
+    MySpUtis.putLong("size", size)
+  }
+
+  public fun getSize(): Long = MySpUtis.getLong("size")
+
+  public fun setMfloat(mfloat: Float): Unit {
+    MySpUtis.putFloat("mfloat", mfloat)
+  }
+
+  public fun getMfloat(): Float = MySpUtis.getFloat("mfloat")
+
+  public fun setMDouble(mdouble: Double): Unit {
+    MySpUtis.putDouble("mDouble", mdouble)
+  }
+
+  public fun getMDouble(): Double = MySpUtis.getDouble("mDouble")
+
+  public fun setFirst(first: Boolean): Unit {
+    MySpUtis.putBoolean("isFirst", first)
+  }
+
+  public fun isFirst(): Boolean = MySpUtis.getBoolean("isFirst")
+}
+```
 ![Video_20210714_084908_861](https://user-images.githubusercontent.com/4067327/125624671-a129958c-5f45-4519-832a-35250ea0a932.gif)
 
 
