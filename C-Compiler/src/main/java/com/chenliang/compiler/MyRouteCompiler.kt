@@ -26,7 +26,7 @@ import javax.lang.model.element.TypeElement
  */
 @AutoService(Processor::class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-@SupportedAnnotationTypes(value = ["com.alibaba.android.arouter.facade.annotation.Route"])
+@SupportedAnnotationTypes(value = ["com.chenliang.baselibrary.annotation.MyRoute"])
 class MyRouteCompiler : AbstractProcessor() {
     private lateinit var mFiler: Filer
     private var mModuleName: String? = null
@@ -46,38 +46,30 @@ class MyRouteCompiler : AbstractProcessor() {
 
         if (en == null) {
 //            return false
-//            System.out.println("MyRouteCompiler Processor  return-------------------------------------------- ")
         }
 
+        var myRoute = TypeSpec.objectBuilder("MyRoutePath")
+        ms!!.forEach {
 
-        var routes = en!!.getElementsAnnotatedWith(Route::class.java)
-        var myRoute = TypeSpec.objectBuilder("MyRoute")
-        routes.forEach {
-            var route = it.getAnnotation(Route::class.java)
-
-            if (route != null) {
-                var path = route.path
-                var keys = path.split("/")
-
-                keys = keys.filter { !it.isNullOrEmpty() }.map {
-                    it.substring(0, 1).toUpperCase() + it.substring(1)
-                }
-                var key = keys.joinToString(separator = "")
-                key = key.substring(0, 1).toLowerCase() + key.substring(1)
+            var annos = en!!.getElementsAnnotatedWith(it)
+            annos.forEach {
+                var keys = it.asType().toString().split(".")
+                var key=keys[keys.size-1]
+                var path = it.asType().toString()
                 myRoute.addProperty(
                     PropertySpec.builder(key, String::class)
                         .initializer("%S", path)
                         .build()
                 )
+
             }
-
-
         }
 
-
         val file =
-            FileSpec.builder("com.chenliang.processor" + mModuleName!!.replace("-", ""), "MyRoute")
-                .addType(myRoute.build()).build()
+            FileSpec.builder(
+                "com.chenliang.processor" + mModuleName!!.replace("-", ""),
+                "MyRoutePath"
+            ).addType(myRoute.build()).build()
 
         try {
             file.writeTo(mFiler)

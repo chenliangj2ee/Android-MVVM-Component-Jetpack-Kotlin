@@ -1,6 +1,7 @@
 package com.chenliang.baselibrary.base
 
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.chenliang.baselibrary.annotation.MyRoute
 import com.chenliang.baselibrary.databinding.BaseFragmentDefaultBinding
 
 /**
@@ -10,7 +11,7 @@ import com.chenliang.baselibrary.databinding.BaseFragmentDefaultBinding
  * @author: chenliang
  * @date: 2021/07/27
  */
-@Route(path = "/base/defaultFragment")
+@MyRoute
 class MyDefaultFragment : MyBaseFragment<BaseFragmentDefaultBinding, DefaultViewModel>() {
     override fun initOnCreateView() {
     }

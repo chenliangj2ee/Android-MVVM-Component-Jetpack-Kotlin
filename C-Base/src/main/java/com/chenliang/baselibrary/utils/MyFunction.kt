@@ -421,46 +421,97 @@ fun <T> Context.goto(cls: Class<T>, vararg values: Any): Any? {
 
 
 }
-
-fun Any.goto(path: String, vararg values: Any): Any? {
+fun Context.goto(path: String, vararg values: Any): Any? {
 
     var size = values.size - 1
+
     if (values.size % 2 != 0) {
         throw Exception("${this::class.simpleName} goto(path,values) values参数必须为偶数对...")
     }
+    var cls=Class.forName(path)
+    if (Activity::class.java.isAssignableFrom(cls)) {
+        var intent = Intent(this, cls)
 
-    var post = ARouter.getInstance()
-        .build(path).withTransition(R.anim.base_right_in, R.anim.base_left_out)
+        for (index in 0..size step 2) {
+            var key = values[index]
+            var value = values[values.indexOf(key) + 1]
+            when (value) {
+                is Int -> intent.putExtra(key.toString(), value)
+                is Long -> intent.putExtra(key.toString(), value)
+                is String -> intent.putExtra(key.toString(), value)
+                is Boolean -> intent.putExtra(key.toString(), value)
+                is Double -> intent.putExtra(key.toString(), value)
+                is Float -> intent.putExtra(key.toString(), value)
+                is Serializable -> intent.putExtra(key.toString(), value)
+            }
+        }
 
-    for (index in 0..size step 2) {
-        var key = values[index]
-        var value = values[values.indexOf(key) + 1]
-        when (value) {
-            is Int -> post.withInt(key.toString(), value)
-            is Long -> post.withLong(key.toString(), value)
-            is String -> post.withString(key.toString(), value)
-            is Boolean -> post.withBoolean(key.toString(), value)
-            is Double -> post.withDouble(key.toString(), value)
-            is Float -> post.withFloat(key.toString(), value)
-            is Serializable -> post.withSerializable(key.toString(), value)
+        startActivity(intent)
+        if (this is Activity) {
+            overridePendingTransition(R.anim.base_right_in, R.anim.base_left_out)
         }
-    }
-    if (this is Context) {
-        var result = post.navigation(this)
-        if (result == null) {
-            result = MyDefaultFragment()
-        }
-        return result
+        return null
     } else {
-        var result = post.navigation()
-        if (result == null) {
-            result = MyDefaultFragment()
+        var fragment = cls.newInstance() as Fragment
+        var bundle = Bundle()
+
+        for (index in 0..size step 2) {
+            var key = values[index]
+            var value = values[values.indexOf(key) + 1]
+            when (value) {
+                is Int -> bundle.putInt(key.toString(), value)
+                is Long -> bundle.putLong(key.toString(), value)
+                is String -> bundle.putString(key.toString(), value)
+                is Boolean -> bundle.putBoolean(key.toString(), value)
+                is Double -> bundle.putDouble(key.toString(), value)
+                is Float -> bundle.putFloat(key.toString(), value)
+                is Serializable -> bundle.putSerializable(key.toString(), value)
+            }
         }
-        return result
+
+        fragment.arguments = bundle
+        return fragment
     }
-
-
 }
+//fun Any.goto(path: String, vararg values: Any): Any? {
+//
+//    var size = values.size - 1
+//    if (values.size % 2 != 0) {
+//        throw Exception("${this::class.simpleName} goto(path,values) values参数必须为偶数对...")
+//    }
+//
+//    var post = ARouter.getInstance()
+//        .build(path).withTransition(R.anim.base_right_in, R.anim.base_left_out)
+//
+//    for (index in 0..size step 2) {
+//        var key = values[index]
+//        var value = values[values.indexOf(key) + 1]
+//        when (value) {
+//            is Int -> post.withInt(key.toString(), value)
+//            is Long -> post.withLong(key.toString(), value)
+//            is String -> post.withString(key.toString(), value)
+//            is Boolean -> post.withBoolean(key.toString(), value)
+//            is Double -> post.withDouble(key.toString(), value)
+//            is Float -> post.withFloat(key.toString(), value)
+//            is Serializable -> post.withSerializable(key.toString(), value)
+//        }
+//    }
+//    if (this is Context) {
+//        var result = post.navigation(this)
+//        if (result == null) {
+//            result = MyDefaultFragment()
+//        }
+//        return result
+//    } else {
+//        var result = post.navigation()
+//        if (result == null) {
+//            result = MyDefaultFragment()
+//        }
+//        return result
+//    }
+//
+//
+//}
 
 fun Any.send(code: Int) {
     RxBus.get().send(code)
