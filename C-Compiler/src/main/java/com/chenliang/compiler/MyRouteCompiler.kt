@@ -13,7 +13,7 @@ import javax.lang.model.element.TypeElement
 /**
  *
  * @Project: MVVM-Component
- * @Package: com.chenliang.compiler.test
+ * @Package: com.chenliang.compiler
  * @author: chenliang
  * @date: 2021/07/28
  */
@@ -32,21 +32,21 @@ class MyRouteCompiler : AbstractProcessor() {
     private var mModuleName: String? = null
 
     init {
-        System.out.println("processor Init--------------------------------------------")
+//        System.out.println("MyRouteCompiler Processor Init--------------------------------------------")
     }
 
     override fun init(p0: ProcessingEnvironment?) {
         super.init(p0)
         mFiler = p0!!.filer
         mModuleName = p0.options["AROUTER_MODULE_NAME"]
-        System.out.println("processor mModuleName-------------------------------------------- $mModuleName")
+//        System.out.println("MyRouteCompiler Processor  mModuleName-------------------------------------------- $mModuleName")
     }
 
     override fun process(ms: MutableSet<out TypeElement>?, en: RoundEnvironment?): Boolean {
 
         if (en == null) {
 //            return false
-            System.out.println("processor return-------------------------------------------- ")
+//            System.out.println("MyRouteCompiler Processor  return-------------------------------------------- ")
         }
 
 
@@ -82,11 +82,11 @@ class MyRouteCompiler : AbstractProcessor() {
         try {
             file.writeTo(mFiler)
         } catch (e: Exception) {
-            e.printStackTrace()
+
         }
 
 
-        System.out.println("processor Finish-------------------------------------------- ")
+//        System.out.println("MyRouteCompiler Processor  Finish-------------------------------------------- ")
         return true
     }
 

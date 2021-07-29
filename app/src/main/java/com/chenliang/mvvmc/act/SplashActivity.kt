@@ -7,6 +7,7 @@ import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.goto
 import com.chenliang.mvvmc.databinding.ActivitySplashBinding
 import com.chenliang.processorCAccount.MyRoute
+import com.chenliang.processorCBase.MySp
 
 /**
  * 启动页

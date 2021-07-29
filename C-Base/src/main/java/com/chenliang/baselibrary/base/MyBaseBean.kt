@@ -3,7 +3,7 @@ package com.chenliang.baselibrary.base
 import androidx.databinding.BaseObservable
 import androidx.databinding.ViewDataBinding
 import com.chenliang.baselibrary.BaseInit
-import com.chenliang.baselibrary.utils.MySp
+import com.chenliang.baselibrary.utils.MySpUtis
 import com.google.gson.Gson
 import java.io.Serializable
 
@@ -21,13 +21,13 @@ import java.io.Serializable
 
       BeanUser().clear()//清除
  */
-open class MyBaseBean() : BaseObservable(),Serializable {
+open class MyBaseBean() : BaseObservable(), Serializable {
     open var itemType = 0
     open var binding: ViewDataBinding? = null
 
 
-    open fun save() = MySp.putString(BaseInit.con!!, this::class.java.name, Gson().toJson(this))
-    open fun get() = MySp.getObject(BaseInit.con!!, this::class.java.name, this::class.java)
-    open fun clear() = MySp.clear(BaseInit.con!!, this::class.java.name)
+    open fun save() = MySpUtis.putString(this::class.java.name, Gson().toJson(this))
+    open fun get() = MySpUtis.getObject(this::class.java.name, this::class.java)
+    open fun clear() = MySpUtis.clear(this::class.java.name)
 }
 
