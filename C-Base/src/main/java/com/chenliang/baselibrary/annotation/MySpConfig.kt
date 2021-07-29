@@ -5,5 +5,5 @@ package com.chenliang.baselibrary.annotation
  */
 
 @Target(AnnotationTarget.FIELD)
-annotation class MySpAnno()
+annotation class MySpConfig()
 

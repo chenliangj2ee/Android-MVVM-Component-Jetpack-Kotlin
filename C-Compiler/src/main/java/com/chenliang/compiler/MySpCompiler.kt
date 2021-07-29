@@ -26,7 +26,7 @@ import javax.lang.model.element.TypeElement
  */
 @AutoService(Processor::class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-@SupportedAnnotationTypes(value = ["com.chenliang.baselibrary.annotation.MySpAnno"])
+@SupportedAnnotationTypes(value = ["com.chenliang.baselibrary.annotation.MySpConfig"])
 class MySpCompiler : AbstractProcessor() {
     private lateinit var mFiler: Filer
     private var mModuleName: String? = null
@@ -54,6 +54,7 @@ class MySpCompiler : AbstractProcessor() {
             var annos = en!!.getElementsAnnotatedWith(it)
             annos.forEach {
 
+                println("asType:${it.asType()}----------------------------------------------------------------------------")
                 var fieldName = it.simpleName.toString()
                 when {
                     it.asType().toString() == "boolean" -> {
@@ -66,7 +67,11 @@ class MySpCompiler : AbstractProcessor() {
                         var setFun = FunSpec
                             .builder(funName)
                             .addParameter(fieldName.toLowerCase(), Boolean::class)
-                            .addStatement("%T.putBoolean(%S, ${fieldName.toLowerCase()})",ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),it.simpleName.toString())
+                            .addStatement(
+                                "%T.putBoolean(%S, ${fieldName.toLowerCase()})",
+                                ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),
+                                it.simpleName.toString()
+                            )
 
                         mySp.addFunction(setFun.build())
 
@@ -78,7 +83,11 @@ class MySpCompiler : AbstractProcessor() {
                         var getFun = FunSpec
                             .builder(getFunctionName)
                             .returns(Boolean::class)
-                            .addStatement("return %T.getBoolean(%S)",ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),it.simpleName.toString())
+                            .addStatement(
+                                "return %T.getBoolean(%S)",
+                                ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),
+                                it.simpleName.toString()
+                            )
 
                         mySp.addFunction(getFun.build())
 
@@ -94,7 +103,11 @@ class MySpCompiler : AbstractProcessor() {
                         var setFun = FunSpec
                             .builder(funName)
                             .addParameter(fieldName.toLowerCase(), String::class)
-                            .addStatement("%T.putString(%S, ${fieldName.toLowerCase()})",ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),it.simpleName.toString())
+                            .addStatement(
+                                "%T.putString(%S, ${fieldName.toLowerCase()})",
+                                ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),
+                                it.simpleName.toString()
+                            )
 
                         mySp.addFunction(setFun.build())
 
@@ -106,7 +119,11 @@ class MySpCompiler : AbstractProcessor() {
                         var getFun = FunSpec
                             .builder(getFunctionName)
                             .returns(String::class)
-                            .addStatement("return %T.getString(%S)",ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),it.simpleName.toString())
+                            .addStatement(
+                                "return %T.getString(%S)",
+                                ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),
+                                it.simpleName.toString()
+                            )
 
                         mySp.addFunction(getFun.build())
 
@@ -121,7 +138,11 @@ class MySpCompiler : AbstractProcessor() {
                         var setFun = FunSpec
                             .builder(funName)
                             .addParameter(fieldName.toLowerCase(), Int::class)
-                            .addStatement("%T.putInt(%S, ${fieldName.toLowerCase()})",ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),it.simpleName.toString())
+                            .addStatement(
+                                "%T.putInt(%S, ${fieldName.toLowerCase()})",
+                                ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),
+                                it.simpleName.toString()
+                            )
 
                         mySp.addFunction(setFun.build())
 
@@ -133,7 +154,11 @@ class MySpCompiler : AbstractProcessor() {
                         var getFun = FunSpec
                             .builder(getFunctionName)
                             .returns(Int::class)
-                            .addStatement("return %T.getInt(%S)",ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),it.simpleName.toString())
+                            .addStatement(
+                                "return %T.getInt(%S)",
+                                ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),
+                                it.simpleName.toString()
+                            )
 
                         mySp.addFunction(getFun.build())
                     }
@@ -147,7 +172,11 @@ class MySpCompiler : AbstractProcessor() {
                         var setFun = FunSpec
                             .builder(funName)
                             .addParameter(fieldName.toLowerCase(), Long::class)
-                            .addStatement("%T.putLong(%S, ${fieldName.toLowerCase()})",ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),it.simpleName.toString())
+                            .addStatement(
+                                "%T.putLong(%S, ${fieldName.toLowerCase()})",
+                                ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),
+                                it.simpleName.toString()
+                            )
 
                         mySp.addFunction(setFun.build())
 
@@ -159,7 +188,11 @@ class MySpCompiler : AbstractProcessor() {
                         var getFun = FunSpec
                             .builder(getFunctionName)
                             .returns(Long::class)
-                            .addStatement("return %T.getLong(%S)",ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),it.simpleName.toString())
+                            .addStatement(
+                                "return %T.getLong(%S)",
+                                ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),
+                                it.simpleName.toString()
+                            )
 
                         mySp.addFunction(getFun.build())
                     }
@@ -173,7 +206,11 @@ class MySpCompiler : AbstractProcessor() {
                         var setFun = FunSpec
                             .builder(funName)
                             .addParameter(fieldName.toLowerCase(), Float::class)
-                            .addStatement("%T.putFloat(%S, ${fieldName.toLowerCase()})",ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),it.simpleName.toString())
+                            .addStatement(
+                                "%T.putFloat(%S, ${fieldName.toLowerCase()})",
+                                ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),
+                                it.simpleName.toString()
+                            )
 
                         mySp.addFunction(setFun.build())
 
@@ -185,7 +222,11 @@ class MySpCompiler : AbstractProcessor() {
                         var getFun = FunSpec
                             .builder(getFunctionName)
                             .returns(Float::class)
-                            .addStatement("return %T.getFloat(%S)",ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),it.simpleName.toString())
+                            .addStatement(
+                                "return %T.getFloat(%S)",
+                                ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),
+                                it.simpleName.toString()
+                            )
 
                         mySp.addFunction(getFun.build())
                     }
@@ -199,7 +240,11 @@ class MySpCompiler : AbstractProcessor() {
                         var setFun = FunSpec
                             .builder(funName)
                             .addParameter(fieldName.toLowerCase(), Double::class)
-                            .addStatement("%T.putDouble(%S, ${fieldName.toLowerCase()})",ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),it.simpleName.toString())
+                            .addStatement(
+                                "%T.putDouble(%S, ${fieldName.toLowerCase()})",
+                                ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),
+                                it.simpleName.toString()
+                            )
 
                         mySp.addFunction(setFun.build())
 
@@ -211,7 +256,11 @@ class MySpCompiler : AbstractProcessor() {
                         var getFun = FunSpec
                             .builder(getFunctionName)
                             .returns(Double::class)
-                            .addStatement("return %T.getDouble(%S)",ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),it.simpleName.toString())
+                            .addStatement(
+                                "return %T.getDouble(%S)",
+                                ClassName("com.chenliang.baselibrary.utils", "MySpUtis"),
+                                it.simpleName.toString()
+                            )
 
                         mySp.addFunction(getFun.build())
                     }
