@@ -77,14 +77,14 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
  goto(UserFragment::class.java, , "user",user,"param1", "value1","param2",vlue2, "param3", true ,"param4",2F,......)//想传递几个值，后面跟上即可
 
 
- //目标页参数接收
- @MyField(myKey = "user")//指定key:user
+ //目标Activity or Fragment参数接收
+ @MyField(myKey = "beanUser")//指定key为:beanUser
  lateinit var user: BeanUser
 
- @MyField(myKey = "param1")//指定key:param1
+ @MyField(myKey = "param1")//指定key为:param1
  lateinit var param1: String
 
- @MyField//默认key为变量名称
+ @MyField//默认key为变量名称param2
  lateinit var param2: String
 
 ```
@@ -150,17 +150,50 @@ fun eventRegister(user: BeanUser) {
    refreshRecycler.loadData { httpGetData() }
 ```
 ![Video_20210714_084908_861](https://user-images.githubusercontent.com/4067327/125624671-a129958c-5f45-4519-832a-35250ea0a932.gif)
-# 七、各个组件根据@Aroute注解，统一自动生成配置文件MyRoute类：
+# 七、各个组件根据@MyRoute注解，统一自动生成配置文件MyRoutePath类，如Account组件模块：
 ```
-public object MyRoute {
-  public val accountLogin: String = "/account/login"
+@MyRoute(path = "/account/login")
+class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {//Activity
+        .
+        .
+        .
+        .
+}
+@MyRoute(path = "/account/register")
+class RegisterActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {//Activity
+        .
+        .
+        .
+        .
+}
+@MyRoute(path = "/account/my")
+class MyFragment : MyBaseFragment<AccountFgMyBinding, DefaultViewModel>() {//Fragment
+        .
+        .
+        .
+        .
+}
+```
+各个组件会自动生成路由配置管理类MyRoutePath
 
-  public val accountMy: String = "/account/my"
+```
+public object MyRoutePath {
+  public val accountLogin: String = "/account/Login|com.chenliang.account.act.LoginActivity"
+
+  public val accountMy: String = "/account/Register|com.chenliang.account.act.RegisterActivity"
+  
+  public val accountMy: String = "/account/my|com.chenliang.account.fragment.MyFragment"
 }
 
 ```
+路由跳转，比如由app Module组件跳到Account Module组件的登录Activity，直接调用如下代码：
 
-# 八、更简单的SharedPreferences使用，在Base组件中配置MyConfig类,则会自动生成MySp类：
+```
+ goto(accountLogin)
+
+```
+
+# 八、更简单的SharedPreferences使用，在Base组件中只需要配置MyConfig类,则会自动生成MySp类，如下：
 ### MyConfit配置
 ```
 class MyConfig {
@@ -168,22 +201,10 @@ class MyConfig {
     var isLogin = false;
 
     @MySpConfig
-    var token = ""
-
-    @MySpConfig
-    var age = 0
-
-    @MySpConfig
-    var size = 0L
-
-    @MySpConfig
-    var mfloat = 0.0f
-
-    @MySpConfig
-    var mDouble = 0.0.toDouble()
-
-    @MySpConfig
     var isFirst = false
+    
+    @MySpConfig
+    var ohter = ""
  
 }
 
@@ -198,41 +219,17 @@ public object MySp {
 
   public fun isLogin(): Boolean = MySpUtis.getBoolean("isLogin")
 
-  public fun setToken(token: String): Unit {
-    MySpUtis.putString("token", token)
-  }
-
-  public fun getToken(): String = MySpUtis.getString("token")
-
-  public fun setAge(age: Int): Unit {
-    MySpUtis.putInt("age", age)
-  }
-
-  public fun getAge(): Int = MySpUtis.getInt("age")
-
-  public fun setSize(size: Long): Unit {
-    MySpUtis.putLong("size", size)
-  }
-
-  public fun getSize(): Long = MySpUtis.getLong("size")
-
-  public fun setMfloat(mfloat: Float): Unit {
-    MySpUtis.putFloat("mfloat", mfloat)
-  }
-
-  public fun getMfloat(): Float = MySpUtis.getFloat("mfloat")
-
-  public fun setMDouble(mdouble: Double): Unit {
-    MySpUtis.putDouble("mDouble", mdouble)
-  }
-
-  public fun getMDouble(): Double = MySpUtis.getDouble("mDouble")
-
   public fun setFirst(first: Boolean): Unit {
     MySpUtis.putBoolean("isFirst", first)
   }
 
   public fun isFirst(): Boolean = MySpUtis.getBoolean("isFirst")
+  
+  public fun setOhter(ohter: String): Unit {
+    MySpUtis.putString("ohter", ohter)
+  }
+
+  public fun isFirst(): String = MySpUtis.getString("ohter")
 }
 ```
 
