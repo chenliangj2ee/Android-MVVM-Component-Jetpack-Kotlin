@@ -180,7 +180,7 @@ class MyFragment : MyBaseFragment<AccountFgMyBinding, DefaultViewModel>() {//Fra
 public object MyRoutePath {
   public val accountLogin: String = "/account/Login|com.chenliang.account.act.LoginActivity"
 
-  public val accountMy: String = "/account/Register|com.chenliang.account.act.RegisterActivity"
+  public val accountRegister: String = "/account/Register|com.chenliang.account.act.RegisterActivity"
   
   public val accountMy: String = "/account/my|com.chenliang.account.fragment.MyFragment"
 }
