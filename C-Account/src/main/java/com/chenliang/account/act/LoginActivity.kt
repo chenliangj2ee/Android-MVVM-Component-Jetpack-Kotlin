@@ -1,11 +1,10 @@
 package com.chenliang.account.act
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.chenliang.account.bean.BeanUser
 import com.chenliang.account.databinding.AccountActLoginBinding
 import com.chenliang.account.vm.AccountViewModel
+import com.chenliang.annotation.MyRoute
 import com.chenliang.baselibrary.annotation.MyClass
-import com.chenliang.baselibrary.annotation.MyRoute
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.base.obs
 import com.chenliang.baselibrary.utils.*
@@ -13,7 +12,7 @@ import gorden.rxbus2.Subscribe
 import kotlinx.android.synthetic.main.account_act_login.*
 
 @MyClass(myToolbarTitle = "登录")
-@MyRoute
+@MyRoute(path = "/account/Login")
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {
     var user = BeanUser()
     override fun initCreate() {

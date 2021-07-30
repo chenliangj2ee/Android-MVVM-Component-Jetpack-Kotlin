@@ -1,7 +1,7 @@
 package com.chenliang.account.fragment
 
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.chenliang.account.databinding.AccountFgMyBinding
+import com.chenliang.annotation.MyRoute
 import com.chenliang.baselibrary.annotation.MyField
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseFragment
@@ -14,7 +14,7 @@ import com.chenliang.baselibrary.base.MyBaseFragment
  * @date: 2021/07/27
  */
 
-@Route(path = "/account/my")
+@MyRoute(path = "/account/my")
 class MyFragment : MyBaseFragment<AccountFgMyBinding, DefaultViewModel>() {
 
     @MyField

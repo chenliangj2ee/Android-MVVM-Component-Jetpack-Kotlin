@@ -3,6 +3,7 @@ package com.chenliang.account
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.MyBaseApplication
 import com.chenliang.baselibrary.utils.log
+import com.chenliang.processorCAccount.MyRoutePath
 
 /**
  *
@@ -17,6 +18,7 @@ class AccountApplication : MyBaseApplication() {
         super.onCreate()
         log("AccountApplication onCreate ....")
         BaseInit.registerApi(ApiService::class.java)
+        BaseInit.initMyRoute(MyRoutePath)
     }
 
 }

@@ -3,6 +3,7 @@ package com.chenliang.account.act
 import com.chenliang.account.bean.BeanUser
 import com.chenliang.account.databinding.AccountActRegisterBinding
 import com.chenliang.account.vm.AccountViewModel
+import com.chenliang.annotation.MyRoute
 import com.chenliang.baselibrary.annotation.MyClass
 import com.chenliang.baselibrary.annotation.MyField
 import com.chenliang.baselibrary.base.MyBaseActivity
@@ -11,6 +12,7 @@ import com.chenliang.baselibrary.utils.hasNull
 import com.chenliang.baselibrary.utils.sendSelf
 
 @MyClass(myToolbarTitle = "注册")
+@MyRoute(path = "/account/Register")
 class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewModel>() {
     @MyField(myKey = "user")
     lateinit var user: BeanUser//通过注解获取intent传值，不指定myKey时，默认key值为属性名称

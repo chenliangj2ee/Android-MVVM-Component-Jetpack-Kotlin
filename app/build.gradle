@@ -22,6 +22,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
 
     }
 
@@ -46,8 +47,6 @@ android {
 
 dependencies {
     implementation project(path: ':C-Third')
-    //ARoute配置
-    kapt project(path: ':C-Compiler')
-    kapt 'com.alibaba:arouter-compiler:1.5.2'
     implementation project(path: ':C-Account')
+    kapt project(path: ':C-Compiler')
 }

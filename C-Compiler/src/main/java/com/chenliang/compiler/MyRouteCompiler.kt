@@ -1,10 +1,9 @@
 package com.chenliang.compiler
 
-import com.alibaba.android.arouter.facade.annotation.Route
+import com.chenliang.annotation.MyRoute
+import com.chenliang.annotation.MyRouteUtils
 import com.google.auto.service.AutoService
-import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.PropertySpec
-import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.*
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
@@ -26,7 +25,7 @@ import javax.lang.model.element.TypeElement
  */
 @AutoService(Processor::class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-@SupportedAnnotationTypes(value = ["com.chenliang.baselibrary.annotation.MyRoute"])
+@SupportedAnnotationTypes(value = ["com.chenliang.annotation.MyRoute"])
 class MyRouteCompiler : AbstractProcessor() {
     private lateinit var mFiler: Filer
     private var mModuleName: String? = null
@@ -48,23 +47,36 @@ class MyRouteCompiler : AbstractProcessor() {
 //            return false
         }
 
-        var myRoute = TypeSpec.objectBuilder("MyRoutePath")
-        ms!!.forEach {
+        var routes = en!!.getElementsAnnotatedWith(MyRoute::class.java)
 
-            var annos = en!!.getElementsAnnotatedWith(it)
-            annos.forEach {
-                var keys = it.asType().toString().split(".")
-                var key=keys[keys.size-1]
-                var path = it.asType().toString()
+        var myRoute = TypeSpec.objectBuilder("MyRoutePath")
+
+        routes.forEach {
+            var route = it.getAnnotation(MyRoute::class.java)
+
+            var className = it.asType().toString()
+
+
+            if (route != null) {
+                var path = route.path
+                var keys = path.split("/")
+
+                keys = keys.filter { !it.isNullOrEmpty() }.map {
+                    it.substring(0, 1).toUpperCase() + it.substring(1)
+                }
+                var key = keys.joinToString(separator = "")
+                key = key.substring(0, 1).toLowerCase() + key.substring(1)
                 myRoute.addProperty(
                     PropertySpec.builder(key, String::class)
-                        .initializer("%S", path)
+                        .initializer("%S", "$path|$className")
                         .build()
                 )
 
+//                MyRouteUtils.path[path] = className
+                println("MyRoute Compiler --------$path : $className ---------------------------------------------------")
             }
-        }
 
+        }
         val file =
             FileSpec.builder(
                 "com.chenliang.processor" + mModuleName!!.replace("-", ""),

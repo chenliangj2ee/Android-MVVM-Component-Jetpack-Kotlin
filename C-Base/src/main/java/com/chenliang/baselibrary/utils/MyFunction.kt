@@ -22,11 +22,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.alibaba.android.arouter.launcher.ARouter
+import com.chenliang.annotation.MyRouteUtils
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.base.MyDefaultFragment
+import com.chenliang.processorCBase.MyRoutePath
 import com.google.gson.Gson
 import com.tbruyelle.rxpermissions3.RxPermissions
 import gorden.rxbus2.RxBus
@@ -421,14 +422,29 @@ fun <T> Context.goto(cls: Class<T>, vararg values: Any): Any? {
 
 
 }
+
 fun Context.goto(path: String, vararg values: Any): Any? {
+
+    log("goto path: $path -----------------------------")
 
     var size = values.size - 1
 
     if (values.size % 2 != 0) {
         throw Exception("${this::class.simpleName} goto(path,values) values参数必须为偶数对...")
     }
-    var cls=Class.forName(path)
+
+    var key = ""
+    var classPath = ""
+    if (path.contains("|")) {
+        key = path.split("|")[0]
+        classPath = path.split("|")[1]
+    } else {
+        key = path;
+        log("goto MyRouteUtils.path[key]: ${MyRouteUtils.path[key]} -----------------------------")
+        classPath = MyRouteUtils.path[key]!!.split("|")[1]
+    }
+    log("goto classPath: $classPath -----------------------------")
+    var cls = Class.forName(classPath)
     if (Activity::class.java.isAssignableFrom(cls)) {
         var intent = Intent(this, cls)
 

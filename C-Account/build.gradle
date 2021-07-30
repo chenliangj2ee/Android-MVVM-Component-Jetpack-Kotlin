@@ -29,6 +29,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
 
     }
 
@@ -62,9 +63,6 @@ android {
 
 
 dependencies {
-    //ARoute配置
     kapt project(path: ':C-Compiler')
-    kapt 'com.alibaba:arouter-compiler:1.5.2'
-
     api project(path: ':C-Base')
 }

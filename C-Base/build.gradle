@@ -22,6 +22,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
 
     buildTypes {
@@ -80,10 +81,6 @@ dependencies {
     //权限
     api 'com.github.tbruyelle:rxpermissions:0.12'
     api 'io.reactivex.rxjava3:rxjava:3.0.4'
-
-    //路由
-    api 'com.alibaba:arouter-api:1.5.2'
+    api project(path: ':C-Compiler')
     kapt project(path: ':C-Compiler')
-    //ARoute配置
-    kapt  'com.alibaba:arouter-compiler:1.5.2'
 }
