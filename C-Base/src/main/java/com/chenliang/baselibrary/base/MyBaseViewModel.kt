@@ -1,6 +1,5 @@
 package com.chenliang.baselibrary.base
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.chenliang.baselibrary.annotation.MyRetrofitGoValue
 import com.chenliang.baselibrary.annotation.defaultValueReflex
@@ -8,10 +7,7 @@ import com.chenliang.baselibrary.net.BaseResponse
 import com.chenliang.baselibrary.net.utils.MyApiReflex
 import com.chenliang.baselibrary.net.utils.MyHttpDB
 import com.chenliang.baselibrary.net.log.BaseBeanLog
-import com.chenliang.baselibrary.utils.log
-import com.chenliang.baselibrary.utils.logJson
-import com.chenliang.baselibrary.utils.toJson
-import com.chenliang.baselibrary.utils.toast
+import com.chenliang.baselibrary.utils.mytoast
 import com.google.gson.stream.MalformedJsonException
 import gorden.rxbus2.RxBus
 import kotlinx.coroutines.CoroutineScope
@@ -87,7 +83,7 @@ open class MyBaseViewModel : ViewModel() {
                 data.value = responseBean as BaseResponse<Any>
 
                 if (myRetrofitGoValue.failToast&&responseBean.code!=0) {
-                    toast(responseBean.message)
+                    mytoast(responseBean.message)
                 }
 
             }

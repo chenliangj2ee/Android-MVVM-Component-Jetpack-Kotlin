@@ -30,7 +30,7 @@ object MyKotlinClass {
             bingingName.split("\\.".toRegex()).toTypedArray()
         val name = bingingNames[bingingNames.size - 1].replace("_binding", "")
         var id=context.resources.getIdentifier(name, "layout", context.packageName)
-        log("解析$bingingName---->name: $name    id:$id")
+//        log("解析$bingingName---->name: $name    id:$id")
         return id
     }
 }

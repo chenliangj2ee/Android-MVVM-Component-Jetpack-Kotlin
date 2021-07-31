@@ -4,7 +4,7 @@ import com.chenliang.baselibrary.annotation.MyClass
 import com.chenliang.baselibrary.annotation.MyField
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseFragment
-import com.chenliang.baselibrary.utils.log
+import com.chenliang.baselibrary.utils.mylog
 import com.chenliang.mvvmc.databinding.FragmentToolbarNoBinding
 
 /**
@@ -20,6 +20,6 @@ class FragmentNoToolbarRefreshDemo : MyBaseFragment<FragmentToolbarNoBinding, De
     @MyField
     lateinit var type:String
     override fun initOnCreateView() {
-        log("fragment传参：type----------------$type")
+        mylog("fragment传参：type----------------$type")
     }
 }

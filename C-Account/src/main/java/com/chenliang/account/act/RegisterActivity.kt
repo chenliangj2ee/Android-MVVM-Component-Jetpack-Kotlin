@@ -8,6 +8,8 @@ import com.chenliang.baselibrary.annotation.MyClass
 import com.chenliang.baselibrary.annotation.MyField
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.base.obs
+import com.chenliang.baselibrary.utils.MyCheck
+import com.chenliang.baselibrary.utils.check
 import com.chenliang.baselibrary.utils.hasNull
 import com.chenliang.baselibrary.utils.sendSelf
 
@@ -25,8 +27,7 @@ class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewMo
     fun registerAction() {
 
         with(user) {
-            if (hasNull(name, "请输入账号", password, "请输入密码")) return
-
+            if (name.check(MyCheck.empty, "请输入账号") || password.check(MyCheck.empty, "请输入密码")) return
             mViewModel.register(name, password).obs(this@RegisterActivity) {
                 it.code = 0//模拟注册成功
                 it.data = user//模拟注册成功

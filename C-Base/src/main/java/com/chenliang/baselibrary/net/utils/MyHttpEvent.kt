@@ -7,7 +7,6 @@ import android.view.MotionEvent
 import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.net.log.BaseBeanLog
 import com.chenliang.baselibrary.net.log.FloatView
-import com.chenliang.baselibrary.utils.log
 import gorden.rxbus2.RxBus
 import gorden.rxbus2.Subscribe
 import gorden.rxbus2.ThreadMode
@@ -33,7 +32,7 @@ class MyHttpEvent(act: Activity) {
      */
     @Subscribe(code = 31415926, threadMode = ThreadMode.MAIN)
     fun eventShowLoading(id: String) {
-        log("${act::class.java.simpleName}  eventShowLoading....................")
+//        log("${act::class.java.simpleName}  eventShowLoading....................")
         var dialog = Dialog(act)
         dialog.setContentView(R.layout.base_loading)
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent);
@@ -47,7 +46,7 @@ class MyHttpEvent(act: Activity) {
      */
     @Subscribe(code = 31415927, threadMode = ThreadMode.MAIN)
     fun eventCloseLoading(id: String) {
-        log("${act::class.java.simpleName}  eventCloseLoading....................")
+//        log("${act::class.java.simpleName}  eventCloseLoading....................")
         dialogs[id]?.dismiss()
         dialogs.remove(id)
     }
@@ -58,7 +57,7 @@ class MyHttpEvent(act: Activity) {
      */
     @Subscribe(code = 31415928, threadMode = ThreadMode.MAIN)
     fun eventHttpLog(bean: BaseBeanLog) {
-        log("${act::class.java.simpleName}  eventHttpLog....................")
+//        log("${act::class.java.simpleName}  eventHttpLog....................")
         if (this.log)
             floatButton.addLog(bean)
 
@@ -69,7 +68,7 @@ class MyHttpEvent(act: Activity) {
      * 注销event，关闭所有loading Dialog
      */
     fun onDestroy() {
-        log("MyHttpEvent ${act::class.java.simpleName} onDestroy......")
+//        log("MyHttpEvent ${act::class.java.simpleName} onDestroy......")
         RxBus.get().unRegister(this)
         for (d in dialogs) {
             d.value.dismiss()

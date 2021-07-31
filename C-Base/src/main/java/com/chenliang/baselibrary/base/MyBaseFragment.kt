@@ -1,6 +1,5 @@
 package com.chenliang.baselibrary.base
 
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -20,8 +19,6 @@ import com.chenliang.baselibrary.utils.*
 import com.chenliang.baselibrary.view.MyToolBar
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
-import kotlinx.android.synthetic.main.base_activity_content.*
-import kotlinx.android.synthetic.main.base_fragment_content.view.*
 
 abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragment() {
     lateinit var mRootView: LinearLayout
@@ -34,7 +31,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        log("MyActivityManager", "启动》》》${javaClass.name}")
+        mylog("MyActivityManager", "启动-----------${javaClass.name}")
         mRootView = layoutInflater.inflate(R.layout.base_fragment_content, null) as LinearLayout
         initSelf();
         initToolbar()

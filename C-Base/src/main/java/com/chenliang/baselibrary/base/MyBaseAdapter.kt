@@ -1,14 +1,13 @@
 package com.chenliang.baselibrary.base
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.chenliang.baselibrary.utils.log
+import com.chenliang.baselibrary.utils.mylog
 
 /**
  * chenliang
@@ -49,7 +48,7 @@ open class MyBaseAdapter<D : MyBaseBean>(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         this.position = position
         if (position >= data.size - 10 && !loading) {
-            log("自动加载....$position")
+            mylog("自动加载....$position")
             loading = true
             loadFun!!()
         }

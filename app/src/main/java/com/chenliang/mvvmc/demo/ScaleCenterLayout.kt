@@ -5,10 +5,7 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.view.View
 import android.widget.FrameLayout
-import com.chenliang.baselibrary.utils.log
-import java.nio.file.Files.size
 
 
 /**
@@ -101,7 +98,6 @@ class ScaleCenterLayout : FrameLayout {
                 layoutParams = p
                 postInvalidate()
 //                invalidate()
-                log("myWidth---$myWidth-----------x:$x")
 
             }
             val an = AnimatorSet()
@@ -142,7 +138,6 @@ class ScaleCenterLayout : FrameLayout {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         paint.isAntiAlias=true
-        log("ondraw------------------------------ $myWidth")
         canvas!!.drawColor(Color.BLUE)
 
         paint.color = Color.BLACK

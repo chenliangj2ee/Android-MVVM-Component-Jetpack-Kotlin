@@ -2,7 +2,6 @@ package com.chenliang.baselibrary.net.utils
 
 import com.chenliang.baselibrary.annotation.MyRetrofitGo
 import com.chenliang.baselibrary.annotation.MyRetrofitGoValue
-import com.chenliang.baselibrary.utils.log
 import retrofit2.http.GET
 import retrofit2.http.POST
 

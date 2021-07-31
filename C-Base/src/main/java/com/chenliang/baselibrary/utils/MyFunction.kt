@@ -57,8 +57,8 @@ fun View.show(show: Boolean) = this.apply {
     }
 }
 
-var toastData = HashMap<String, String>()
-fun Any.toast(msg: String) {
+private var toastData = HashMap<String, String>()
+fun Any.mytoast(msg: String) {
 
     if (toastData.containsKey(msg))
         return
@@ -75,64 +75,59 @@ fun Any.toast(msg: String) {
 
 }
 
-fun Any.logJson() {
-    log(Gson().toJson(this))
-}
 
-fun Any.log(message: String) {
+fun Any.mylog(message: String) {
     val className = Thread.currentThread().stackTrace[3].className
     val fileName = Thread.currentThread().stackTrace[3].fileName
     val methodName = Thread.currentThread().stackTrace[3].methodName
     val lineNumber = Thread.currentThread().stackTrace[3].lineNumber
-    Log.i(
-        "MyLog",
-        "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
-                "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
-    )
+
+    var message =
+        ":\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
+                "|      日志：$message\n|\n————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
+
+    Log.i("MyLog", message)
     Log.i(this::class.java.simpleName, message)
 }
 
-fun Any.log(tag: String, message: String) {
-    Log.i(tag, message)
-
+fun Any.mylog(tag: String, message: String) {
     val className = Thread.currentThread().stackTrace[3].className
     val fileName = Thread.currentThread().stackTrace[3].fileName
     val methodName = Thread.currentThread().stackTrace[3].methodName
     val lineNumber = Thread.currentThread().stackTrace[3].lineNumber
-    Log.i(
-        "MyLog",
-        "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
-                "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
-    )
+    var message2 =
+        ":\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
+                "|      日志：$message\n|\n————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
 
+    Log.i("MyLog", message2)
+    Log.i(tag, message2)
 }
 
-fun Any.logE(message: String) {
+fun Any.myloge(message: String) {
     val className = Thread.currentThread().stackTrace[3].className
     val fileName = Thread.currentThread().stackTrace[3].fileName
     val methodName = Thread.currentThread().stackTrace[3].methodName
     val lineNumber = Thread.currentThread().stackTrace[3].lineNumber
-    Log.e(
-        "MyLog",
-        "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
-                "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
-    )
+    var message =
+        ":\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
+                "|      日志：$message\n|\n————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
 
+    Log.e("MyLog", message)
     Log.e(this::class.java.simpleName, message)
 }
 
-fun Any.logE(tag: String, message: String) {
-    Log.e(tag, message)
+fun Any.myloge(tag: String, message: String) {
+
     val className = Thread.currentThread().stackTrace[3].className
     val fileName = Thread.currentThread().stackTrace[3].fileName
     val methodName = Thread.currentThread().stackTrace[3].methodName
     val lineNumber = Thread.currentThread().stackTrace[3].lineNumber
-    Log.e(
-        "MyLog",
-        "———————————————————————————————————————————————————————————————————————————————————————————————————————————————\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
-                "|      日志：$message\n|\n———————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
-    )
+    var message =
+        ":\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
+                "|      日志：$message\n|\n————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
 
+    Log.e("MyLog", message)
+    Log.e(tag, message)
 }
 
 /**
@@ -160,32 +155,6 @@ fun View.click(func: (view: View) -> Unit) = this.apply {
  */
 fun <T : ViewModel> AppCompatActivity.initVM(modelClass: Class<T>) =
     ViewModelProvider(this)[modelClass]
-
-
-fun Any.hasNull(vararg args: String): Boolean {
-    val array = arrayOf(args)
-    var size = args.size - 1
-
-    for (index in 0..size step 2) {
-        var item = args[index]
-        var message = args[index + 1]
-
-        if (item == null) {
-            toast(message)
-            return true
-        }
-
-        when (item) {
-            is String -> {
-                if (item.isEmpty()) {
-                    toast(message)
-                    return true
-                }
-            }
-        }
-    }
-    return false
-}
 
 /**
  * 创建ViewModel
@@ -223,7 +192,7 @@ fun Any.hasNetWork(): Boolean {
             }
         }
  */
-fun Array<String>.check(act: AppCompatActivity, func: (boo: Boolean) -> Unit) {
+fun Array<String>.checkPermissions(act: AppCompatActivity, func: (boo: Boolean) -> Unit) {
     var array = this
     var per = RxPermissions(act)
     per.request(*array)
@@ -342,7 +311,7 @@ fun String.isPhone() =
 fun String.isID() =
     Pattern.compile("^\\d{15}\$)|(^\\d{18}\$)|(^\\d{17}(\\d|X|x)\$").matcher(this).matches()
 
-fun Drawable.bitmap(): Bitmap {
+fun Drawable.toBitmap(): Bitmap {
     val w: Int = this.intrinsicWidth
     val h: Int = this.intrinsicHeight
     val config =
@@ -354,7 +323,7 @@ fun Drawable.bitmap(): Bitmap {
     return bitmap
 }
 
-fun Bitmap.drawable() = BitmapDrawable(this)
+fun Bitmap.toDrawable() = BitmapDrawable(this)
 
 fun Bitmap.toZoomImage(w: Int, h: Int): Bitmap {
     val width: Int = this.width
@@ -423,7 +392,7 @@ fun <T> Context.goto(cls: Class<T>, vararg values: Any): Fragment {
 
 fun Context.goto(path: String, vararg values: Any): Fragment {
 
-    log("goto path: $path -----------------------------")
+//    log("goto path: $path -----------------------------")
 
     var size = values.size - 1
 
@@ -438,10 +407,10 @@ fun Context.goto(path: String, vararg values: Any): Fragment {
         classPath = path.split("|")[1]
     } else {
         key = path;
-        log("goto MyRouteUtils.path[key]: ${MyRouteUtils.path[key]} -----------------------------")
+//        log("goto MyRouteUtils.path[key]: ${MyRouteUtils.path[key]} -----------------------------")
         classPath = MyRouteUtils.path[key]!!.split("|")[1]
     }
-    log("goto classPath: $classPath -----------------------------")
+//    log("goto classPath: $classPath -----------------------------")
     var cls = Class.forName(classPath)
     if (Activity::class.java.isAssignableFrom(cls)) {
         var intent = Intent(this, cls)
@@ -584,10 +553,10 @@ fun Any.anrCheck(time: Int, func: () -> Unit) {
     func()
     var end = System.currentTimeMillis();
     if (end - start > time) {
-        logE("耗时操作:${end - start}毫秒 ")
+        myloge("耗时操作:${end - start}毫秒 ")
 //        throw Exception("${this::class.simpleName} initCreate耗时太长，请优化...")
     } else {
-        log("操作时长:${end - start}毫秒 ")
+//        log("操作时长:${end - start}毫秒 ")
     }
 }
 
@@ -613,55 +582,55 @@ fun String.check(vararg checks: Any): Boolean {
                 when (check) {
                     MyCheck.empty -> {
                         if (text.isNullOrEmpty()) {
-                            toast(message)
+                            mytoast(message)
                             return true
                         }
                     }
                     MyCheck.mobilePhone -> {
                         if (!text.isMobilePhone()) {
-                            toast(message)
+                            mytoast(message)
                             return true
                         }
                     }
                     MyCheck.phone -> {
                         if (!text.isPhone()) {
-                            toast(message)
+                            mytoast(message)
                             return true
                         }
                     }
                     MyCheck.AZ -> {
                         if (!text.isAZ()) {
-                            toast(message)
+                            mytoast(message)
                             return true
                         }
                     }
                     MyCheck.az -> {
                         if (!text.isaz()) {
-                            toast(message)
+                            mytoast(message)
                             return true
                         }
                     }
                     MyCheck.AZaz -> {
                         if (!text.isAAaz()) {
-                            toast(message)
+                            mytoast(message)
                             return true
                         }
                     }
                     MyCheck.AZ09All -> {
                         if (!text.isAZ09All()) {
-                            toast(message)
+                            mytoast(message)
                             return true
                         }
                     }
                     MyCheck.number -> {
                         if (!text.isNumber()) {
-                            toast(message)
+                            mytoast(message)
                             return true
                         }
                     }
                     MyCheck.id -> {
                         if (!text.isNumber()) {
-                            toast(message)
+                            mytoast(message)
                             return true
                         }
                     }
@@ -670,7 +639,7 @@ fun String.check(vararg checks: Any): Boolean {
             }
             is ChenkLength -> {
                 if (text.length < check.min || text.length > check.max) {
-                    toast(message)
+                    mytoast(message)
                     return true
                 }
             }

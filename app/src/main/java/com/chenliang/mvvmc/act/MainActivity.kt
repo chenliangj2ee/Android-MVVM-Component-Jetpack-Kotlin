@@ -18,8 +18,8 @@ import gorden.rxbus2.Subscribe
 class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
 
     override fun initCreate() {
-        log(intent.getStringExtra("username").toString())
-        log(intent.getIntExtra("age", 0).toString())
+        mylog(intent.getStringExtra("username").toString())
+        mylog(intent.getIntExtra("age", 0).toString())
     }
 
 
@@ -53,8 +53,8 @@ class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
 
     fun dialogAction(v: View) {
         MyDialog().message("确定删除用户？")
-            .y { toast("确定被点击") }
-            .n { toast("取消被点击") }
+            .y { mytoast("确定被点击") }
+            .n { mytoast("取消被点击") }
             .show(this)
 
 //        //或者
@@ -67,8 +67,8 @@ class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
 
     fun dialogCustomTextAction(v: View) {
         MyDialog().message("确定提交订单？")
-            .y("提交") { toast("提交被点击") }
-            .n("关闭") { toast("关闭被点击") }
+            .y("提交") { mytoast("提交被点击") }
+            .n("关闭") { mytoast("关闭被点击") }
             .show(this)
 //        //或者
 //        dialog("确定删除用户？")
@@ -88,7 +88,7 @@ class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
 
     @Subscribe(code = 100)
     fun eventCallBack(event: RxBusEvent<String>) {
-        toast("消息收到：${event.data}")
+        mytoast("消息收到：${event.data}")
 
         event.callback("message", "回调成功", "age", 11)
     }

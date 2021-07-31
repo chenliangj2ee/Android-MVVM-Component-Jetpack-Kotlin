@@ -2,8 +2,6 @@ package com.chenliang.baselibrary.utils
 
 import android.content.Context
 import android.text.TextUtils
-import android.util.Log
-import androidx.core.content.edit
 import com.google.gson.Gson
 import com.chenliang.baselibrary.BaseInit
 import java.lang.reflect.Type
@@ -17,7 +15,7 @@ object MySpUtis {
         key: String,
         value: String
     ) {
-        log("put key:$key  value:$value")
+        mylog("put key:$key  value:$value")
         val sp =
             BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val edit = sp.edit()
@@ -29,7 +27,7 @@ object MySpUtis {
         val sp =
             BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val result = sp.getString(key, "")
-        log("get key:$key  value:$result")
+        mylog("get key:$key  value:$result")
         return result!!
     }
 
@@ -37,7 +35,7 @@ object MySpUtis {
         key: String,
         value: Boolean
     ) {
-        log("put key:$key  value:$value")
+        mylog("put key:$key  value:$value")
         val sp =
             BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val edit = sp.edit()
@@ -49,14 +47,14 @@ object MySpUtis {
         val sp =
             BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val result = sp.getBoolean(key, false)
-        log("get key:$key  value:$result")
+        mylog("get key:$key  value:$result")
         return result
     }
     fun putInt(
         key: String,
         value: Int
     ) {
-        log("put key:$key  value:$value")
+        mylog("put key:$key  value:$value")
         val sp =
             BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val edit = sp.edit()
@@ -68,14 +66,14 @@ object MySpUtis {
         val sp =
             BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val result = sp.getInt(key, 0)
-        log("get key:$key  value:$result")
+        mylog("get key:$key  value:$result")
         return result
     }
     fun putLong(
         key: String,
         value: Long
     ) {
-        log("put key:$key  value:$value")
+        mylog("put key:$key  value:$value")
         val sp =
             BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val edit = sp.edit()
@@ -87,7 +85,7 @@ object MySpUtis {
         val sp =
             BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val result = sp.getLong(key, 0)
-        log("get  key:$key  value:$result")
+        mylog("get  key:$key  value:$result")
         return result
     }
 
@@ -95,7 +93,7 @@ object MySpUtis {
         key: String,
         value: Float
     ) {
-        log("put key:$key  value:$value")
+        mylog("put key:$key  value:$value")
         val sp =
             BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val edit = sp.edit()
@@ -107,14 +105,14 @@ object MySpUtis {
         val sp =
             BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val result = sp.getFloat(key, 0f)
-        log("get key:$key  value:$result")
+        mylog("get key:$key  value:$result")
         return result
     }
     fun putDouble(
         key: String,
         value: Double
     ) {
-        log("put key:$key  value:$value")
+        mylog("put key:$key  value:$value")
         val sp =
             BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val edit = sp.edit()
@@ -126,7 +124,7 @@ object MySpUtis {
         val sp =
             BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val result = sp.getString(key, "0")
-        log("get key:$key  value:$result")
+        mylog("get key:$key  value:$result")
         return result!!.toDouble()
     }
     fun clear(key: String) {

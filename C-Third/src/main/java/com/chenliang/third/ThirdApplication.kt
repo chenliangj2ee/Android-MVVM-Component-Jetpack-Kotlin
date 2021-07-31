@@ -2,7 +2,7 @@ package com.chenliang.third
 
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.MyBaseApplication
-import com.chenliang.baselibrary.utils.log
+import com.chenliang.baselibrary.utils.mylog
 
 /**
  *
@@ -14,7 +14,7 @@ import com.chenliang.baselibrary.utils.log
 class ThirdApplication : MyBaseApplication() {
     override fun onCreate() {
         super.onCreate()
-        log("ThirdApplication onCreate ....")
+        mylog("ThirdApplication onCreate ....")
         BaseInit.registerApi(ApiService::class.java)
     }
 
