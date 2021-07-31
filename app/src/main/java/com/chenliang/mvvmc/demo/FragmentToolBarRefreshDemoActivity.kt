@@ -10,7 +10,7 @@ import com.chenliang.mvvmc.databinding.ActivityFragmentNoToolbarBinding
 class FragmentToolBarRefreshDemoActivity : MyBaseActivity<ActivityFragmentNoToolbarBinding, DefaultViewModel>() {
     override fun initCreate() {
 
-        replace(R.id.fragment,goto(FragmentToolbarRefreshDemo::class.java) as Fragment)
+        replace(R.id.fragment,goto(FragmentToolbarRefreshDemo::class.java))
     }
 
 

@@ -25,9 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.chenliang.annotation.MyRouteUtils
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.R
-import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.base.MyDefaultFragment
-import com.chenliang.processorCBase.MyRoutePath
 import com.google.gson.Gson
 import com.tbruyelle.rxpermissions3.RxPermissions
 import gorden.rxbus2.RxBus
@@ -368,7 +366,7 @@ fun Bitmap.toZoomImage(w: Int, h: Int): Bitmap {
     return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
 }
 
-fun <T> Context.goto(cls: Class<T>, vararg values: Any): Any? {
+fun <T> Context.goto(cls: Class<T>, vararg values: Any): Fragment {
 
     var size = values.size - 1
 
@@ -397,7 +395,7 @@ fun <T> Context.goto(cls: Class<T>, vararg values: Any): Any? {
         if (this is Activity) {
             overridePendingTransition(R.anim.base_right_in, R.anim.base_left_out)
         }
-        return null
+        return MyDefaultFragment()
     } else {
         var fragment = cls.newInstance() as Fragment
         var bundle = Bundle()
@@ -423,7 +421,7 @@ fun <T> Context.goto(cls: Class<T>, vararg values: Any): Any? {
 
 }
 
-fun Context.goto(path: String, vararg values: Any): Any? {
+fun Context.goto(path: String, vararg values: Any): Fragment {
 
     log("goto path: $path -----------------------------")
 
@@ -466,7 +464,7 @@ fun Context.goto(path: String, vararg values: Any): Any? {
         if (this is Activity) {
             overridePendingTransition(R.anim.base_right_in, R.anim.base_left_out)
         }
-        return null
+        return MyDefaultFragment()
     } else {
         var fragment = cls.newInstance() as Fragment
         var bundle = Bundle()
@@ -489,6 +487,10 @@ fun Context.goto(path: String, vararg values: Any): Any? {
         return fragment
     }
 }
+
+/**
+ * 阿里路由调用配置
+ */
 //fun Any.goto(path: String, vararg values: Any): Any? {
 //
 //    var size = values.size - 1
@@ -533,12 +535,38 @@ fun Any.send(code: Int) {
     RxBus.get().send(code)
 }
 
+fun Any.send(code: Int, f: ((intent: Intent) -> Unit)) {
+    RxBus.get().send(code, RxBusEvent(this, f))
+}
+
 fun Any.sendSelf(code: Int) {
     RxBus.get().send(code, this)
 }
 
-fun Any.sendSelf() {
-    RxBus.get().send(this)
+fun Any.sendSelf(code: Int, f: ((intent: Intent) -> Unit)) {
+    RxBus.get().send(code, RxBusEvent(this, f))
+}
+
+
+fun Intent.put(vararg values: Any): Intent {
+    if (values.size % 2 != 0) {
+        throw Exception("${this::class.simpleName} Intent.put values参数必须为偶数对...")
+    }
+    var size = values.size - 1
+    for (index in 0..size step 2) {
+        var key = values[index]
+        var value = values[values.indexOf(key) + 1]
+        when (value) {
+            is Int -> this.putExtra(key.toString(), value)
+            is Long -> this.putExtra(key.toString(), value)
+            is String -> this.putExtra(key.toString(), value)
+            is Boolean -> this.putExtra(key.toString(), value)
+            is Double -> this.putExtra(key.toString(), value)
+            is Float -> this.putExtra(key.toString(), value)
+            is Serializable -> this.putExtra(key.toString(), value)
+        }
+    }
+    return this
 }
 
 /**

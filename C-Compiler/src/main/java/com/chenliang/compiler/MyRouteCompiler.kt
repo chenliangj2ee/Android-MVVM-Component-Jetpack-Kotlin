@@ -7,6 +7,7 @@ import com.squareup.kotlinpoet.*
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
+import kotlin.concurrent.thread
 
 
 /**
@@ -82,6 +83,8 @@ class MyRouteCompiler : AbstractProcessor() {
                 "com.chenliang.processor" + mModuleName!!.replace("-", ""),
                 "MyRoutePath"
             ).addType(myRoute.build()).build()
+
+
 
         try {
             file.writeTo(mFiler)

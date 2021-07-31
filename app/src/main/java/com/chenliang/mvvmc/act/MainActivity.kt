@@ -1,6 +1,5 @@
 package com.chenliang.mvvmc.act
 
-import android.content.Intent
 import android.view.View
 import com.chenliang.annotation.MyRoute
 import com.chenliang.baselibrary.annotation.MyClass
@@ -14,7 +13,7 @@ import gorden.rxbus2.Subscribe
 /**
  * 主页
  */
-@MyRoute(path="/app/main")
+@MyRoute(path = "/app/main")
 @MyClass(myToolbarTitle = "主页")
 class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
 
@@ -88,11 +87,10 @@ class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
     }
 
     @Subscribe(code = 100)
-    fun eventCallBack(call: Callback<String>) {
-        toast("消息收到")
-        var intent = Intent()
-        intent.putExtra("message", "消息回执")
-        call.func?.let { it(intent) }
+    fun eventCallBack(event: RxBusEvent<String>) {
+        toast("消息收到：${event.data}")
+
+        event.callback("message", "回调成功", "age", 11)
     }
 
     fun libraryFragmentAction(v: View) {

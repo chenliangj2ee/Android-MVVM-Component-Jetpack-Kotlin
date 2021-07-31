@@ -15,9 +15,9 @@ class ViewPageFragmentDemoActivity :
 
     override fun initCreate() {
         viewpager.setTabLayout(tabLayout, "tab1", "tab2", "tab3")
-        viewpager.addFragments(goto(FragmentNoToolbarRefreshDemo::class.java,"type","1") as Fragment)
-        viewpager.addFragments(goto(FragmentNoToolbarRefreshDemo::class.java,"type","2") as Fragment)
-        viewpager.addFragments(goto(FragmentNoToolbarRefreshDemo::class.java,"type","3") as Fragment)
+        viewpager.addFragments(goto(FragmentNoToolbarRefreshDemo::class.java,"type","1"))
+        viewpager.addFragments(goto(FragmentNoToolbarRefreshDemo::class.java,"type","2"))
+        viewpager.addFragments(goto(FragmentNoToolbarRefreshDemo::class.java,"type","3"))
     }
 
 
