@@ -39,25 +39,40 @@ class AccountViewModel : MyBaseViewModel() {
 ## 三、登录Activity：
 
 ```
-@MyClass(myToolbarTitle = "登陆")
+@MyClass(myToolbarTitle = "登录")
+@MyRoute(path = "/account/Login")
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {
-
     var user = BeanUser()
-    
-    override fun initCreate() { mBinding.user = user  }
+    override fun initCreate() {
+        mBinding.user = user
+        //监听编辑框输入状态，手机号设置成130 7876 7657 格式
+        account.changed { account.setText(it.insert(" ", 3, 7)) }
+    }
 
-    fun registerAction() {  goto(RegisterActivity::class.java)  }
+    //去注册
+    fun registerAction() { goto(RegisterActivity::class.java, "user", user) }
 
     fun loginAction() {
-            if (hasNull(user.name, "请输入账号",user.password, "请输入密码"))
-                return
-            mViewModel.login(name, password).obs(this@LoginActivity) {  it.y { loginSuccess(it.data!!) }  }
+        //登录验证
+        if (user.name.check(MyCheck.empty, "请输入账号", MyCheck.mobilePhone, "手机号格式不正确") ||
+            user.password.check(MyCheck.empty, "请输入密码", MyCheck.LENGTH(6, 12), "密码长度在6-12之间")
+        ) return
+        //登录接口
+        mViewModel.login(user.name, user.password).obs(this@LoginActivity) {  it.y { loginSuccess(it.data!!) }  }
     }
 
     private fun loginSuccess(user: BeanUser) {
-        user.save()
-        goto("/app/main", "user",user)
+        user.save()//把登录后user数据保存到sp
+        goto(appMain)//跳转到Main界面
         finish()
+    }
+
+    //注册后，登录界面回显账号信息
+    @Subscribe(code = 100)
+    fun eventRegister(user: BeanUser) {
+        this.user = user
+        user.password = ""
+        mBinding.user = user
     }
 
 }
@@ -88,16 +103,29 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
  lateinit var param2: String
 
 ```
-*  **组件之间的消息传递**
+*  **组件之间的消息传递与事件回调**
 ```
-//发送数据
+//仅发送数据
 var user=BeanUser("tom",12)
 user.postSelf(1002)
 
-//接受数据
+//仅接受数据
 @Subscribe(code = 1002)
 fun eventRegister(user: BeanUser) {
       //接收到user
+}
+
+//发送数据、并且回调接收数据
+var user=BeanUser("tom",12)
+user.postSelf(1002){
+    mytoast(it.getStringExtra("message")!!)
+}
+
+//接受数据，并且回调数据给发送者
+@Subscribe(code = 100)
+fun eventCallBack(event: RxBusEvent<BeanUser>) {
+   mytoast("消息收到${event.data.toJson}")
+   event.callback("message", "回调成功")
 }
 ```
 
