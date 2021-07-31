@@ -10,7 +10,6 @@ import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.base.obs
 import com.chenliang.baselibrary.utils.MyCheck
 import com.chenliang.baselibrary.utils.check
-import com.chenliang.baselibrary.utils.hasNull
 import com.chenliang.baselibrary.utils.sendSelf
 
 @MyClass(myToolbarTitle = "注册")
