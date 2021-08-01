@@ -58,7 +58,11 @@ fun View.show(show: Boolean) = this.apply {
 }
 
 private var toastData = HashMap<String, String>()
-fun Any.mytoast(msg: String) {
+
+/**
+ * 自定义toast
+ */
+fun Any.toast(msg: String) {
 
     if (toastData.containsKey(msg))
         return
@@ -76,7 +80,7 @@ fun Any.mytoast(msg: String) {
 }
 
 
-fun Any.mylog(message: String) {
+fun Any.log(message: String) {
     val className = Thread.currentThread().stackTrace[3].className
     val fileName = Thread.currentThread().stackTrace[3].fileName
     val methodName = Thread.currentThread().stackTrace[3].methodName
@@ -90,7 +94,7 @@ fun Any.mylog(message: String) {
     Log.i(this::class.java.simpleName, message)
 }
 
-fun Any.mylog(tag: String, message: String) {
+fun Any.log(tag: String, message: String) {
     val className = Thread.currentThread().stackTrace[3].className
     val fileName = Thread.currentThread().stackTrace[3].fileName
     val methodName = Thread.currentThread().stackTrace[3].methodName
@@ -103,7 +107,7 @@ fun Any.mylog(tag: String, message: String) {
     Log.i(tag, message2)
 }
 
-fun Any.myloge(message: String) {
+fun Any.loge(message: String) {
     val className = Thread.currentThread().stackTrace[3].className
     val fileName = Thread.currentThread().stackTrace[3].fileName
     val methodName = Thread.currentThread().stackTrace[3].methodName
@@ -116,7 +120,7 @@ fun Any.myloge(message: String) {
     Log.e(this::class.java.simpleName, message)
 }
 
-fun Any.myloge(tag: String, message: String) {
+fun Any.loge(tag: String, message: String) {
 
     val className = Thread.currentThread().stackTrace[3].className
     val fileName = Thread.currentThread().stackTrace[3].fileName
@@ -553,7 +557,7 @@ fun Any.anrCheck(time: Int, func: () -> Unit) {
     func()
     var end = System.currentTimeMillis();
     if (end - start > time) {
-        myloge("耗时操作:${end - start}毫秒 ")
+        loge("耗时操作:${end - start}毫秒 ")
 //        throw Exception("${this::class.simpleName} initCreate耗时太长，请优化...")
     } else {
 //        log("操作时长:${end - start}毫秒 ")
@@ -582,55 +586,55 @@ fun String.check(vararg checks: Any): Boolean {
                 when (check) {
                     MyCheck.empty -> {
                         if (text.isNullOrEmpty()) {
-                            mytoast(message)
+                            toast(message)
                             return true
                         }
                     }
                     MyCheck.mobilePhone -> {
                         if (!text.isMobilePhone()) {
-                            mytoast(message)
+                            toast(message)
                             return true
                         }
                     }
                     MyCheck.phone -> {
                         if (!text.isPhone()) {
-                            mytoast(message)
+                            toast(message)
                             return true
                         }
                     }
                     MyCheck.AZ -> {
                         if (!text.isAZ()) {
-                            mytoast(message)
+                            toast(message)
                             return true
                         }
                     }
                     MyCheck.az -> {
                         if (!text.isaz()) {
-                            mytoast(message)
+                            toast(message)
                             return true
                         }
                     }
                     MyCheck.AZaz -> {
                         if (!text.isAAaz()) {
-                            mytoast(message)
+                            toast(message)
                             return true
                         }
                     }
                     MyCheck.AZ09All -> {
                         if (!text.isAZ09All()) {
-                            mytoast(message)
+                            toast(message)
                             return true
                         }
                     }
                     MyCheck.number -> {
                         if (!text.isNumber()) {
-                            mytoast(message)
+                            toast(message)
                             return true
                         }
                     }
                     MyCheck.id -> {
                         if (!text.isNumber()) {
-                            mytoast(message)
+                            toast(message)
                             return true
                         }
                     }
@@ -639,7 +643,7 @@ fun String.check(vararg checks: Any): Boolean {
             }
             is ChenkLength -> {
                 if (text.length < check.min || text.length > check.max) {
-                    mytoast(message)
+                    toast(message)
                     return true
                 }
             }

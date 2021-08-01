@@ -38,7 +38,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mylog("MyActivityManager", "启动-----------${javaClass.name}")
+        log("MyActivityManager", "启动-----------${javaClass.name}")
         setContentView(R.layout.base_activity_content)
         initSelf()
         initStatusBar()

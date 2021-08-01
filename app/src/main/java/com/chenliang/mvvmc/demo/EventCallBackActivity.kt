@@ -4,7 +4,7 @@ import android.view.View
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.sendSelf
-import com.chenliang.baselibrary.utils.mytoast
+import com.chenliang.baselibrary.utils.toast
 import com.chenliang.mvvmc.databinding.ActivityEventCallbackBinding
 
 class EventCallBackActivity : MyBaseActivity<ActivityEventCallbackBinding, DefaultViewModel>() {
@@ -14,9 +14,9 @@ class EventCallBackActivity : MyBaseActivity<ActivityEventCallbackBinding, Defau
 
 
     fun sendEventAction(v: View) {
-        mytoast("消息发出")
+        toast("消息发出")
         "来自send的数据".sendSelf(100) {
-            mytoast(it.getStringExtra("message")!!)
+            toast(it.getStringExtra("message")!!)
         }
     }
 

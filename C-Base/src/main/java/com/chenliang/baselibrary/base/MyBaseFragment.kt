@@ -31,7 +31,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mylog("MyActivityManager", "启动-----------${javaClass.name}")
+        log("MyActivityManager", "启动-----------${javaClass.name}")
         mRootView = layoutInflater.inflate(R.layout.base_fragment_content, null) as LinearLayout
         initSelf();
         initToolbar()

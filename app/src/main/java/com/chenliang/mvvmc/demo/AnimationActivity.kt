@@ -4,7 +4,7 @@ import android.view.MotionEvent
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.click
-import com.chenliang.baselibrary.utils.mylog
+import com.chenliang.baselibrary.utils.log
 import com.chenliang.mvvmc.databinding.ActivityAnimationBinding
 import kotlinx.android.synthetic.main.activity_animation.*
 
@@ -42,7 +42,7 @@ class AnimationActivity : MyBaseActivity<ActivityAnimationBinding, DefaultViewMo
             }
             button1.initWH2()
             button1.performClick()
-            mylog("button click onTouchEvent action up ....")
+            log("button click onTouchEvent action up ....")
         }
         return super.onTouchEvent(event)
 
