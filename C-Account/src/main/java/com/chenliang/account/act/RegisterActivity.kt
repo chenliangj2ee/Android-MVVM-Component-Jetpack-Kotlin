@@ -11,6 +11,7 @@ import com.chenliang.baselibrary.base.obs
 import com.chenliang.baselibrary.utils.MyCheck
 import com.chenliang.baselibrary.utils.check
 import com.chenliang.baselibrary.utils.sendSelf
+import com.chenliang.baselibrary.utils.toast
 
 @MyClass(myToolbarTitle = "注册")
 @MyRoute(path = "/account/Register")
@@ -30,7 +31,7 @@ class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewMo
             mViewModel.register(name, password).obs(this@RegisterActivity) {
                 it.code = 0//模拟注册成功
                 it.data = user//模拟注册成功
-                it.y { registerSuccess(it.data) }
+                it.y { registerSuccess(it) }
             }
         }
 

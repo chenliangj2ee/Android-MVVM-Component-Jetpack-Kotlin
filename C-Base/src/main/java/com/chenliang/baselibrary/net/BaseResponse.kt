@@ -11,22 +11,22 @@ open class BaseResponse<T> : Serializable {
     /**
      * 网络数据请求成功
      */
-    fun y(func: () -> Unit) {
-        if (this.code == 0 && !this.cache) func()
+    fun y(func: (data: T) -> Unit) {
+        if (this.code == 0 && !this.cache) func(data)
     }
 
     /**
      * 缓存数据请求成功
      */
-    fun c(func: () -> Unit) {
-        if (this.code == 0 && this.cache) func()
+    fun c(func: (data: T) -> Unit) {
+        if (this.code == 0 && this.cache) func(data)
     }
 
     /**
      * 网络数据请求失败
      */
-    fun n(func: () -> Unit) {
-        if (this.code != 0 && !this.cache) func()
+    fun n(func: (message: String) -> Unit) {
+        if (this.code != 0 && !this.cache) func(message)
     }
 
 }
