@@ -58,7 +58,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
             user.password.check(MyCheck.empty, "请输入密码", MyCheck.LENGTH(6, 12), "密码长度在6-12之间")
         ) return
         //登录接口
-        mViewModel.login(user.name, user.password).obs(this@LoginActivity) {  it.y { loginSuccess(it.data!!) }  }
+        mViewModel.login(user.name, user.password).obs(this@LoginActivity) {  it.y { loginSuccess(it.data) }  }
     }
 
     private fun loginSuccess(user: BeanUser) {

@@ -37,7 +37,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
         mViewModel.login(user.name, user.password).obs(this@LoginActivity) {
             it.code = 0//模拟登录成功
             it.data = user//模拟登录成功
-            it.y { loginSuccess(it.data!!) }
+            it.y { loginSuccess(it.data) }
         }
     }
 

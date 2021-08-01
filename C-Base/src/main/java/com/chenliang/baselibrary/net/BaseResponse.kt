@@ -6,7 +6,7 @@ open class BaseResponse<T> : Serializable {
     var cache = false
     var code: Int = -1
     var message: String = "程序异常！"
-    var data: T? = null
+    var data: T = Any() as T
 
     /**
      * 网络数据请求成功
