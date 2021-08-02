@@ -96,6 +96,16 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
 
 
     }
+    /**
+     * 设置标题栏标题
+     * @param title String
+     */
+    fun setToolbarTitle(title: String) {
+        if (title.isNullOrEmpty())
+            return
+        mToolBar.setTitle(title)
+        mToolBar.show(true)
+    }
 
     abstract fun initOnCreateView()
     private fun layoutId(): Int {
