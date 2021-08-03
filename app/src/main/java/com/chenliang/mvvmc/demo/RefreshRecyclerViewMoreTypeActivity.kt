@@ -22,7 +22,6 @@ class RefreshRecyclerViewMoreTypeActivity :
             }
         }
         refresh.loadData { httpGetData() }
-        recyclerview.addLoading {  }
 
 
     }
