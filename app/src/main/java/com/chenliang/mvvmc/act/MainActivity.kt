@@ -2,21 +2,17 @@ package com.chenliang.mvvmc.act
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.net.Network
 import android.view.View
 import com.chenliang.annotation.MyRoute
-import com.chenliang.baselibrary.MyCode
 import com.chenliang.baselibrary.annotation.MyClass
 import com.chenliang.baselibrary.annotation.MyField
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.*
+import com.chenliang.mvvmc.BuildConfig
 import com.chenliang.mvvmc.databinding.ActivityMainBinding
 import com.chenliang.mvvmc.demo.*
-import com.tbruyelle.rxpermissions3.RxPermissions
 import gorden.rxbus2.Subscribe
-import gorden.rxbus2.ThreadMode
-import java.security.Permissions
 
 /**
  * 主页
