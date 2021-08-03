@@ -9,78 +9,101 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="defaultActivity"
-                android:text="默认Activity" />
+                android:text="默认Activity"
+                android:textAllCaps="false" />
             android:layout_height="match_parent">
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="toolbarActivity"
-                android:text="有标题Activity" />
+                android:text="有标题Activity"
+                android:textAllCaps="false" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="refreshActivity"
-                android:text="自带下拉刷新Activity" />
+                android:text="自带下拉刷新Activity"
+                android:textAllCaps="false" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="refreshRecyclerViewActivity"
-                android:text="分页" />
+                android:text="分页-单type列表"
+                android:textAllCaps="false" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="refreshRecyclerViewMoreTypeActivity"
+                android:text="分页-多type列表"
+                android:textAllCaps="false" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="noToolbarRefreshFragment"
-                android:text="无标题、自带下拉刷新Fragment" />
+                android:text="无标题、自带下拉刷新Fragment"
+                android:textAllCaps="false" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="toolbarRefreshFragment"
-                android:text="有标题、自带下拉刷新Fragment" />
+                android:text="有标题、自带下拉刷新Fragment"
+                android:textAllCaps="false" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="viewPageFragmentDemoActivity"
-                android:text="Viewpager、tab切换Fragment" />
+                android:text="Viewpager、tab切换Fragment"
+                android:textAllCaps="false" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="dialogAction"
-                android:text="默认dialog" />
+                android:text="默认dialog"
+                android:textAllCaps="false" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="dialogCustomTextAction"
-                android:text="默认dialog,自定义文案" />
+                android:text="默认dialog,自定义文案"
+                android:textAllCaps="false" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="customDialogAction"
-                android:text="自定义dialog" />
+                android:text="自定义dialog"
+                android:textAllCaps="false" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="evnetCallBackAction"
-                android:text="Event回调" />
+                android:text="Event回调"
+                android:textAllCaps="false" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="libraryFragmentAction"
-                android:text="跨组件Fragment调用" />
+                android:text="跨组件Fragment调用"
+                android:textAllCaps="false" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

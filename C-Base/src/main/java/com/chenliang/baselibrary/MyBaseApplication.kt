@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import java.lang.reflect.Method
 
+
 /**
  *
  * @Project: MVVM-Component
@@ -17,6 +18,8 @@ abstract class MyBaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         moduleApps.forEach { it.onCreate() }
+
+
     }
 
     override fun attachBaseContext(base: Context?) {

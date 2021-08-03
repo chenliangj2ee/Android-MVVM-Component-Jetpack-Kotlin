@@ -1,5 +1,7 @@
 package com.chenliang.mvvmc.act
 
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.net.Network
 import android.view.View
 import com.chenliang.annotation.MyRoute
@@ -11,14 +13,16 @@ import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.*
 import com.chenliang.mvvmc.databinding.ActivityMainBinding
 import com.chenliang.mvvmc.demo.*
+import com.tbruyelle.rxpermissions3.RxPermissions
 import gorden.rxbus2.Subscribe
 import gorden.rxbus2.ThreadMode
+import java.security.Permissions
 
 /**
  * 主页
  */
 @MyRoute(path = "/app/main")
-@MyClass(myToolbarTitle = "主页", myShowNetworkError = true)
+@MyClass(myToolbarTitle = "Demo主页", myShowNetworkError = true)
 class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
 
     @MyField//Intent传参
@@ -28,7 +32,16 @@ class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
     var age: Int = 0
 
     override fun initCreate() {
+        mToolBar.showLeft(false)
         networkChangeListener()
+        arrayOf(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE)
+            .checkPermissions(this) {
+                if (it) {
+
+                } else {
+
+                }
+            }
     }
 
     /**
@@ -58,6 +71,10 @@ class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
 
     fun refreshRecyclerViewActivity(v: View) {
         goto(RefreshRecyclerViewActivity::class.java)
+    }
+
+    fun refreshRecyclerViewMoreTypeActivity(v: View) {
+        goto(RefreshRecyclerViewMoreTypeActivity::class.java)
     }
 
     fun noToolbarRefreshFragment(v: View) {

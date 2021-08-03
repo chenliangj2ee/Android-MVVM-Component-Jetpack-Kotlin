@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.BASE"
         tools:replace="icon,label,theme,name">
 
@@ -27,6 +28,7 @@
         <activity android:name=".demo.RefreshDemoActivity" />
         <activity android:name=".demo.ToolBarDemoActivity" />
         <activity android:name=".demo.RefreshRecyclerViewActivity" />
+        <activity android:name=".demo.RefreshRecyclerViewMoreTypeActivity" />
         <activity android:name=".demo.FragmentNoTBRefreshDemoActivity" />
         <activity android:name=".demo.FragmentToolBarRefreshDemoActivity" />
         <activity android:name=".demo.ViewPageFragmentDemoActivity" />
