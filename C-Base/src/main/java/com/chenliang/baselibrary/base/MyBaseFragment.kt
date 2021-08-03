@@ -15,10 +15,13 @@ import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.annotation.activityRefresh
 import com.chenliang.baselibrary.annotation.activityTitle
 import com.chenliang.baselibrary.annotation.initValueFromIntent
+import com.chenliang.baselibrary.annotation.myShowNetworkError
 import com.chenliang.baselibrary.utils.*
+import com.chenliang.baselibrary.view.MyNetWorkMessage
 import com.chenliang.baselibrary.view.MyToolBar
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
+import kotlinx.android.synthetic.main.base_activity_content.*
 
 abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragment() {
     lateinit var mRootView: LinearLayout
@@ -35,6 +38,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
         mRootView = layoutInflater.inflate(R.layout.base_fragment_content, null) as LinearLayout
         initSelf();
         initToolbar()
+        initNetWorkMessage()
         bindView()
 
         anrCheck { initOnCreateView() }
@@ -60,7 +64,21 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
         mToolBar.setTitle(activityTitle(this))
         mToolBar.show(activityTitle(this).isNullOrEmpty().not())
     }
+    /**
+     * 初始化网络异常状态
+     */
+    private fun initNetWorkMessage() {
+        var netWorkMessage = MyNetWorkMessage(context)
+        mRootView.addView(
+            netWorkMessage,
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        )
 
+        netWorkMessage.showNetworkError(myShowNetworkError(this))
+    }
     open fun refresh() {
     }
 

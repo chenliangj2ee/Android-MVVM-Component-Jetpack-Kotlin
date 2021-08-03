@@ -48,13 +48,24 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader
             app:item="@layout/item_layout"：item所对应的layout布局
  代码：
  * 绑定item
-            refresh.binding(fun(binding: ItemBinding, bean: Product) {
-                    binding.bean = bean
-                })
+       //单type类型
+        refresh.bindData<BeanItem> { (it.binding as ItemRecyclerviewBinding).item = it }
+
+       //多type类型
+        recyclerview.bindTypeToItemView(0, R.layout.item_recyclerview0)
+        recyclerview.bindTypeToItemView(1, R.layout.item_recyclerview1)
+        recyclerview.binding<BeanItem> {
+
+         if(it.type==0){
+            (it.binding as ItemRecyclerviewBinding0).item = it
+         }
+         if(it.type==1){
+            (it.binding as ItemRecyclerviewBinding1).item = it
+         }
+
+        }
 *数据加载监听：下拉刷新，上拉加载
-            refresh.load() {
-                    分页请使用refresh.pageSize,refresh.pageIndex数据传递给后台
-                }
+*         refresh.loadData { 分页请使用refresh.pageSize,refresh.pageIndex数据传递给后台 }
 数据更新：数据加载后，添加到列表：
         recyclerView.addData(list)
  */
@@ -69,14 +80,17 @@ class MyRefreshRecyclerView : SmartRefreshLayout {
 
     private var emptyLayoutId: Int = 0
     private var topLayoutId: Int = 0
+    private var layoutManagerValue = 0
+    private var myOrientation = 0;
+    private var spanCount = 0
     private var layoutIds = ArrayList<Int>()
     var layoutId = -1
     var layoutMap = HashMap<Int, Int>()
     var pageSize: Int = 20
     var defaultPageIndex: Int = 1
     var pageIndex: Int = defaultPageIndex
-    var enableTop=false
-    var loading=false
+    var enableTop = false
+    var loading = false
     private var loadFun: (() -> Unit?)? = null
 
     constructor(context: Context?) : super(context!!) {}
@@ -89,6 +103,10 @@ class MyRefreshRecyclerView : SmartRefreshLayout {
         topLayoutId = typedArray.getResourceId(styleable.MyRefreshRecyclerView_my_top_layout, 0)
         enableTop = typedArray.getBoolean(styleable.MyRefreshRecyclerView_my_top_enable, false)
 
+        layoutManagerValue =
+            typedArray.getInt(R.styleable.MyRefreshRecyclerView_my_layout_manager, 0)
+        spanCount = typedArray.getInt(R.styleable.MyRefreshRecyclerView_my_span_count, 2)
+        myOrientation = typedArray.getInt(R.styleable.MyRefreshRecyclerView_my_orientation, 1)
         params = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         setRefreshHeader(ClassicsHeader(context));
         setRefreshFooter(ClassicsFooter(context));
@@ -127,7 +145,7 @@ class MyRefreshRecyclerView : SmartRefreshLayout {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             recyclerView!!.setOnScrollChangeListener(OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
                 if (topLayout != null) {
-                    if (recyclerView!!.getPosition() > 50&&enableTop) {
+                    if (recyclerView!!.getPosition() > 50 && enableTop) {
                         topLayout!!.show(true)
                     } else {
                         topLayout!!.show(false)
@@ -139,20 +157,20 @@ class MyRefreshRecyclerView : SmartRefreshLayout {
     }
 
     private fun initTop(context: Context?, attributeSet: AttributeSet) {
-        if(topLayoutId==0)
-            topLayoutId=R.layout.base_layout_top
+        if (topLayoutId == 0)
+            topLayoutId = R.layout.base_layout_top
         if (topLayoutId != 0) {
             var params =
                 FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-            params.gravity =  Gravity.RIGHT +Gravity.BOTTOM
-            params.rightMargin=100
-            params.bottomMargin=100
+            params.gravity = Gravity.RIGHT + Gravity.BOTTOM
+            params.rightMargin = 100
+            params.bottomMargin = 100
             topLayout = View.inflate(context, topLayoutId, null)
             rootView!!.addView(topLayout, params)
             topLayout!!.show(false)
             topLayout!!.setOnClickListener {
                 recyclerView!!.smoothScrollToPosition(0)
-                Handler().postDelayed(Runnable {   recyclerView!!.scrollToPosition(0) },500)
+                Handler().postDelayed(Runnable { recyclerView!!.scrollToPosition(0) }, 500)
                 topLayout!!.show(false)
             }
         }
@@ -170,7 +188,7 @@ class MyRefreshRecyclerView : SmartRefreshLayout {
         this.setOnLoadMoreListener {
             pageIndex =
                 recyclerView!!.getData<MyBaseBean>().size / pageSize + defaultPageIndex
-            if(recyclerView!!.isLoading())
+            if (recyclerView!!.isLoading())
                 return@setOnLoadMoreListener
             loadFun?.invoke()
         }
@@ -180,6 +198,9 @@ class MyRefreshRecyclerView : SmartRefreshLayout {
     fun <D : MyBaseBean> bindData(func: (bind: D) -> Unit): MyRefreshRecyclerView {
         recyclerView!!.layoutIds = layoutMap
         recyclerView!!.layoutId = layoutId
+        recyclerView!!.layoutManagerValue = layoutManagerValue
+        recyclerView!!.spanCount = spanCount
+        recyclerView!!.myOrientation = myOrientation
         recyclerView!!.binding(func)
         return this
     }

@@ -2,12 +2,14 @@ package com.chenliang.baselibrary.utils
 
 import android.app.Activity
 import android.app.ActivityManager
+import android.app.ActivityManager.RunningAppProcessInfo
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Process
+import com.chenliang.baselibrary.BaseInit
 import kotlin.system.exitProcess
 /**
  *
@@ -19,23 +21,25 @@ import kotlin.system.exitProcess
 object MyApp {
 
     /**
+     * tag app：是否是主进程
      * 是否是主进程
      * @param context Context
      * @return Boolean
      */
-    fun isMainProcess(context: Context): Boolean {
-        val procName = getCurrentProcessName(context)
-        return procName == null || procName.equals(context.packageName, ignoreCase = true)
+    fun isMainProcess(): Boolean {
+        val procName = getCurrentProcessName()
+        return procName == null || procName.equals(BaseInit.con!!.packageName, ignoreCase = true)
     }
 
     /**
+     * tag app：获取当前进程名字
      * 获取当前进程名字
      * @param context Context
      * @return String?
      */
-    private fun getCurrentProcessName(context: Context): String? {
+    private fun getCurrentProcessName(): String? {
         val pid = Process.myPid()
-        val mActivityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val mActivityManager = BaseInit.con!!.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         for (appProcess in mActivityManager.runningAppProcesses) {
             if (appProcess.pid == pid) {
                 return appProcess.processName
@@ -46,6 +50,7 @@ object MyApp {
 
 
     /**
+     * tag app：系统分享
      * 系统分享
      * @param context Context
      * @param title String?
@@ -62,22 +67,26 @@ object MyApp {
     }
 
     /**
-     * 判断是否前台运行
-     * @param context Context
+     * tag app： 判断是否前台运行
+     *  判断是否前台运行
      * @return Boolean
      */
-    fun isForeground(context: Context): Boolean {
-        val am = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        val taskList = am.getRunningTasks(1)
-        if (taskList != null && taskList.isNotEmpty()) {
-            val componentName = taskList[0].topActivity
-            return componentName != null && componentName.packageName == context.packageName
+    fun isAppRunningForeground(): Boolean {
+        val activityManager = BaseInit.con!!.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val runningAppProcessInfos = activityManager.runningAppProcesses ?: return false
+        val packageName = BaseInit.con!!.packageName
+        for (appProcessInfo in runningAppProcessInfos) {
+            if (appProcessInfo.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND
+                && appProcessInfo.processName == packageName
+            ) {
+                return true
+            }
         }
         return false
     }
 
-
     /**
+     * tag app：获取版本名称
      * 获取版本名称
      * @param context Context
      * @return String?
@@ -98,6 +107,7 @@ object MyApp {
 
 
     /**
+     * tag app：获取版本号
      * 获取版本号
      * @param context Context
      * @return Int
@@ -117,6 +127,7 @@ object MyApp {
     }
 
     /**
+     * tag app：退出应用
      * 退出应用
      */
     fun exit() {
@@ -125,6 +136,7 @@ object MyApp {
     }
 
     /**
+     * tag app：打电话
      * 打电话
      * @param phone String
      * @return Intent?
@@ -138,6 +150,7 @@ object MyApp {
 
 
     /**
+     * tag app：发送短信
      * 发送短信
      * @param phoneNumber
      * @param message
@@ -150,6 +163,7 @@ object MyApp {
 
 
     /**
+     * tag app： activity透明
      * activity透明
      * @param activity Activity
      */

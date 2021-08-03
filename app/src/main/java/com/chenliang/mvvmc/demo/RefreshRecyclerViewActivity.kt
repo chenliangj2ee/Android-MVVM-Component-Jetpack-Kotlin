@@ -4,6 +4,7 @@ import android.os.Handler
 import com.chenliang.baselibrary.annotation.MyClass
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
+import com.chenliang.mvvmc.R
 import com.chenliang.mvvmc.bean.BeanItem
 import com.chenliang.mvvmc.databinding.ActivityRecyclerviewBinding
 import com.chenliang.mvvmc.databinding.ItemRecyclerviewBinding
@@ -16,6 +17,11 @@ class RefreshRecyclerViewActivity :
 
         refresh.bindData<BeanItem> { (it.binding as ItemRecyclerviewBinding).item = it }
         refresh.loadData { httpGetData() }
+
+
+        recyclerview.binding<BeanItem> {
+            (it.binding as ItemRecyclerviewBinding).item = it
+        }
 
     }
 
@@ -31,6 +37,7 @@ class RefreshRecyclerViewActivity :
                 datas.add(bean)
             }
             refresh.addData(datas)
+            recyclerview.addData(datas)
             mToolBar.setTitle("分页：${refresh.pageIndex}")
         }
     }

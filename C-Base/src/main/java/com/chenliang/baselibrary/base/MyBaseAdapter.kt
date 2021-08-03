@@ -50,7 +50,9 @@ open class MyBaseAdapter<D : MyBaseBean>(
         if (position >= data.size - 10 && !loading) {
             log("自动加载....$position")
             loading = true
-            loadFun!!()
+            if(loadFun!=null){
+                loadFun!!()
+            }
         }
 
         val binding: ViewDataBinding = DataBindingUtil.getBinding(holder.itemView)!!

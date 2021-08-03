@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="my_item_layout" format="reference" />
-
-    <declare-styleable name="MyRecyclerView">
-        <attr name="my_item_layout" />
-    </declare-styleable>
-
     <attr name="my_empty_layout" format="reference" />
     <attr name="my_top_layout" format="reference" />
     <attr name="my_top_enable" format="boolean" />
+    <attr name="my_span_count" format="integer" />
+
+    <attr name="my_layout_manager" format="enum">
+        <enum name="linearLayout" value="0" />
+        <enum name="gridLayout" value="1" />
+        <enum name="staggered" value="2" />
+    </attr>
+
+    <attr name="my_orientation">
+        <enum name="horizontal" value="0" />
+        <enum name="vertical" value="1" />
+    </attr>
+
+
+    <declare-styleable name="MyRecyclerView">
+        <attr name="my_item_layout" />
+        <attr name="my_span_count" />
+        <attr name="my_layout_manager" />
+    </declare-styleable>
+
+
     <declare-styleable name="MyRefreshRecyclerView">
         <attr name="my_item_layout" />
         <attr name="my_empty_layout" />
         <attr name="my_top_layout" />
         <attr name="my_top_enable" />
+        <attr name="my_layout_manager" />
+        <attr name="my_span_count" />
+        <attr name="my_orientation" />
     </declare-styleable>
 
 </resources>

@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.wifi.WifiManager
+import com.chenliang.baselibrary.BaseInit
 import java.net.InetAddress
 import java.net.NetworkInterface
 import java.net.SocketException
@@ -31,6 +32,7 @@ class MyNetWorkUtils {
 
 
         /**
+         * tag network：获取本机IP地址
          * 获取本机IP地址
          *
          * @return null：没有网络连接
@@ -66,11 +68,17 @@ class MyNetWorkUtils {
          * @param context 上下文
          * @return 当前网络的状态。具体类型可参照NetworkInfo.State.CONNECTED、NetworkInfo.State.CONNECTED.DISCONNECTED等字段。当前没有网络连接时返回null
          */
-        private fun getCurrentNetworkState(context: Context): NetworkInfo.State? {
-            @SuppressLint("MissingPermission") val networkInfo = (context.getSystemService(
-                Context.CONNECTIVITY_SERVICE
-            ) as ConnectivityManager).activeNetworkInfo
-            return networkInfo?.state
+        private fun getCurrentNetworkState(context: Context): Boolean {
+            @SuppressLint("MissingPermission")
+            val infos =
+                (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).allNetworkInfo
+
+            infos?.forEach {
+                if (it.state == NetworkInfo.State.CONNECTED) {
+                    return true
+                }
+            }
+            return false
         }
 
 
@@ -89,62 +97,46 @@ class MyNetWorkUtils {
 
 
         /**
+         * tag network：网络是否已经连接
          * 网络是否已经连接
          * @param context Context
          * @return Boolean
          */
-        fun isConnected(context: Context): Boolean {
-            return getCurrentNetworkState(context) == NetworkInfo.State.CONNECTED
+        fun isConnected(): Boolean {
+            return getCurrentNetworkState(BaseInit.con!!)
         }
 
 
         /**
-         * 网络是否正在连接
-         * @param context Context
-         * @return Boolean
-         */
-        fun isConnecting(context: Context): Boolean {
-            return getCurrentNetworkState(context) == NetworkInfo.State.CONNECTING
-        }
-
-
-        /**
+         * tag network：判断当前网络是否已经断开
          * 判断当前网络是否已经断开
          * @param context Context
          * @return Boolean
          */
-        fun isDisconnected(context: Context): Boolean {
-            return getCurrentNetworkState(context) == NetworkInfo.State.DISCONNECTED
+        fun isDisconnected(): Boolean {
+            return getCurrentNetworkState(BaseInit.con!!)
         }
 
 
         /**
-         * 断当前网络是否正在断开
-         * @param context Context
-         * @return Boolean
-         */
-        fun isDisconnecting(context: Context): Boolean {
-            return getCurrentNetworkState(context) == NetworkInfo.State.DISCONNECTING
-        }
-
-
-        /**
+         * tag network：是否是手机网络
          * 是否是手机网络
          * @param context Context
          * @return Boolean
          */
-        fun isMobile(context: Context): Boolean {
-            return getCurrentNetworkType(context) == ConnectivityManager.TYPE_MOBILE
+        fun isMobile(): Boolean {
+            return getCurrentNetworkType(BaseInit.con!!) == ConnectivityManager.TYPE_MOBILE
         }
 
 
         /**
+         * tag network：判断当前网络的类型是否是Wifi
          * 判断当前网络的类型是否是Wifi
          * @param context Context
          * @return Boolean
          */
-        fun isWifi(context: Context): Boolean {
-            return getCurrentNetworkType(context) == ConnectivityManager.TYPE_WIFI
+        fun isWifi(): Boolean {
+            return getCurrentNetworkType(BaseInit.con!!) == ConnectivityManager.TYPE_WIFI
         }
 
 
@@ -157,8 +149,8 @@ class MyNetWorkUtils {
          */
         @SuppressLint("MissingPermission")
         @Throws(Exception::class)
-        private fun getWifiState(context: Context): Int {
-            val wifiManager = context.getSystemService(
+        private fun getWifiState(): Int {
+            val wifiManager = BaseInit.con!!.getSystemService(
                 Context.WIFI_SERVICE
             ) as WifiManager
             return wifiManager?.wifiState ?: throw Exception("wifi device not found!")
@@ -166,6 +158,7 @@ class MyNetWorkUtils {
 
 
         /**
+         * tag network：判断Wifi是否打开，需要ACCESS_WIFI_STATE权限
          * 判断Wifi是否打开，需要ACCESS_WIFI_STATE权限
          * @param context Context
          * @return Boolean
@@ -173,12 +166,13 @@ class MyNetWorkUtils {
          */
         @Throws(Exception::class)
         fun isWifiOpen(context: Context): Boolean {
-            val wifiState = getWifiState(context)
+            val wifiState = getWifiState()
             return wifiState == WifiManager.WIFI_STATE_ENABLED || wifiState == WifiManager.WIFI_STATE_ENABLING
         }
 
 
         /**
+         * tag network：打开wifi
          * 打开Wifi，需要CHANGE_WIFI_STATE权限
          * @param context Context
          * @param enable Boolean
@@ -187,24 +181,25 @@ class MyNetWorkUtils {
          */
         @SuppressLint("MissingPermission")
         @Throws(Exception::class)
-        fun openWifi(context: Context, enable: Boolean): Boolean {
-            if (isWifiOpen(context) != enable) {
-                (context.getSystemService(
+        fun openWifi(): Boolean {
+            if (!isWifiOpen(BaseInit.con!!)) {
+                (BaseInit.con!!.getSystemService(
                     Context.WIFI_SERVICE
-                ) as WifiManager).isWifiEnabled = enable
+                ) as WifiManager).isWifiEnabled = true
             }
             return true
         }
 
 
         /**
+         * tag network：断移动网络是否打开
          * 断移动网络是否打开，需要ACCESS_NETWORK_STATE权限
          * @param context Context
          * @return Boolean
          */
         @SuppressLint("MissingPermission")
-        fun isMobileEnable(context: Context): Boolean {
-            return (context.getSystemService(
+        fun isMobileEnable(): Boolean {
+            return (BaseInit.con!!.getSystemService(
                 Context.CONNECTIVITY_SERVICE
             ) as ConnectivityManager).getNetworkInfo(
                 ConnectivityManager.TYPE_MOBILE

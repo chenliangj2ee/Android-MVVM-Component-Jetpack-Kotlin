@@ -1,6 +1,7 @@
 package com.chenliang.baselibrary.base
 
 import android.graphics.Color
+import android.net.Network
 import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
@@ -13,18 +14,19 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModel
+import com.chenliang.baselibrary.MyCode
 import com.chenliang.baselibrary.R
-import com.chenliang.baselibrary.annotation.activityFullScreen
-import com.chenliang.baselibrary.annotation.activityRefresh
-import com.chenliang.baselibrary.annotation.activityTitle
-import com.chenliang.baselibrary.annotation.initValueFromIntent
+import com.chenliang.baselibrary.annotation.*
 import com.chenliang.baselibrary.net.utils.MyHttpEvent
 import com.chenliang.baselibrary.utils.*
+import com.chenliang.baselibrary.view.MyNetWorkMessage
 import com.chenliang.baselibrary.view.MyToolBar
 import com.github.xubo.statusbarutils.StatusBarUtils
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import gorden.rxbus2.RxBus
+import gorden.rxbus2.Subscribe
+import gorden.rxbus2.ThreadMode
 import kotlinx.android.synthetic.main.base_activity_content.*
 
 abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCompatActivity() {
@@ -43,13 +45,14 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
         initSelf()
         initStatusBar()
         initToolbar()
+        initNetWorkMessage()
         bindView()
         anrCheck(200) { initCreate() }
     }
 
-    private fun initSelf(){
-        mW = MyScreen.getScreenWidth(this)
-        mH = MyScreen.getScreenHeight(this)
+    private fun initSelf() {
+        mW = MyScreen.getScreenWidth()
+        mH = MyScreen.getScreenHeight()
         RxBus.get().register(this)
         mHttpEvent = MyHttpEvent(this)
         initValueFromIntent(this)
@@ -130,7 +133,21 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
         mToolBar.setTitle(activityTitle(this))
         mToolBar.show(activityTitle(this).isNullOrEmpty().not())
     }
+    /**
+     * 初始化网络异常状态
+     */
+    private fun initNetWorkMessage() {
+        var netWorkMessage = MyNetWorkMessage(this)
+        base_root.addView(
+            netWorkMessage,
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        )
 
+        netWorkMessage.showNetworkError(myShowNetworkError(this))
+    }
     /**
      * 设置标题栏标题
      * @param title String
@@ -238,5 +255,7 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
         handler.postDelayed(run, delay)
         handlerRunnable.add(run)
     }
+
+
 
 }

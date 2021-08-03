@@ -9,8 +9,12 @@ import android.graphics.Matrix
 import android.graphics.PixelFormat
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.os.Handler
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -30,6 +34,9 @@ import com.google.gson.Gson
 import com.tbruyelle.rxpermissions3.RxPermissions
 import gorden.rxbus2.RxBus
 import kotlinx.android.synthetic.main.base_toast.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.regex.Pattern
@@ -174,7 +181,7 @@ fun <T : ViewModel> Fragment.initVM(modelClass: Class<T>) = ViewModelProvider(th
  * @return Boolean
  */
 fun Any.hasNetWork(): Boolean {
-    return MyNetWorkUtils.isConnected(BaseInit.con!!)
+    return MyNetWorkUtils.isConnected()
 }
 
 
@@ -513,6 +520,7 @@ fun Any.send(code: Int, f: ((intent: Intent) -> Unit)) {
 }
 
 fun Any.sendSelf(code: Int) {
+
     RxBus.get().send(code, this)
 }
 
@@ -688,4 +696,34 @@ fun EditText.changed(func: (str: String) -> Unit) {
     }
 
     this.addTextChangedListener(listener)
+}
+
+
+/**
+ * tag network：网络状态变化监听
+ * @receiver Any
+ * @param func Function1<[@kotlin.ParameterName] Boolean, Unit>
+ */
+fun Any.networkChange(func: (enable: Boolean) -> Unit) {
+
+    class CallBack : ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network: Network) {
+            super.onAvailable(network)
+
+            GlobalScope.launch(Dispatchers.Main) {
+                func(true)
+            }
+        }
+
+        override fun onLost(network: Network) {
+            super.onLost(network)
+            GlobalScope.launch(Dispatchers.Main) {
+                func(false)
+            }
+        }
+    }
+
+    val connMgr =
+        BaseInit.con?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    connMgr?.registerNetworkCallback(NetworkRequest.Builder().build(), CallBack())
 }

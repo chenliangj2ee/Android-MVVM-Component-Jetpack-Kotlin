@@ -1,27 +1,48 @@
 package com.chenliang.mvvmc.act
 
+import android.net.Network
 import android.view.View
 import com.chenliang.annotation.MyRoute
+import com.chenliang.baselibrary.MyCode
 import com.chenliang.baselibrary.annotation.MyClass
+import com.chenliang.baselibrary.annotation.MyField
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.*
 import com.chenliang.mvvmc.databinding.ActivityMainBinding
 import com.chenliang.mvvmc.demo.*
 import gorden.rxbus2.Subscribe
+import gorden.rxbus2.ThreadMode
 
 /**
  * 主页
  */
 @MyRoute(path = "/app/main")
-@MyClass(myToolbarTitle = "主页")
+@MyClass(myToolbarTitle = "主页", myShowNetworkError = true)
 class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
 
+    @MyField//Intent传参
+    lateinit var username: String
+
+    @MyField//Intent传参
+    var age: Int = 0
+
     override fun initCreate() {
-        log(intent.getStringExtra("username").toString())
-        log(intent.getIntExtra("age", 0).toString())
+        networkChangeListener()
     }
 
+    /**
+     * 网络监听
+     */
+    private fun networkChangeListener() {
+        networkChange {
+            if (it) {
+                log("来网了")
+            } else {
+                log("断网了")
+            }
+        }
+    }
 
     fun defaultActivity(v: View) {
         goto(DefaultDemoActivity::class.java)
@@ -92,7 +113,13 @@ class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
         event.callback("message", "回调成功", "age", 11)
     }
 
+    /**
+     * 跨组件fragment调用
+     * @param v View
+     */
     fun libraryFragmentAction(v: View) {
         goto(LibraryFragmentActivity::class.java)
     }
+
+
 }
