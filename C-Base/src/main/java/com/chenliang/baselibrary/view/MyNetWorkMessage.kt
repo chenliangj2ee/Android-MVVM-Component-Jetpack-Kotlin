@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.utils.hasNetWork
+import com.chenliang.baselibrary.utils.log
 import com.chenliang.baselibrary.utils.networkChange
 import com.chenliang.baselibrary.utils.show
 
@@ -28,9 +29,9 @@ class MyNetWorkMessage : LinearLayout {
     fun showNetworkError(boo: Boolean) {
         this.boo = boo
         if (boo) {
-            show(hasNetWork())
-            networkChange { show(it) }
-        }else{
+            show(!hasNetWork())
+            networkChange { show(!it) }
+        } else {
             show(false)
         }
     }
