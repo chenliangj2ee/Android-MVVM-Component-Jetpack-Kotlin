@@ -229,7 +229,7 @@ class MyRefreshRecyclerView : SmartRefreshLayout {
     public fun <D : MyBaseBean> addData(list: ArrayList<D>?) {
         if (list != null) {
             if (pageIndex == defaultPageIndex) {
-                recyclerView!!.clearData<MyBaseBean>()
+                recyclerView!!.clearData()
             }
             recyclerView!!.addData(list)
 

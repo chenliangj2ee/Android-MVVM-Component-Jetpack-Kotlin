@@ -5,5 +5,7 @@ class MyRetrofitGoValue(
     val cache: Boolean,
     val hasCacheLoading: Boolean,
     val tag: String,
-    val failToast: Boolean
+    val failToast: Boolean,
+    val successCode: Int,
+    val failCode: Int
 )

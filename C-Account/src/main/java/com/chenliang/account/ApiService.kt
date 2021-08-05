@@ -28,4 +28,12 @@ interface ApiService {
     ): Data<BeanUser>
 
 
+    @MyRetrofitGo(myTag = "添加测试",myCache = false,myLoading = true,myFailToast = true,mySuccessCode = 1001)
+    @POST("home/add")
+    fun addTest(
+        @Query("account") account: String,
+        @Query("password") password: String
+    ): Data<BeanUser>
+
+
 }

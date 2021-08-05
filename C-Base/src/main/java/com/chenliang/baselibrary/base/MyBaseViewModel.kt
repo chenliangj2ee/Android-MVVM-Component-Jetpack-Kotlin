@@ -82,8 +82,16 @@ open class MyBaseViewModel : ViewModel() {
             viewModelScope.launch(Dispatchers.Main) {
                 data.value = responseBean as BaseResponse<Any>
 
-                if (myRetrofitGoValue.failToast&&responseBean.code!=0) {
+                if (myRetrofitGoValue.failToast && responseBean.code != 0) {
                     toast(responseBean.message)
+
+                }
+                if (myRetrofitGoValue.successCode != 0 && responseBean.code == 0) {
+                    RxBus.get().send(myRetrofitGoValue.successCode)
+                }
+
+                if (myRetrofitGoValue.failCode != 0 && responseBean.code != 0) {
+                    RxBus.get().send(myRetrofitGoValue.failCode)
                 }
 
             }
@@ -170,7 +178,9 @@ open class MyBaseViewModel : ViewModel() {
             cache = false,
             hasCacheLoading = false,
             tag = "",
-            failToast = false
+            failToast = false,
+            successCode = 0,
+            failCode = 0
         )
     }
 

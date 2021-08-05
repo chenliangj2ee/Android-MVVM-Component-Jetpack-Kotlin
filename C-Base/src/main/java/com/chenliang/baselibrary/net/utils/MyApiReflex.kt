@@ -38,8 +38,10 @@ object MyApiReflex {
             var hasCacheLoading = method.getAnnotation(MyRetrofitGo::class.java).myHasCacheLoading
             var tag = method.getAnnotation(MyRetrofitGo::class.java).myTag
             var failToast = method.getAnnotation(MyRetrofitGo::class.java).myFailToast
+            var successCode = method.getAnnotation(MyRetrofitGo::class.java).mySuccessCode
+            var failCode = method.getAnnotation(MyRetrofitGo::class.java).myFailCode
 
-            value[path] = MyRetrofitGoValue(loading, cache, hasCacheLoading, tag,failToast)
+            value[path] = MyRetrofitGoValue(loading, cache, hasCacheLoading, tag,failToast,successCode,failCode)
 
         }
     }
