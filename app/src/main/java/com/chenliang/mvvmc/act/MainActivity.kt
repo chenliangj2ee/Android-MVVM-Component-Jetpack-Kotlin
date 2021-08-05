@@ -105,10 +105,10 @@ class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
             .n("关闭") { toast("关闭被点击") }
             .show(this)
         //或者
-        dialog("确定删除用户？")
-            .y("提交") { toast("确定被点击") }
-            .n("关闭") { toast("取消被点击") }
-            .show(this)
+//        dialog("确定删除用户？")
+//            .y("提交") { toast("确定被点击") }
+//            .n("关闭") { toast("取消被点击") }
+//            .show(this)
     }
 
     fun customDialogAction(v: View) {

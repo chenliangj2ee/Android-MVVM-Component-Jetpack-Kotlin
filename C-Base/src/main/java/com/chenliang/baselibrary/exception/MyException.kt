@@ -108,7 +108,7 @@ class MyException private constructor() : Thread.UncaughtExceptionHandler {
                     "AsException",
                     "-------------------------------------------------------------------------"
                 )
-                System.exit(1)
+//                System.exit(1)
             }
         }
         return boo
