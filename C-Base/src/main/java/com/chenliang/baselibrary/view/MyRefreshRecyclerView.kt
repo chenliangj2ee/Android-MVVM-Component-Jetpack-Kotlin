@@ -14,6 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.R.*
+import com.chenliang.baselibrary.base.MyBaseAdapter
 import com.chenliang.baselibrary.base.MyBaseBean
 import com.chenliang.baselibrary.utils.show
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -240,7 +241,21 @@ class MyRefreshRecyclerView : SmartRefreshLayout {
         stop()
     }
 
-    public fun stop() {
+    fun notifyDataSetChanged() {
+        this.recyclerView?.listAdapter?.notifyDataSetChanged()
+    }
+
+    fun removeData(any: Any) {
+        var index = (recyclerView?.listAdapter as MyBaseAdapter<*>).data.indexOf(any)
+        (recyclerView?.listAdapter as MyBaseAdapter<*>).data.removeAt(index)
+        this.recyclerView?.listAdapter?.notifyItemRemoved(index)
+    }
+
+    fun clearData() {
+        recyclerView?.clearData()
+    }
+
+    fun stop() {
         this.finishRefresh()
         this.finishLoadMore()
         recyclerView!!.finishLoading()

@@ -21,7 +21,7 @@ open class MyBaseAdapter<D : MyBaseBean>(
 
     var loading = false;
     var con = context;
-    var data = ArrayList<D>()
+    open var data = ArrayList<D>()
     var layoutIds = layoutIds;
     var viewHolders = HashMap<Int, MyViewHolder>()
     var func = func

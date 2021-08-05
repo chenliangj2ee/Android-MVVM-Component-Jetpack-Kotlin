@@ -131,9 +131,9 @@ class MyRecyclerView : RecyclerView {
         listAdapter.notifyDataSetChanged()
     }
 
-    public fun <D : MyBaseBean> clearData() {
+    fun clearData() {
 
-        (listAdapter as MyBaseAdapter<D>).data.clear()
+        (listAdapter as MyBaseAdapter<*>).data.clear()
         listAdapter.notifyDataSetChanged()
     }
 
