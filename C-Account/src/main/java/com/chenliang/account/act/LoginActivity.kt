@@ -43,7 +43,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 
     private fun loginSuccess(user: BeanUser) {
         user.save()
-        goto("/app/main2", "username", "tom", "age", 15)
+        goto("/app/main", "username", "tom", "age", 15)
         finish()
     }
 
