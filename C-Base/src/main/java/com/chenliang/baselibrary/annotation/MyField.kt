@@ -32,7 +32,7 @@ fun initValueFromIntent(any: Any) {
             f.isAccessible = true
             var fieldValue = f.get(any)
 
-            if (fieldValue == null) {
+            if (fieldValue != null) {
                 var fieldName = f.name
                 var fieldType = f.type
                 var anno = f.getAnnotation(MyField::class.java)
