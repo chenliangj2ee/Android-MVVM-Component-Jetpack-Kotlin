@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
             android:hint="请输入账号"
+            android:maxLength="13"
             android:text="@={user.name}" />
 
         <EditText

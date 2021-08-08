@@ -419,6 +419,11 @@ fun Context.goto(path: String, vararg values: Any): Fragment {
     } else {
         key = path;
 //        log("goto MyRouteUtils.path[key]: ${MyRouteUtils.path[key]} -----------------------------")
+        if(MyRouteUtils.path[key]==null){
+            toast("找不到路由对应的页面：$key")
+            loge("找不到路由对应的页面：$key")
+            return MyDefaultFragment()
+        }
         classPath = MyRouteUtils.path[key]!!.split("|")[1]
     }
 //    log("goto classPath: $classPath -----------------------------")
