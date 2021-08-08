@@ -30,58 +30,55 @@ fun initValueFromIntent(any: Any) {
 
         for (f in fields) {
             f.isAccessible = true
-            var fieldValue = f.get(any)
 
-            if (fieldValue != null) {
-                var fieldName = f.name
-                var fieldType = f.type
-                var anno = f.getAnnotation(MyField::class.java)
-                var intentKey = fieldName
-                if (anno?.myKey != "") {
-                    intentKey = anno?.myKey
+            var fieldName = f.name
+            var fieldType = f.type
+            var anno = f.getAnnotation(MyField::class.java)
+            var intentKey = fieldName
+            if (anno?.myKey != "") {
+                intentKey = anno?.myKey
+            }
+
+            if (any is Activity) {
+                when {
+                    String::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.intent.getStringExtra(intentKey))
+                    Int::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.intent.getIntExtra(intentKey, 0))
+                    Boolean::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.intent.getBooleanExtra(intentKey, false))
+                    Long::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.intent.getLongExtra(intentKey, 0))
+                    Double::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.intent.getDoubleExtra(intentKey, 0.0))
+                    Float::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.intent.getFloatExtra(intentKey, 0F))
+                    Serializable::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.intent.getSerializableExtra(intentKey))
                 }
-
-                if (any is Activity) {
-                    when {
-                        String::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.intent.getStringExtra(intentKey))
-                        Int::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.intent.getIntExtra(intentKey, 0))
-                        Boolean::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.intent.getBooleanExtra(intentKey, false))
-                        Long::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.intent.getLongExtra(intentKey, 0))
-                        Double::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.intent.getDoubleExtra(intentKey, 0.0))
-                        Float::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.intent.getFloatExtra(intentKey, 0F))
-                        Serializable::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.intent.getSerializableExtra(intentKey))
-                    }
-
-                }
-                if (any is Fragment) {
-                    when {
-                        String::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.arguments?.getString(intentKey))
-                        Int::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.arguments?.getInt(intentKey, 0))
-                        Boolean::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.arguments?.getBoolean(intentKey, false))
-                        Long::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.arguments?.getLong(intentKey, 0))
-                        Double::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.arguments?.getDouble(intentKey, 0.0))
-                        Float::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.arguments?.getFloat(intentKey, 0F))
-                        Serializable::class.java.isAssignableFrom(fieldType) ->
-                            f.set(any, any.arguments?.getSerializable(intentKey))
-                    }
-
-                }
-
 
             }
+            if (any is Fragment) {
+                when {
+                    String::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.arguments?.getString(intentKey))
+                    Int::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.arguments?.getInt(intentKey, 0))
+                    Boolean::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.arguments?.getBoolean(intentKey, false))
+                    Long::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.arguments?.getLong(intentKey, 0))
+                    Double::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.arguments?.getDouble(intentKey, 0.0))
+                    Float::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.arguments?.getFloat(intentKey, 0F))
+                    Serializable::class.java.isAssignableFrom(fieldType) ->
+                        f.set(any, any.arguments?.getSerializable(intentKey))
+                }
+
+            }
+
+
         }
     }
 
