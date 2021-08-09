@@ -57,11 +57,14 @@ import java.util.regex.Pattern
  * @return View
  */
 fun View.show(show: Boolean) = this.apply {
-    if (show) {
-        this.visibility = View.VISIBLE
-    } else {
-        this.visibility = View.GONE
-    }
+    this.visibility = if (show) View.VISIBLE else View.GONE
+}
+
+/**
+ * 是否隐藏
+ */
+fun View.hide(hide: Boolean) = this.apply {
+    this.visibility = if (hide) View.GONE else View.VISIBLE;
 }
 
 private var toastData = HashMap<String, String>()
@@ -419,7 +422,7 @@ fun Context.goto(path: String, vararg values: Any): Fragment {
     } else {
         key = path;
 //        log("goto MyRouteUtils.path[key]: ${MyRouteUtils.path[key]} -----------------------------")
-        if(MyRouteUtils.path[key]==null){
+        if (MyRouteUtils.path[key] == null) {
             toast("找不到路由对应的页面：$key")
             loge("找不到路由对应的页面：$key")
             return MyDefaultFragment()
@@ -708,6 +711,7 @@ fun Any.editChanged(vararg edits: EditText, func: () -> Unit) {
         edit.changed { func() }
     }
 }
+
 /**
  * tag network：网络状态变化监听
  * @receiver Any
