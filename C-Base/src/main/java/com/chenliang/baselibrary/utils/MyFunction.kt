@@ -703,7 +703,11 @@ fun EditText.changed(func: (str: String) -> Unit) {
     this.addTextChangedListener(listener)
 }
 
-
+fun Any.editChanged(vararg edits: EditText, func: () -> Unit) {
+    for (edit in edits) {
+        edit.changed { func() }
+    }
+}
 /**
  * tag network：网络状态变化监听
  * @receiver Any
