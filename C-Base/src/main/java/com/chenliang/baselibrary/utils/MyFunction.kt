@@ -12,7 +12,9 @@ import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.provider.Settings
 import android.text.Editable
@@ -21,11 +23,15 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.chenliang.annotation.MyRouteUtils
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.R
@@ -37,9 +43,10 @@ import kotlinx.android.synthetic.main.base_toast.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.io.Serializable
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.regex.Pattern
+import javax.sql.DataSource
 
 
 /**
@@ -739,4 +746,69 @@ fun Any.networkChange(func: (enable: Boolean) -> Unit) {
     val connMgr =
         BaseInit.con?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     connMgr?.registerNetworkCallback(NetworkRequest.Builder().build(), CallBack())
+}
+
+/**
+ * 将图片下载到本地
+ * @receiver ImageView
+ * @param url String
+ */
+fun ImageView.download(url: String) {
+
+    var downloadListener = object : RequestListener<File> {
+        override fun onLoadFailed(
+            _: GlideException?, _: Any?, _: Target<File>?, _: Boolean,
+        ): Boolean {
+            toast("图片下载视频")
+            return false
+        }
+
+        override fun onResourceReady(
+            resource: File?,
+            model: Any?,
+            target: com.bumptech.glide.request.target.Target<File>?,
+            dataSource: com.bumptech.glide.load.DataSource?,
+            isFirstResource: Boolean
+        ): Boolean {
+            saveFileFromUri(context!!, Uri.fromFile(resource))
+        }
+    }
+
+    Glide.with(context!!)
+        .downloadOnly()
+        .load(url)
+        .listener(downloadListener)
+        .preload();
+}
+
+
+private fun saveFileFromUri(context: Context, uri: Uri) {
+    //系统相册目录
+    val storePath = (Environment.getExternalStorageDirectory()
+        .toString() + File.separator + Environment.DIRECTORY_DCIM
+            + File.separator + "Camera" + File.separator + "new_" + File(uri.path + ".png").name)
+    var inputStream: InputStream? = null
+    var bos: BufferedOutputStream? = null
+    try {
+        inputStream = context.contentResolver.openInputStream(uri)
+        bos = BufferedOutputStream(FileOutputStream(storePath, false))
+        val buf = ByteArray(1024)
+        inputStream!!.read(buf)
+        do {
+            bos.write(buf)
+        } while (inputStream.read(buf) != -1)
+    } catch (e: IOException) {
+        e.printStackTrace()
+    } finally {
+        //发送广播通知系统图库刷新数据
+        val uri2 = Uri.fromFile(File(storePath))
+        context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri2))
+        Any().toast("图片已保存到相册")
+        try {
+            inputStream?.close()
+            bos?.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
 }
