@@ -32,6 +32,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.chenliang.annotation.MyRouteUtils
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.R
@@ -756,12 +757,7 @@ fun Any.networkChange(func: (enable: Boolean) -> Unit) {
 fun ImageView.download(url: String) {
 
     var downloadListener = object : RequestListener<File> {
-        override fun onLoadFailed(
-            _: GlideException?, _: Any?, _: Target<File>?, _: Boolean,
-        ): Boolean {
-            toast("图片下载视频")
-            return false
-        }
+
 
         override fun onResourceReady(
             resource: File?,
@@ -771,6 +767,17 @@ fun ImageView.download(url: String) {
             isFirstResource: Boolean
         ): Boolean {
             saveFileFromUri(context!!, Uri.fromFile(resource))
+            return true
+        }
+
+        override fun onLoadFailed(
+            e: GlideException?,
+            model: Any?,
+            target: Target<File>?,
+            isFirstResource: Boolean
+        ): Boolean {
+            toast("图片下载视频")
+            return false;
         }
     }
 
