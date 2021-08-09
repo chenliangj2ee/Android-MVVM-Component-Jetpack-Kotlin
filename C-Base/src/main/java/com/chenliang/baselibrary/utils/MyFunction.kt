@@ -812,3 +812,7 @@ private fun saveFileFromUri(context: Context, uri: Uri) {
         }
     }
 }
+
+fun EditText.focusableEnd(){
+    setSelection(text.toString().length)
+}
