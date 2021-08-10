@@ -1,13 +1,11 @@
 package com.chenliang.compiler
 
 import com.chenliang.annotation.MyRoute
-import com.chenliang.annotation.MyRouteUtils
 import com.google.auto.service.AutoService
 import com.squareup.kotlinpoet.*
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
-import kotlin.concurrent.thread
 
 
 /**
@@ -59,7 +57,7 @@ class MyRouteCompiler : AbstractProcessor() {
 
 
             if (route != null) {
-                var path = route.path
+                var path = route.mPath
                 var keys = path.split("/")
 
                 keys = keys.filter { !it.isNullOrEmpty() }.map {

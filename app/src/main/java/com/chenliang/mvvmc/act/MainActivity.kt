@@ -16,7 +16,7 @@ import gorden.rxbus2.Subscribe
 /**
  * 主页
  */
-@MyRoute(path = "/app/main")
+@MyRoute(mPath = "/app/main")
 @MyClass(mToolbarTitle = "Demo主页", mShowNetworkError = true)
 class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
 

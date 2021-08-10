@@ -13,7 +13,7 @@ import com.chenliang.processorapp.MyRoutePath.appMain
 /**
  * 启动页
  */
-@MyRoute(path = "app/splash")
+@MyRoute(mPath = "app/splash")
 @MyClass(mFullScreen = true)
 class SplashActivity : MyBaseActivity<ActivitySplashBinding, DefaultViewModel>() {
 

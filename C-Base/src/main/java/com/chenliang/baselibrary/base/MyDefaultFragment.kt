@@ -10,7 +10,7 @@ import com.chenliang.baselibrary.databinding.BaseFragmentDefaultBinding
  * @author: chenliang
  * @date: 2021/07/27
  */
-@MyRoute(path="base/defautFragment")
+@MyRoute(mPath="base/defautFragment")
 class MyDefaultFragment : MyBaseFragment<BaseFragmentDefaultBinding, DefaultViewModel>() {
     override fun initOnCreateView() {
     }

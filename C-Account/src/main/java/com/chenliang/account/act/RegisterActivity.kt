@@ -13,7 +13,7 @@ import com.chenliang.baselibrary.utils.check
 import com.chenliang.baselibrary.utils.sendSelf
 
 @MyClass(mToolbarTitle = "注册")
-@MyRoute(path = "/account/Register")
+@MyRoute(mPath = "/account/Register")
 class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewModel>() {
     @MyField(mKey = "user")
     lateinit var user: BeanUser//通过注解获取intent传值，不指定myKey时，默认key值为属性名称

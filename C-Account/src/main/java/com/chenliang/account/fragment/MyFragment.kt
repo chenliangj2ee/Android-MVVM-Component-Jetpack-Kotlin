@@ -16,7 +16,7 @@ import com.chenliang.baselibrary.base.MyBaseFragment
  */
 
 @MyClass(mShowNetworkError = true)
-@MyRoute(path = "/account/my")
+@MyRoute(mPath = "/account/my")
 class MyFragment : MyBaseFragment<AccountFgMyBinding, DefaultViewModel>() {
 
     @MyField

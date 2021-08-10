@@ -12,7 +12,7 @@ import gorden.rxbus2.Subscribe
 import kotlinx.android.synthetic.main.account_act_login.*
 
 @MyClass(mToolbarTitle = "登录")
-@MyRoute(path = "/account/Login")
+@MyRoute(mPath = "/account/Login")
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {
     var user = BeanUser()
     override fun initCreate() {

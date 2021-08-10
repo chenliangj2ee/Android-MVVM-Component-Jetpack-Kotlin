@@ -6,6 +6,6 @@ package com.chenliang.annotation
 
 @Target(AnnotationTarget.CLASS)
 annotation class MyRoute(
-    val path: String = ""
+    val mPath: String = ""
 )
 
