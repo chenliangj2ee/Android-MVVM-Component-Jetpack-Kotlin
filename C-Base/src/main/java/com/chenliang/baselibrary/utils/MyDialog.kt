@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.base_dialog_default_layout.view.*
  * @date: 2021/07/14
  */
 
-@MyClass(myDialogAnimation = true)
+@MyClass(mDialogAnimation = true)
 class MyDialog : MyBaseDialog<BaseDialogDefaultLayoutBinding>() {
 
 

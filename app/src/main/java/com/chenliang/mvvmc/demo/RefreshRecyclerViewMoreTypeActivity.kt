@@ -1,6 +1,5 @@
 package com.chenliang.mvvmc.demo
 
-import android.os.Handler
 import com.chenliang.baselibrary.annotation.MyClass
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
@@ -9,7 +8,7 @@ import com.chenliang.mvvmc.bean.BeanItem
 import com.chenliang.mvvmc.databinding.*
 import kotlinx.android.synthetic.main.activity_recyclerview.*
 
-@MyClass(myToolbarTitle = "分页")
+@MyClass(mToolbarTitle = "分页")
 class RefreshRecyclerViewMoreTypeActivity :
     MyBaseActivity<ActivityRecyclerviewMoreTypeBinding, DefaultViewModel>() {
     override fun initCreate() {

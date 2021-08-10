@@ -13,14 +13,14 @@ typealias Datas<T> = Call<BaseResponse<ArrayList<T>>>
 
 
 interface ApiService {
-    @MyRetrofitGo(myTag = "登录", myLoading = true,myFailToast = true)
+    @MyRetrofitGo(mTag = "登录", mLoading = true,mFailToast = true)
     @POST("home/login")
     fun login(
         @Query("account") account: String,
         @Query("password") password: String
     ): Data<BeanUser>
 
-    @MyRetrofitGo(myTag = "注册", myLoading = true,myFailToast = true)
+    @MyRetrofitGo(mTag = "注册", mLoading = true,mFailToast = true)
     @POST("home/register")
     fun register(
         @Query("account") account: String,
@@ -28,7 +28,7 @@ interface ApiService {
     ): Data<BeanUser>
 
 
-    @MyRetrofitGo(myTag = "添加测试",myCache = false,myLoading = true,myFailToast = true,mySuccessCode = 1001)
+    @MyRetrofitGo(mTag = "添加测试",mCache = false,mLoading = true,mFailToast = true,mSuccessCode = 1001)
     @POST("home/add")
     fun addTest(
         @Query("account") account: String,

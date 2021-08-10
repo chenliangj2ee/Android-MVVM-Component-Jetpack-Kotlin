@@ -11,12 +11,11 @@ import com.chenliang.baselibrary.base.obs
 import com.chenliang.baselibrary.utils.MyCheck
 import com.chenliang.baselibrary.utils.check
 import com.chenliang.baselibrary.utils.sendSelf
-import com.chenliang.baselibrary.utils.toast
 
-@MyClass(myToolbarTitle = "注册")
+@MyClass(mToolbarTitle = "注册")
 @MyRoute(path = "/account/Register")
 class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewModel>() {
-    @MyField(myKey = "user")
+    @MyField(mKey = "user")
     lateinit var user: BeanUser//通过注解获取intent传值，不指定myKey时，默认key值为属性名称
 
     override fun initCreate() {

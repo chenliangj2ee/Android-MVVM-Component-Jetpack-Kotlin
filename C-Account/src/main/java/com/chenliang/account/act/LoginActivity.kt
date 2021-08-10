@@ -11,7 +11,7 @@ import com.chenliang.baselibrary.utils.*
 import gorden.rxbus2.Subscribe
 import kotlinx.android.synthetic.main.account_act_login.*
 
-@MyClass(myToolbarTitle = "登录")
+@MyClass(mToolbarTitle = "登录")
 @MyRoute(path = "/account/Login")
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {
     var user = BeanUser()

@@ -14,7 +14,7 @@ import com.chenliang.processorapp.MyRoutePath.appMain
  * 启动页
  */
 @MyRoute(path = "app/splash")
-@MyClass(myFullScreen = true)
+@MyClass(mFullScreen = true)
 class SplashActivity : MyBaseActivity<ActivitySplashBinding, DefaultViewModel>() {
 
     override fun initCreate() {

@@ -14,7 +14,7 @@ import com.chenliang.mvvmc.databinding.FragmentToolbarNoBinding
  * @author: chenliang
  * @date: 2021/07/14
  */
-@MyClass(myRefresh = true)
+@MyClass(mRefresh = true)
 class FragmentNoToolbarRefreshDemo : MyBaseFragment<FragmentToolbarNoBinding, DefaultViewModel>() {
 
     @MyField

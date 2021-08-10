@@ -9,7 +9,6 @@ import com.chenliang.baselibrary.annotation.MyField
 import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.*
-import com.chenliang.mvvmc.BuildConfig
 import com.chenliang.mvvmc.databinding.ActivityMainBinding
 import com.chenliang.mvvmc.demo.*
 import gorden.rxbus2.Subscribe
@@ -18,7 +17,7 @@ import gorden.rxbus2.Subscribe
  * 主页
  */
 @MyRoute(path = "/app/main")
-@MyClass(myToolbarTitle = "Demo主页", myShowNetworkError = true)
+@MyClass(mToolbarTitle = "Demo主页", mShowNetworkError = true)
 class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
 
     @MyField//Intent传参
@@ -26,7 +25,6 @@ class MainActivity : MyBaseActivity<ActivityMainBinding, DefaultViewModel>() {
 
     @MyField//Intent传参
     var age: Int = 0
-
     override fun initCreate() {
         mToolBar.showLeft(false)
         networkChangeListener()

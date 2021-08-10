@@ -8,7 +8,7 @@ import com.chenliang.baselibrary.base.MyBaseBean
 
 @Target(AnnotationTarget.FIELD)
 annotation class MyDefault(
-    val myValue: String = ""
+    val mValue: String = ""
 )
 
 /**
@@ -17,7 +17,7 @@ annotation class MyDefault(
 fun defaultValue(cla: Any): String {
     val clazz = cla::class.java
     val annotation = clazz.getAnnotation(MyDefault::class.java) ?: return ""
-    return annotation.myValue
+    return annotation.mValue
 }
 
 /**
@@ -34,8 +34,8 @@ fun defaultValueReflex(any: Any) {
         if (String::class.java.isAssignableFrom(fieldType)) {
             if (fieldValue == null) {
                 var myDefault = f.getAnnotation(MyDefault::class.java)
-                if (myDefault?.myValue != null) {
-                    f.set(any, myDefault?.myValue)
+                if (myDefault?.mValue != null) {
+                    f.set(any, myDefault?.mValue)
                 }
             }
         } else if (fieldValue is MyBaseBean) {

@@ -12,7 +12,7 @@ import com.chenliang.mvvmc.databinding.FragmentToolbarNoBinding
  * @author: chenliang
  * @date: 2021/07/14
  */
-@MyClass(myToolbarTitle = "自带标题的Fragment", myRefresh = true)
+@MyClass(mToolbarTitle = "自带标题的Fragment", mRefresh = true)
 class FragmentToolbarRefreshDemo : MyBaseFragment<FragmentToolbarNoBinding, DefaultViewModel>() {
     override fun initOnCreateView() {
     }

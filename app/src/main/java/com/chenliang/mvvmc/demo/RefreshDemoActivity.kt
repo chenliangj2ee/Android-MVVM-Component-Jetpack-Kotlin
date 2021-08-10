@@ -5,7 +5,7 @@ import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.mvvmc.databinding.ActivityRefreshBinding
 
-@MyClass(myRefresh = true, myToolbarTitle = "下拉刷新")
+@MyClass(mRefresh = true, mToolbarTitle = "下拉刷新")
 class RefreshDemoActivity : MyBaseActivity<ActivityRefreshBinding, DefaultViewModel>() {
     override fun initCreate() {
     }

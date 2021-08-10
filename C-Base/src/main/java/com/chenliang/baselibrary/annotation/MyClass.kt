@@ -5,26 +5,26 @@ import android.view.Gravity
 
 /**
  *
- * @property myToolbarTitle String
- * @property myFullScreen Boolean
- * @property myShowNetworkError Boolean
- * @property myRefresh Boolean
- * @property myDialogGravity Int
- * @property myDialogAnimation Boolean
- * @property myDialogAnimationTime Long
- * @property myDialogTransparent Boolean
+ * @property mToolbarTitle String
+ * @property mFullScreen Boolean
+ * @property mShowNetworkError Boolean
+ * @property mRefresh Boolean
+ * @property mDialogGravity Int
+ * @property mDialogAnimation Boolean
+ * @property mDialogAnimationTime Long
+ * @property mDialogTransparent Boolean
  * @constructor
  */
 @Target(AnnotationTarget.CLASS)
 annotation class MyClass(
-    val myToolbarTitle: String = "",//Activity fragment标题
-    val myFullScreen: Boolean = false,//Activity是否全屏
-    val myShowNetworkError: Boolean = false,//是否网络异常时，Activity，fragmen显示View提示
-    val myRefresh: Boolean = false,//Activity fragment是否启用下拉刷新
-    val myDialogGravity: Int = Gravity.CENTER,//dialog默认居中显示
-    val myDialogAnimation: Boolean = false,//dialog默认居中显示
-    val myDialogAnimationTime: Long = 400,//dialog默认居中显示
-    val myDialogTransparent: Boolean = false//dialog是否透明
+    val mToolbarTitle: String = "",//Activity fragment标题
+    val mFullScreen: Boolean = false,//Activity是否全屏
+    val mShowNetworkError: Boolean = false,//是否网络异常时，Activity，fragmen显示View提示
+    val mRefresh: Boolean = false,//Activity fragment是否启用下拉刷新
+    val mDialogGravity: Int = Gravity.CENTER,//dialog默认居中显示
+    val mDialogAnimation: Boolean = false,//dialog默认居中显示
+    val mDialogAnimationTime: Long = 400,//dialog默认居中显示
+    val mDialogTransparent: Boolean = false//dialog是否透明
 
 
 )
@@ -36,7 +36,7 @@ annotation class MyClass(
 fun activityTitle(cla: Any): String {
     val clazz = cla::class.java
     val annotation = clazz.getAnnotation(MyClass::class.java) ?: return ""
-    return annotation.myToolbarTitle
+    return annotation.mToolbarTitle
 }
 
 
@@ -46,7 +46,7 @@ fun activityTitle(cla: Any): String {
 fun activityRefresh(cla: Any): Boolean {
     val clazz = cla::class.java
     val annotation = clazz.getAnnotation(MyClass::class.java) ?: return false
-    return annotation.myRefresh
+    return annotation.mRefresh
 }
 
 /**
@@ -55,7 +55,7 @@ fun activityRefresh(cla: Any): Boolean {
 fun activityFullScreen(cla: Any): Boolean {
     val clazz = cla::class.java
     val annotation = clazz.getAnnotation(MyClass::class.java) ?: return false
-    return annotation.myFullScreen
+    return annotation.mFullScreen
 }
 
 /**
@@ -64,7 +64,7 @@ fun activityFullScreen(cla: Any): Boolean {
 fun dialogGravity(cla: Any): Int {
     val clazz = cla::class.java
     val annotation = clazz.getAnnotation(MyClass::class.java) ?: return Gravity.CENTER
-    return annotation.myDialogGravity
+    return annotation.mDialogGravity
 }
 
 /**
@@ -73,7 +73,7 @@ fun dialogGravity(cla: Any): Int {
 fun dialogTransparent(cla: Any): Boolean {
     val clazz = cla::class.java
     val annotation = clazz.getAnnotation(MyClass::class.java) ?: return false
-    return annotation.myDialogTransparent
+    return annotation.mDialogTransparent
 }
 
 /**
@@ -82,7 +82,7 @@ fun dialogTransparent(cla: Any): Boolean {
 fun myDialogAnimation(cla: Any): Boolean {
     val clazz = cla::class.java
     val annotation = clazz.getAnnotation(MyClass::class.java) ?: return false
-    return annotation.myDialogAnimation
+    return annotation.mDialogAnimation
 }
 
 /**
@@ -91,7 +91,7 @@ fun myDialogAnimation(cla: Any): Boolean {
 fun myDialogAnimationTime(cla: Any): Long {
     val clazz = cla::class.java
     val annotation = clazz.getAnnotation(MyClass::class.java) ?: return 400
-    return annotation.myDialogAnimationTime
+    return annotation.mDialogAnimationTime
 }
 
 /**
@@ -100,5 +100,5 @@ fun myDialogAnimationTime(cla: Any): Long {
 fun myShowNetworkError(cla: Any): Boolean {
     val clazz = cla::class.java
     val annotation = clazz.getAnnotation(MyClass::class.java) ?: return false
-    return annotation.myShowNetworkError
+    return annotation.mShowNetworkError
 }

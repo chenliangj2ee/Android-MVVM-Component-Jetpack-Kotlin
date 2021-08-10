@@ -12,11 +12,11 @@ package com.chenliang.baselibrary.annotation
  */
 @Target(AnnotationTarget.FUNCTION)
 annotation class MyRetrofitGo(
-    val myLoading: Boolean = false,
-    val myCache: Boolean = false,
-    val myHasCacheLoading: Boolean = false,
-    val myTag: String = "",
-    val myFailToast: Boolean = false,
-    val mySuccessCode: Int = 0,
-    val myFailCode: Int = 0
+    val mLoading: Boolean = false,
+    val mCache: Boolean = false,
+    val mHasCacheLoading: Boolean = false,
+    val mTag: String = "",
+    val mFailToast: Boolean = false,
+    val mSuccessCode: Int = 0,
+    val mFailCode: Int = 0
 )
