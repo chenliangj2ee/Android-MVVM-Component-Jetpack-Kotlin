@@ -22,7 +22,7 @@
 ## 一、登录接口定义：
 ```
 interface ApiService {
-    @MyRetrofitGo(mTag = "登录", mLoading = true,mCache = false ,mFailToast = true,mSuccessCode = true)
+    @MyRetrofitGo(mTag = "登录", mLoading = true,mCache = false ,mFailToast = true,mSuccessCode = 1001)
     @POST("home/login")
     fun login(
         @Query("account") account: String,
