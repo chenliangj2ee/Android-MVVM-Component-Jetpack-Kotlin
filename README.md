@@ -22,7 +22,7 @@
 ## 一、登录接口定义：
 ```
 interface ApiService {
-    @MyRetrofitGo(myTag = "登录", myLoading = true,myFailToast = true)
+    @MyRetrofitGo(mTag = "登录", mLoading = true,mCache = false ,mFailToast = true,mSuccessCode = true)
     @POST("home/login")
     fun login(
         @Query("account") account: String,
@@ -39,8 +39,8 @@ class AccountViewModel : MyBaseViewModel() {
 ## 三、登录Activity：
 
 ```
-@MyClass(myToolbarTitle = "登录")
-@MyRoute(path = "/account/Login")
+@MyClass(mToolbarTitle = "登录")
+@MyRoute(mPath = "/account/Login")
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {
     var user = BeanUser()
     override fun initCreate() {
@@ -93,10 +93,10 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
 
 
  //目标Activity or Fragment参数接收
- @MyField(myKey = "beanUser")//指定key为:beanUser
+ @MyField(mKey = "beanUser")//指定key为:beanUser
  lateinit var user: BeanUser
 
- @MyField(myKey = "param1")//指定key为:param1
+ @MyField(mKey = "param1")//指定key为:param1
  lateinit var param1: String
 
  @MyField//默认key为变量名称param2
@@ -156,12 +156,12 @@ fun eventCallBack(event: RxBusEvent<BeanUser>) {
             .show(this)
 ```
 ### 自定义dialog：
-* **myDialogGravity：指定位置**
-* **myDialogAnimation：指定是否启用动画[Gravity.BOTTOM:底部向上动画，其他；伸缩、透明度动画]**
-* **myDialogAnimationTime：指定动画时长**
-* **myDialogTransparent：指定是否透明**
+* **mDialogGravity：指定位置**
+* **mDialogAnimation：指定是否启用动画[Gravity.BOTTOM:底部向上动画，其他；伸缩、透明度动画]**
+* **mDialogAnimationTime：指定动画时长**
+* **mDialogTransparent：指定是否透明**
 ```
-     @MyClass(myDialogGravity = Gravity.BOTTOM, myDialogTransparent = true ，myDialogAnimation = true,*myDialogAnimationTime = 300)
+     @MyClass(mDialogGravity = Gravity.BOTTOM, mDialogTransparent = true ，mDialogAnimation = true,mDialogAnimationTime = 300)
      class DialogDemo : MyBaseDialog<DialogLayoutBinding>() {
         override fun initCreate() {
             mRootView.confirm.click { dismiss() }
@@ -180,21 +180,21 @@ fun eventCallBack(event: RxBusEvent<BeanUser>) {
 ![Video_20210714_084908_861](https://user-images.githubusercontent.com/4067327/125624671-a129958c-5f45-4519-832a-35250ea0a932.gif)
 # 七、各个组件根据@MyRoute注解，统一自动生成配置文件MyRoutePath类，如Account组件模块：
 ```
-@MyRoute(path = "/account/login")
+@MyRoute(mPath = "/account/login")
 class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {//Activity
         .
         .
         .
         .
 }
-@MyRoute(path = "/account/register")
+@MyRoute(mPath = "/account/register")
 class RegisterActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>() {//Activity
         .
         .
         .
         .
 }
-@MyRoute(path = "/account/my")
+@MyRoute(mPath = "/account/my")
 class MyFragment : MyBaseFragment<AccountFgMyBinding, DefaultViewModel>() {//Fragment
         .
         .
