@@ -3,7 +3,7 @@ package com.chenliang.account
 import com.chenliang.baselibrary.net.initAPI
 
 var Any.API: ApiService
-    set(value) {}
+    private set(value) {}
     get() = MyApiFactory.api!!
 
 object MyApiFactory {

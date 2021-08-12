@@ -54,7 +54,7 @@ class MySpCompiler : AbstractProcessor() {
             var annos = en!!.getElementsAnnotatedWith(it)
             annos.forEach {
 
-                println("asType:${it.asType()}----------------------------------------------------------------------------")
+//                println("asType:${it.asType()}----------------------------------------------------------------------------")
                 var fieldName = it.simpleName.toString()
                 when {
                     it.asType().toString() == "boolean" -> {

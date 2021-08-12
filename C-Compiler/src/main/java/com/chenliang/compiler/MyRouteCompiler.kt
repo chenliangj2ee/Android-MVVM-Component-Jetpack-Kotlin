@@ -72,7 +72,7 @@ class MyRouteCompiler : AbstractProcessor() {
                 )
 
 //                MyRouteUtils.path[path] = className
-                println("MyRoute Compiler --------$path : $className ---------------------------------------------------")
+//                println("MyRoute Compiler --------$path : $className ---------------------------------------------------")
             }
 
         }

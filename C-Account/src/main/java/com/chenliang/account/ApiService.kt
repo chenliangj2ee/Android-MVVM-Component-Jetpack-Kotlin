@@ -1,6 +1,7 @@
 package com.chenliang.account
 
 import com.chenliang.account.bean.BeanUser
+import com.chenliang.annotation.MyApiService
 import com.chenliang.baselibrary.annotation.MyRetrofitGo
 import com.chenliang.baselibrary.net.BaseResponse
 import retrofit2.Call
@@ -12,15 +13,16 @@ typealias Data<T> = Call<BaseResponse<T>>
 typealias Datas<T> = Call<BaseResponse<ArrayList<T>>>
 
 
+@MyApiService(mName = "API", mPath = "http://api.alpha.xiaoliuyisheng.cn/app/doctor/")
 interface ApiService {
-    @MyRetrofitGo(mTag = "登录", mLoading = true,mFailToast = true)
+    @MyRetrofitGo(mTag = "登录", mLoading = true, mFailToast = true)
     @POST("home/login")
     fun login(
         @Query("account") account: String,
         @Query("password") password: String
     ): Data<BeanUser>
 
-    @MyRetrofitGo(mTag = "注册", mLoading = true,mFailToast = true)
+    @MyRetrofitGo(mTag = "注册", mLoading = true, mFailToast = true)
     @POST("home/register")
     fun register(
         @Query("account") account: String,
@@ -28,7 +30,7 @@ interface ApiService {
     ): Data<BeanUser>
 
 
-    @MyRetrofitGo(mTag = "添加测试",mCache = false,mLoading = true,mFailToast = true,mSuccessCode = 1001)
+    @MyRetrofitGo(mTag = "添加测试", mCache = false, mFailToast = true)
     @POST("home/add")
     fun addTest(
         @Query("account") account: String,
