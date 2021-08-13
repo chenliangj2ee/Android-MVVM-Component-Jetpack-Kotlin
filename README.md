@@ -22,7 +22,7 @@
 ## 一、登录接口定义：
 ```
 @MyApiService(
-    mName = "API2",
+    mName = "API",
     mPath = "http://www.chenliang.com/app/",//成产环境
     mDevPath = "http://www.chenliang.com/dev/app/",//开发环境
     mTestPath = "http://www.chenliang.com/test/app/"//测试环境
