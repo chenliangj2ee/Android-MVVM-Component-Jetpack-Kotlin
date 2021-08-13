@@ -11,6 +11,20 @@ kapt {
     }
 }
 android {
+    signingConfigs {
+        debug {
+            storeFile file('../mvvm.jks')
+            storePassword '111111'
+            keyAlias '111111'
+            keyPassword '111111'
+        }
+        release {
+            storeFile file('../mvvm.jks')
+            storePassword '111111'
+            keyAlias '111111'
+            keyPassword '111111'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
