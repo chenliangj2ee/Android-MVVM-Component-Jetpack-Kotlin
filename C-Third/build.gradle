@@ -28,10 +28,24 @@ android {
     }
 
     buildTypes {
+
+        release {
+            buildConfigField "Boolean", "isRelease", 'true'
+            buildConfigField "Boolean", "isTest", 'false'
+            buildConfigField "Boolean", "isDev", 'false'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            buildConfigField "Boolean", "isDev", 'true'
+            buildConfigField "Boolean", "isTest", 'false'
+            buildConfigField "Boolean", "isRelease", 'false'
+            signingConfig signingConfigs.release
+        }
         DEV {
             buildConfigField "Boolean", "isDev", 'true'
             buildConfigField "Boolean", "isTest", 'false'
             buildConfigField "Boolean", "isRelease", 'false'
+            signingConfig signingConfigs.release
         }
         TES {
             buildConfigField "Boolean", "isTest", 'true'
@@ -45,7 +59,9 @@ android {
             buildConfigField "Boolean", "isDev", 'false'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

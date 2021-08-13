@@ -17,10 +17,7 @@ abstract class MyBaseApplication : Application() {
     var moduleApps = ArrayList<Application>()
     override fun onCreate() {
         super.onCreate()
-        initEnvironmentModel()
         moduleApps.forEach { it.onCreate() }
-
-
     }
 
     fun initEnvironmentModel(){
@@ -42,6 +39,7 @@ abstract class MyBaseApplication : Application() {
         if (BaseInit.con != null)
             return
         BaseInit.init(this)
+        initEnvironmentModel()
         var info = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
         if (info.metaData == null)
             return
