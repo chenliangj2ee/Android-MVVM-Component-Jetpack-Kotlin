@@ -32,7 +32,8 @@ interface ApiService {
 }
 ```
 ## 二、登录ViewMode：
-通过@MyApiService注解指定的mName名称，直接调用接口：
+
+* **通过@MyApiService注解指定的mName名称，直接调用接口：**
 ```
 class AccountViewModel : MyBaseViewModel() {
     fun login(account: String, pass: String) = go { API.login(account, pass) }
