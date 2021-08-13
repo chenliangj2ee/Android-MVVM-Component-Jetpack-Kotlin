@@ -12,7 +12,6 @@ import kotlin.concurrent.thread
 @SuppressLint("StaticFieldLeak")
 object BaseInit {
     var con: Context? = null
-    var isTest: Boolean = BuildConfig.CONFIG_TEST
 
     fun init(context: Application) {
         if (con == null) {

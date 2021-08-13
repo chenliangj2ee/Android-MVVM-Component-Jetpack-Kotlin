@@ -26,13 +26,24 @@ android {
     }
 
     buildTypes {
-        debug{
-            buildConfigField "Boolean", "CONFIG_TEST", "true"
+
+        DEV {
+            buildConfigField "Boolean", "isDev", 'true'
+            buildConfigField "Boolean", "isTest", 'false'
+            buildConfigField "Boolean", "isRelease", 'false'
         }
-        release {
+        TES {
+            buildConfigField "Boolean", "isTest", 'true'
+            buildConfigField "Boolean", "isDev", 'false'
+            buildConfigField "Boolean", "isRelease", 'false'
+        }
+
+        REL {
+            buildConfigField "Boolean", "isRelease", 'true'
+            buildConfigField "Boolean", "isTest", 'false'
+            buildConfigField "Boolean", "isDev", 'false'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "Boolean", "CONFIG_TEST", "true"
         }
     }
     compileOptions {
@@ -89,4 +100,6 @@ dependencies {
     api 'io.reactivex.rxjava3:rxjava:3.0.4'
     api project(path: ':C-Compiler')
     kapt project(path: ':C-Compiler')
+
+
 }

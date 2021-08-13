@@ -12,7 +12,6 @@ class MyApplication : MyBaseApplication() {
     override fun onCreate() {
         anrCheck {
             super.onCreate()
-            BaseInit.openDev()//开发开发模式
             BaseInit.registerApi(ApiService::class.java)
             BaseInit.initMyRoute(MyRoutePath)
 

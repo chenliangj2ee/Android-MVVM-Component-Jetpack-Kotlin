@@ -17,9 +17,19 @@ abstract class MyBaseApplication : Application() {
     var moduleApps = ArrayList<Application>()
     override fun onCreate() {
         super.onCreate()
+        initEnvironmentModel()
         moduleApps.forEach { it.onCreate() }
 
 
+    }
+
+    fun initEnvironmentModel(){
+        if (BuildConfig.isDev)
+            BaseInit.openDev()
+        if (BuildConfig.isTest)
+            BaseInit.openTest()
+        if (BuildConfig.isRelease)
+            BaseInit.openRelease()
     }
 
     override fun attachBaseContext(base: Context?) {
@@ -51,7 +61,8 @@ abstract class MyBaseApplication : Application() {
     }
 
     private fun initModuleAppAttach(app: Application) {
-        val method: Method? = Application::class.java.getDeclaredMethod("attach", Context::class.java)
+        val method: Method? =
+            Application::class.java.getDeclaredMethod("attach", Context::class.java)
         if (method != null) {
             method.isAccessible = true
             method.invoke(app, baseContext)
