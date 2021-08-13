@@ -7,6 +7,7 @@ import android.util.Log
 import com.chenliang.annotation.ApiModel
 import com.chenliang.annotation.MyRouteUtils
 import com.chenliang.baselibrary.net.utils.MyApiReflex
+import com.chenliang.baselibrary.utils.log
 import kotlin.concurrent.thread
 
 @SuppressLint("StaticFieldLeak")
@@ -31,14 +32,17 @@ object BaseInit {
 
 
     fun openDev() {
+        log("开发环境............................")
         ApiModel.openDev()
     }
 
     fun openTest() {
+        log("测试环境............................")
         ApiModel.openTest()
     }
 
     fun openRelease() {
+        log("生产环境............................")
         ApiModel.openRelease()
     }
 
