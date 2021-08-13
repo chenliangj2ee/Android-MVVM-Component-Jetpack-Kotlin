@@ -7,6 +7,32 @@ package com.chenliang.annotation
 @Target(AnnotationTarget.CLASS)
 annotation class MyApiService(
     val mName: String = "",//API接口名称
-    val mPath: String = ""//API接口base路径
+    val mPath: String = "",//API接口生产环境base路径
+    val mDevPath: String = "",//API接口开发环境base路径
+    val mTestPath: String = ""//API接口测试环境base路径
 )
 
+object ApiModel {
+
+    var test = false
+    var dev = false
+    var release = true
+
+    fun isTest() {
+        test = true
+        release = false
+        dev = false
+    }
+
+    fun isDev() {
+        dev = true
+        release = false
+        test = false
+    }
+
+    fun isRelease() {
+        release = true
+        test = false
+        dev = false
+    }
+}

@@ -21,7 +21,12 @@
 # 有多精简？先举了栗子，以登录为栗：
 ## 一、登录接口定义：
 ```
-@MyApiService(mName = "API", mPath = "http://www.text.com/app/")
+@MyApiService(
+    mName = "API2",
+    mPath = "http://www.chenliang.com/app/",//成产环境
+    mDevPath = "http://www.chenliang.com/dev/app/",//开发环境
+    mTestPath = "http://www.chenliang.com/test/app/"//测试环境
+)
 interface ApiService {
     @MyRetrofitGo(mTag = "登录", mLoading = true,mCache = false ,mFailToast = true,mSuccessCode = 1001)
     @POST("home/login")

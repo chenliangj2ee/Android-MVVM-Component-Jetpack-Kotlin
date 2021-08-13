@@ -12,7 +12,12 @@ import java.util.ArrayList
 typealias Data<T> = Call<BaseResponse<T>>
 typealias Datas<T> = Call<BaseResponse<ArrayList<T>>>
 
-@MyApiService(mName = "API", mPath = "http://api.alpha.xiaoliuyisheng.cn/app/doctor/")
+@MyApiService(
+    mName = "API",
+    mPath = "http://www.chenliang.com/app/",
+    mDevPath = "http://www.chenliang.com/dev/app/",
+    mTestPath = "http://www.chenliang.com/test/app/"
+)
 interface ApiService {
     @MyRetrofitGo(mTag = "登录", mLoading = true, mFailToast = true)
     @POST("home/login")

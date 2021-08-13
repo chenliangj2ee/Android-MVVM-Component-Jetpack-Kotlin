@@ -1,5 +1,6 @@
 package com.chenliang.compiler
 
+import com.chenliang.annotation.ApiModel
 import com.chenliang.annotation.MyApiService
 import com.google.auto.service.AutoService
 import com.squareup.kotlinpoet.*
@@ -52,6 +53,9 @@ class MyApiServiceCompiler : AbstractProcessor() {
             var anno = it.getAnnotation(MyApiService::class.java)
             var name = anno.mName
             var path = anno.mPath
+            var testPath=anno.mTestPath
+            var devPath=anno.mDevPath
+
             var apiName = it.simpleName.toString()
 
             var myApiFactory = TypeSpec.objectBuilder("MyApiFactory$name")
@@ -76,7 +80,22 @@ class MyApiServiceCompiler : AbstractProcessor() {
             //init方法
             var codeBlock = CodeBlock.builder()
                 .addStatement(
-                    "api = %T(%S, %T::class.java)",
+                    "if (%T.dev) api = %T(%S, %T::class.java)",
+                    ClassName("com.chenliang.annotation", "ApiModel"),
+                    ClassName("com.chenliang.baselibrary.net", "initAPI"),
+                    devPath,
+                    ClassName(apiPackageName, apiName)
+                )
+                .addStatement(
+                    "if (%T.test) api = %T(%S, %T::class.java)",
+                    ClassName("com.chenliang.annotation", "ApiModel"),
+                    ClassName("com.chenliang.baselibrary.net", "initAPI"),
+                    testPath,
+                    ClassName(apiPackageName, apiName)
+                )
+                .addStatement(
+                    "if (%T.release) api = %T(%S, %T::class.java)",
+                    ClassName("com.chenliang.annotation", "ApiModel"),
                     ClassName("com.chenliang.baselibrary.net", "initAPI"),
                     path,
                     ClassName(apiPackageName, apiName)

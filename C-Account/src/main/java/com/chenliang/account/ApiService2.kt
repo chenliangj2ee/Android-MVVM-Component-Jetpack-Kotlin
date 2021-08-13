@@ -12,7 +12,12 @@ import java.util.*
 
 
 
-@MyApiService(mName = "API2", mPath = "http://www.api.test/app")
+@MyApiService(
+    mName = "API2",
+    mPath = "http://www.chenliang.com/app/",
+    mDevPath = "http://www.chenliang.com/dev/app/",
+    mTestPath = "http://www.chenliang.com/test/app/"
+)
 interface ApiService2 {
     @MyRetrofitGo(mTag = "登录", mLoading = true, mFailToast = true)
     @POST("home/login")
