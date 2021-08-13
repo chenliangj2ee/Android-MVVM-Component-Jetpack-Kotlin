@@ -6,7 +6,7 @@ package com.chenliang.annotation
 
 @Target(AnnotationTarget.CLASS)
 annotation class MyApiService(
-    val mName: String = "",
-    val mPath: String = ""
+    val mName: String = "",//API接口名称
+    val mPath: String = ""//API接口base路径
 )
 
