@@ -3,7 +3,7 @@ package com.chenliang.account
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.MyBaseApplication
 import com.chenliang.baselibrary.utils.log
-import com.chenliang.processorCAccount.MyRoutePath
+import com.chenliang.processor.CBase.MyRoutePath
 
 /**
  *

@@ -7,8 +7,8 @@ import com.chenliang.baselibrary.base.DefaultViewModel
 import com.chenliang.baselibrary.base.MyBaseActivity
 import com.chenliang.baselibrary.utils.goto
 import com.chenliang.mvvmc.databinding.ActivitySplashBinding
-import com.chenliang.processorCAccount.MyRoutePath.accountLogin
-import com.chenliang.processorapp.MyRoutePath.appMain
+import com.chenliang.processor.CAccount.MyRoutePath.accountLogin
+import com.chenliang.processor.app.MyRoutePath.appMain
 
 /**
  * 启动页

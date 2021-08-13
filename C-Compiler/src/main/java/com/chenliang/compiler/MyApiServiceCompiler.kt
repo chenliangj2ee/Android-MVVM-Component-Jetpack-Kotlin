@@ -46,13 +46,6 @@ class MyApiServiceCompiler : AbstractProcessor() {
 
 
 
-
-        var myApiFactory = TypeSpec.objectBuilder("MyApiFactory")
-        var codeBlockApi = CodeBlock.Builder().add(
-            "var  Any.API: ApiService\n" +
-                    "            private set(value) {}\n" +
-                    "            get() = MyApiFactory.api!!"
-        )
         mApiServices?.forEach {
 
 
@@ -60,7 +53,10 @@ class MyApiServiceCompiler : AbstractProcessor() {
             var name = anno.mName
             var path = anno.mPath
             var apiName = it.simpleName.toString()
+
+            var myApiFactory = TypeSpec.objectBuilder("MyApiFactory$name")
             println(
+
                 "MyApiServiceCompiler--------------  it.simpleName:${
                     it.asType().toString()
                 }   "
@@ -89,21 +85,38 @@ class MyApiServiceCompiler : AbstractProcessor() {
 
             myApiFactory.addInitializerBlock(codeBlock)
 
+            val square = PropertySpec.builder(name, ClassName(apiPackageName, apiName))
+                .receiver(Any::class)
+                .setter(
+                    FunSpec.setterBuilder()
+                        .addParameter("value", String::class)
+                        .build()
+                )
+                .getter(
+                    FunSpec.getterBuilder()
+                        .addStatement("return MyApiFactory$name.api!!")
+                        .build()
+                ).mutable(true)
+                .build()
+
+            val file = FileSpec.builder(
+                "com.chenliang.processor." + mModuleName!!.replace("-", ""),
+                "MyApiFactory$name"
+            ).addProperty(square)
+                .addType(myApiFactory.build())
+                .build()
+
+
+
+            try {
+                file.writeTo(mFiler)
+            } catch (e: Exception) {
+
+            }
 
         }
-        val file = FileSpec.builder(
-            "com.chenliang.processor" + mModuleName!!.replace("-", ""),
-            "MyApiFactory"
-        )
-            .addType(myApiFactory.build())
-            .build()
 
 
-        try {
-            file.writeTo(mFiler)
-        } catch (e: Exception) {
-
-        }
 
 
         return true

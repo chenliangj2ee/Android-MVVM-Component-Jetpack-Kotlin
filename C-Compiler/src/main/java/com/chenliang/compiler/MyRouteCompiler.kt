@@ -78,7 +78,7 @@ class MyRouteCompiler : AbstractProcessor() {
         }
         val file =
             FileSpec.builder(
-                "com.chenliang.processor" + mModuleName!!.replace("-", ""),
+                "com.chenliang.processor." + mModuleName!!.replace("-", ""),
                 "MyRoutePath"
             ).addType(myRoute.build()).build()
 

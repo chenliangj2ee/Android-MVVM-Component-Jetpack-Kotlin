@@ -273,7 +273,7 @@ class MySpCompiler : AbstractProcessor() {
 
         }
         val file =
-            FileSpec.builder("com.chenliang.processor" + mModuleName!!.replace("-", ""), "MySp")
+            FileSpec.builder("com.chenliang.processor." + mModuleName!!.replace("-", ""), "MySp")
                 .addType(mySp.build()).build()
 
         try {
