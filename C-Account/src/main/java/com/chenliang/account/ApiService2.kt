@@ -9,8 +9,7 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 import java.util.*
 
-typealias Data<T> = Call<BaseResponse<T>>
-typealias Datas<T> = Call<BaseResponse<ArrayList<T>>>
+
 
 
 @MyApiService(mName = "API2", mPath = "http://www.api.test/app")

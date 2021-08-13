@@ -3,9 +3,14 @@ package com.chenliang.account
 import com.chenliang.account.bean.BeanUser
 import com.chenliang.annotation.MyApiService
 import com.chenliang.baselibrary.annotation.MyRetrofitGo
+import com.chenliang.baselibrary.net.BaseResponse
+import retrofit2.Call
 import retrofit2.http.POST
 import retrofit2.http.Query
+import java.util.ArrayList
 
+typealias Data<T> = Call<BaseResponse<T>>
+typealias Datas<T> = Call<BaseResponse<ArrayList<T>>>
 
 @MyApiService(mName = "API", mPath = "http://api.alpha.xiaoliuyisheng.cn/app/doctor/")
 interface ApiService {
