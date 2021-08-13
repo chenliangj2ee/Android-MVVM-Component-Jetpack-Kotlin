@@ -57,6 +57,7 @@ android {
             buildConfigField "Boolean", "isTest", 'true'
             buildConfigField "Boolean", "isDev", 'false'
             buildConfigField "Boolean", "isRelease", 'false'
+            signingConfig signingConfigs.release
         }
 
         REL {
