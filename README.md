@@ -21,6 +21,7 @@
 # 有多精简？先举了栗子，以登录为栗：
 ## 一、登录接口定义：
 ```
+@MyApiService(mName = "API", mPath = "http://www.text.com/app/")
 interface ApiService {
     @MyRetrofitGo(mTag = "登录", mLoading = true,mCache = false ,mFailToast = true,mSuccessCode = 1001)
     @POST("home/login")
@@ -31,6 +32,7 @@ interface ApiService {
 }
 ```
 ## 二、登录ViewMode：
+通过@MyApiService注解指定的mName名称，直接调用接口：
 ```
 class AccountViewModel : MyBaseViewModel() {
     fun login(account: String, pass: String) = go { API.login(account, pass) }
