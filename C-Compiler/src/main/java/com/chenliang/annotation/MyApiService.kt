@@ -18,19 +18,19 @@ object ApiModel {
     var dev = false
     var release = true
 
-    fun isTest() {
+    fun openTest() {
         test = true
         release = false
         dev = false
     }
 
-    fun isDev() {
+    fun openDev() {
         dev = true
         release = false
         test = false
     }
 
-    fun isRelease() {
+    fun openRelease() {
         release = true
         test = false
         dev = false
