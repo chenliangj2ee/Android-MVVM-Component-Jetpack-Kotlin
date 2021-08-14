@@ -12,6 +12,7 @@
 * **弃用@Aroute，使用自定义@MyRoute路由，编译器自动化路由配置管理，更简单的路由跳转参数传递与参数接收**
 * **更简单的SharedPreferences使用，再也不需要自己写setXXX()，getXXX()了，皆有编译器自动生成**
 * **最新的技术实现方案，Retrofit2、OkHttp3、ViewModel、DataBinding、LiveData等jetpack组件，以及Kotlin协程技术方案**
+* **无需Repository层，在网络封装层，已经实现了对缓存的2级处理，如果要实现其他业务，可在网络层对其继续扩展**
 
 
 # 组件化说明
@@ -22,7 +23,7 @@
 ## 一、登录接口定义：
 ```
 @MyApiService(
-    mName = "API",
+    mName = "API",//给接口起个名成，随后可以通过这个名称直接调用接口的方法。
     mPath = "http://www.chenliang.com/app/",//成产环境
     mDevPath = "http://www.chenliang.com/dev/app/",//开发环境
     mTestPath = "http://www.chenliang.com/test/app/"//测试环境
@@ -36,7 +37,7 @@ interface ApiService {
     ): Data<BeanUser>
 }
 ```
-* **API环境随时切换：**
+* **API环境随时切换：path最好统一放在一个地方管理**
 ```
     mPath = "http://www.chenliang.com/app/",//成产环境
     mDevPath = "http://www.chenliang.com/dev/app/",//开发环境
