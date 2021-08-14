@@ -1,6 +1,5 @@
 # Android-MVVM-Component-Jetpack-Kotlin
-## 超级简洁、彻底组件化的轻量级Android Kotlin Jetpack MVVM框架----持续更新----未完结
-## 框架追求：简洁！简洁！简洁！没办法，老子就是这么懒，多写一行代码，都感觉累！
+## 超级简洁、彻底组件化的轻量级Android Kotlin Jetpack MVVM组件化框架----持续更新----未完结
 
 # 结构
 ![结构](https://user-images.githubusercontent.com/4067327/125152474-577f7880-e17f-11eb-8e94-8813379e2d53.jpg)
@@ -12,6 +11,7 @@
 * **弃用@Aroute，使用自定义@MyRoute路由，编译器自动化路由配置管理，更简单的路由跳转参数传递与参数接收**
 * **更简单的SharedPreferences使用，再也不需要自己写setXXX()，getXXX()了，皆有编译器自动生成**
 * **最新的技术实现方案，Retrofit2、OkHttp3、ViewModel、DataBinding、LiveData等jetpack组件，以及Kotlin协程技术方案**
+* **无需Repository层，在网络封装层，已经实现了对缓存的2级处理，如果要实现其他业务，可在网络层对其继续扩展**
 
 
 # 组件化说明
@@ -22,7 +22,7 @@
 ## 一、登录接口定义：
 ```
 @MyApiService(
-    mName = "API",
+    mName = "API",//给接口起个名成，随后可以通过这个名称直接调用接口的方法。
     mPath = "http://www.chenliang.com/app/",//成产环境
     mDevPath = "http://www.chenliang.com/dev/app/",//开发环境
     mTestPath = "http://www.chenliang.com/test/app/"//测试环境
@@ -36,6 +36,14 @@ interface ApiService {
     ): Data<BeanUser>
 }
 ```
+* **API环境随时切换：path最好统一放在一个地方管理**
+```
+    mPath = "http://www.chenliang.com/app/",//成产环境
+    mDevPath = "http://www.chenliang.com/dev/app/",//开发环境
+    mTestPath = "http://www.chenliang.com/test/app/"//测试环境
+```
+![image](https://user-images.githubusercontent.com/4067327/129448392-185044a9-3b50-49a3-af38-9ba4bd816671.png)
+
 ## 二、登录ViewMode：
 
 * **通过@MyApiService注解指定的mName名称，直接调用接口：**
