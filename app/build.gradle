@@ -47,6 +47,8 @@ android {
             buildConfigField "Boolean", "isRelease", 'true'
             buildConfigField "Boolean", "isTest", 'false'
             buildConfigField "Boolean", "isDev", 'false'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
         debug {
@@ -55,27 +57,20 @@ android {
             buildConfigField "Boolean", "isRelease", 'false'
             signingConfig signingConfigs.release
         }
-        DEV {
+        develop {
             buildConfigField "Boolean", "isDev", 'true'
             buildConfigField "Boolean", "isTest", 'false'
             buildConfigField "Boolean", "isRelease", 'false'
             signingConfig signingConfigs.release
         }
-        TES {
+        alpha {
             buildConfigField "Boolean", "isTest", 'true'
             buildConfigField "Boolean", "isDev", 'false'
             buildConfigField "Boolean", "isRelease", 'false'
             signingConfig signingConfigs.release
         }
 
-        REL {
-            buildConfigField "Boolean", "isRelease", 'true'
-            buildConfigField "Boolean", "isTest", 'false'
-            buildConfigField "Boolean", "isDev", 'false'
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-        }
+
 
     }
     compileOptions {
