@@ -37,9 +37,11 @@ interface ApiService {
 }
 ```
 * **API环境随时切换：**
+```
     mPath = "http://www.chenliang.com/app/",//成产环境
     mDevPath = "http://www.chenliang.com/dev/app/",//开发环境
     mTestPath = "http://www.chenliang.com/test/app/"//测试环境
+```
 ![image](https://user-images.githubusercontent.com/4067327/129448392-185044a9-3b50-49a3-af38-9ba4bd816671.png)
 
 ## 二、登录ViewMode：
