@@ -2,7 +2,8 @@
 ## 超级简洁、彻底组件化的轻量级Android Kotlin Jetpack MVVM组件化框架----持续更新----未完结
 
 # 结构
-![image](https://user-images.githubusercontent.com/4067327/129465253-7d9ba020-4381-4c53-9ea5-81b20e7b6eab.png)
+![1628995831(1)](https://user-images.githubusercontent.com/4067327/129465391-c2732cec-0b1a-458b-85c4-0bcb33ec7451.jpg)
+
 # 特点：
 * **彻底组件化，且更简洁，Module具有独立的Application、AndroidMinifast、资源文件等；Application和Library的切换更加快捷；**
 * **超级简洁、且多功能的网络层封装，自带2级缓存，App端内嵌了日志查看，测试人员，接口错误，该知道找谁了吧；**
