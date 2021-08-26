@@ -39,6 +39,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
             it.data = user//模拟登录成功
             it.y { loginSuccess(it) }
         }
+
     }
 
     private fun loginSuccess(user: BeanUser) {

@@ -4,9 +4,9 @@ import androidx.lifecycle.*
 import com.chenliang.baselibrary.annotation.MyRetrofitGoValue
 import com.chenliang.baselibrary.annotation.defaultValueReflex
 import com.chenliang.baselibrary.net.BaseResponse
+import com.chenliang.baselibrary.net.log.BaseBeanLog
 import com.chenliang.baselibrary.net.utils.MyApiReflex
 import com.chenliang.baselibrary.net.utils.MyHttpDB
-import com.chenliang.baselibrary.net.log.BaseBeanLog
 import com.chenliang.baselibrary.utils.toast
 import com.google.gson.stream.MalformedJsonException
 import gorden.rxbus2.RxBus
@@ -22,9 +22,6 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.net.UnknownServiceException
 import javax.net.ssl.SSLException
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.collections.forEach
 import kotlin.collections.set
 
 open class MyBaseViewModel : ViewModel() {
@@ -36,15 +33,17 @@ open class MyBaseViewModel : ViewModel() {
         block: () -> Call<BaseResponse<T>>
     ): MutableLiveData<BaseResponse<T>> {
 
-
-        var s = System.currentTimeMillis()
         var cell = block()
         var path = cell.request().url.toString()
 
-        var data = dataMap[path.split("?")[0]]
+
+        var mutableLiveDataKey=this.toString()+path.split("?")[0]
+
+        var data = dataMap[mutableLiveDataKey]
+
         if (data == null) {
             data = MutableLiveData<BaseResponse<Any>>()
-            dataMap[path.split("?")[0]] = data
+            dataMap[mutableLiveDataKey] = data
         }
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -77,7 +76,6 @@ open class MyBaseViewModel : ViewModel() {
 
             //使用默认值
             defaultValueReflex(responseBean!!)
-
             BaseBeanLog().send(myRetrofitGoValue!!.tag, path, responseBean!!)
             viewModelScope.launch(Dispatchers.Main) {
                 data.value = responseBean as BaseResponse<Any>
