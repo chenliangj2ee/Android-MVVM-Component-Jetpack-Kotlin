@@ -45,9 +45,11 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
         return mRootView
     }
     private fun initSelf(){
-        mViewModel = MyKotlinClass.createByName<VM>(
-            this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")
-        )!!
+//        mViewModel = MyKotlinClass.createByName<VM>(
+//            this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")
+//        )!!
+        mViewModel= initVM(MyKotlinClass.getViewModelClass<VM>(   this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")))!!
+
         initValueFromIntent(this)
     }
     private fun initToolbar() {

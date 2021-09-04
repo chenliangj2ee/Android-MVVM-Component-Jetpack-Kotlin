@@ -176,7 +176,7 @@ fun View.click(func: (view: View) -> Unit) = this.apply {
  * @return T
  */
 fun <T : ViewModel> AppCompatActivity.initVM(modelClass: Class<T>) =
-    ViewModelProvider(this)[modelClass]
+    ViewModelProvider(this).get(modelClass)
 
 /**
  * 创建ViewModel

@@ -11,6 +11,9 @@ import com.chenliang.baselibrary.R
  * @date: 2021/7/12
  */
 object MyKotlinClass {
+
+    fun <T> getViewModelClass(name: String?): Class<T> = Class.forName(name) as Class<T>
+
     fun <T> createByName(name: String?): T? {
         try {
             return Class.forName(name).newInstance() as T
@@ -29,7 +32,7 @@ object MyKotlinClass {
         val bingingNames =
             bingingName.split("\\.".toRegex()).toTypedArray()
         val name = bingingNames[bingingNames.size - 1].replace("_binding", "")
-        var id=context.resources.getIdentifier(name, "layout", context.packageName)
+        var id = context.resources.getIdentifier(name, "layout", context.packageName)
 //        log("解析$bingingName---->name: $name    id:$id")
         return id
     }

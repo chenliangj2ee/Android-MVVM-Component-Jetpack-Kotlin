@@ -56,9 +56,11 @@ abstract class MyBaseActivity<BINDING : ViewDataBinding, VM : ViewModel> : AppCo
         RxBus.get().register(this)
         mHttpEvent = MyHttpEvent(this)
         initValueFromIntent(this)
-        mViewModel = MyKotlinClass.createByName<VM>(
-            this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")
-        )!!
+//        mViewModel = MyKotlinClass.createByName<VM>(
+//            this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")
+//        )!!
+
+        mViewModel= initVM(MyKotlinClass.getViewModelClass<VM>(this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")!!))!!
     }
 
     /**
