@@ -12,7 +12,8 @@ import kotlinx.android.synthetic.main.activity_recyclerview.*
 class RefreshRecyclerViewActivity :
     MyBaseActivity<ActivityRecyclerviewBinding, DefaultViewModel>() {
     override fun initCreate() {
-        refresh.bindDataToItem<BeanItem,ItemRecyclerviewBinding> { bind, bean -> bind.item=bean }.loadData {  httpGetData() }
+        refresh.bindDataToItem<BeanItem, ItemRecyclerviewBinding> { bind, bean -> bind.item = bean }
+        refresh.loadData { httpGetData() }
     }
 
     /**
