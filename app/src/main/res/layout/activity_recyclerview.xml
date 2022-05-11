@@ -16,14 +16,5 @@
             android:layout_weight="1"
             app:my_item_layout="@layout/item_recyclerview" />
 
-        <com.chenliang.baselibrary.view.MyRecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            app:my_item_layout="@layout/item_recyclerview"
-            app:my_layout_manager="linearLayout" />
     </LinearLayout>
 </layout>

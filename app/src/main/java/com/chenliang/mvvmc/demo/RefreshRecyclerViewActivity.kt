@@ -12,21 +12,13 @@ import kotlinx.android.synthetic.main.activity_recyclerview.*
 class RefreshRecyclerViewActivity :
     MyBaseActivity<ActivityRecyclerviewBinding, DefaultViewModel>() {
     override fun initCreate() {
-
-        refresh.bindData<BeanItem> { (it.binding as ItemRecyclerviewBinding).item = it }
-        refresh.loadData { httpGetData() }
-
-
-        recyclerview.binding<BeanItem> {
-            (it.binding as ItemRecyclerviewBinding).item = it
-        }
-
+        refresh.bindDataToItem<BeanItem,ItemRecyclerviewBinding> { bind, bean -> bind.item=bean }.loadData {  httpGetData() }
     }
 
     /**
      * 分页会提前加载下一页：当查看第1页时，会自动预加载第2页，当查看第2页时，会自动加载第3页
      */
-    fun httpGetData() {
+    private fun httpGetData() {
         postDelayed(300) {
             var datas = ArrayList<BeanItem>()
             for (i in 1..20) {
@@ -35,7 +27,6 @@ class RefreshRecyclerViewActivity :
                 datas.add(bean)
             }
             refresh.addDatas(datas)
-            recyclerview.addData(datas)
             mToolBar.setTitle("分页：${refresh.pageIndex}")
         }
     }

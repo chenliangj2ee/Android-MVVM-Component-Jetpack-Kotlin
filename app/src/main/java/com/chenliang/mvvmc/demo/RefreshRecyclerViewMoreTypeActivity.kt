@@ -28,7 +28,7 @@ class RefreshRecyclerViewMoreTypeActivity :
     /**
      * 分页会提前加载下一页：当查看第1页时，会自动预加载第2页，当查看第2页时，会自动加载第3页
      */
-    fun httpGetData() {
+    private fun httpGetData() {
         postDelayed(300) {
             var datas = ArrayList<BeanItem>()
             for (i in 1..20) {

@@ -19,7 +19,7 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
         mBinding.user = user
         mBinding.act = this
         //监听编辑框输入状态，手机号设置成130 7876 7657 格式
-        account.changed { account.setText(it.insert(" ", 3, 7)) }
+//        account.changed { account.setText(it.insert(" ", 3, 7)) }
     }
 
     //去注册
@@ -35,9 +35,9 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
         ) return
         //登录接口
         mViewModel.login(user.name, user.password).obs(this@LoginActivity) {
-//            it.code = 0//模拟登录成功
-//            it.data = user//模拟登录成功
-//            it.y { loginSuccess(it) }
+            it.code = 0//模拟登录成功
+            it.data = user//模拟登录成功
+            it.y { loginSuccess(it) }
         }
 
     }

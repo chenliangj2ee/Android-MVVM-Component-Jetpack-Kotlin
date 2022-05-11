@@ -18,7 +18,7 @@ import com.chenliang.mvvmc.databinding.FragmentToolbarNoBinding
 class FragmentNoToolbarRefreshDemo : MyBaseFragment<FragmentToolbarNoBinding, DefaultViewModel>() {
 
     @MyField
-    lateinit var type:String
+    var type:String=""
     override fun initOnCreateView() {
         log("fragment传参：type----------------$type")
     }

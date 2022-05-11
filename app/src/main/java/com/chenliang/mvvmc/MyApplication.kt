@@ -2,10 +2,8 @@ package com.chenliang.mvvmc
 
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.MyBaseApplication
-import com.chenliang.baselibrary.exception.MyException
 import com.chenliang.baselibrary.utils.anrCheck
-import com.chenliang.mvvmc.act.MainActivity
-import com.chenliang.processor.CBase.MyRoutePath
+import com.chenliang.processor.app.MyRoutePath
 
 class MyApplication : MyBaseApplication() {
 
@@ -14,9 +12,6 @@ class MyApplication : MyBaseApplication() {
             super.onCreate()
             BaseInit.registerApi(ApiService::class.java)
             BaseInit.initMyRoute(MyRoutePath)
-
-            MyException.open(this, MainActivity::class.java)
-                .addPackage("com.chenliang")
         }
     }
 }
