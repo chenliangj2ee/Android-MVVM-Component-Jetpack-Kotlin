@@ -1,11 +1,11 @@
 package com.chenliang.third
 
-import com.chenliang.baselibrary.net.BaseResponse
+import com.chenliang.baselibrary.base.MyBaseResponse
 import retrofit2.Call
 import java.util.*
 
-typealias Data<T> = Call<BaseResponse<T>>
-typealias Datas<T> = Call<BaseResponse<ArrayList<T>>>
+typealias Data<T> = Call<MyBaseResponse<T>>
+typealias Datas<T> = Call<MyBaseResponse<ArrayList<T>>>
 
 
 interface ApiService {

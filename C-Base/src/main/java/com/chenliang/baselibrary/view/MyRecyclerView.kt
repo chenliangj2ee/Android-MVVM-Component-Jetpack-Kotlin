@@ -2,12 +2,15 @@ package com.chenliang.baselibrary.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.base.MyBaseAdapter
+import com.chenliang.baselibrary.base.MyBaseAdapter2
 import com.chenliang.baselibrary.base.MyBaseBean
 
 /**
@@ -74,6 +77,7 @@ class MyRecyclerView : RecyclerView {
         layoutManagerValue = typedArray.getInt(R.styleable.MyRecyclerView_my_layout_manager, 0)
         spanCount = typedArray.getInt(R.styleable.MyRecyclerView_my_span_count, 2)
         myOrientation = typedArray.getInt(R.styleable.MyRefreshRecyclerView_my_orientation, 1)
+        overScrollMode = View.OVER_SCROLL_NEVER;
     }
 
     fun bindTypeToItemView(type: Int, layoutId: Int) {
@@ -121,36 +125,129 @@ class MyRecyclerView : RecyclerView {
         adapter = listAdapter
     }
 
-    fun addLoading(func: (() -> Unit?)) {
-        loadFun = func
-        (listAdapter as MyBaseAdapter<*>).loadFun = func
+    fun <D : MyBaseBean, B : ViewDataBinding> binding2(
+        func: (d: B,b:D) -> Unit
+    ) {
+
+        if (layoutManager == null) {
+            if (layoutManagerValue == 0) {
+                var m = LinearLayoutManager(context)
+                if (myOrientation == 0) {
+                    m.orientation = RecyclerView.HORIZONTAL
+                } else {
+                    m.orientation = RecyclerView.VERTICAL
+                }
+                layoutManager = m
+            }
+            if (layoutManagerValue == 1) {
+                var m = GridLayoutManager(context, spanCount)
+                if (myOrientation == 0) {
+                    m.orientation = RecyclerView.HORIZONTAL
+                } else {
+                    m.orientation = RecyclerView.VERTICAL
+                }
+                layoutManager = m
+            }
+            if (layoutManagerValue == 2) {
+                var m = StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL)
+                if (myOrientation == 0) {
+                    m.orientation = RecyclerView.HORIZONTAL
+                } else {
+                    m.orientation = RecyclerView.VERTICAL
+                }
+                layoutManager = m
+
+            }
+        }
+
+        if (layoutIds.isEmpty())
+            layoutIds[31415926] = layoutId
+        listAdapter = MyBaseAdapter2<D, B>(context, layoutIds, func)
+        adapter = listAdapter
     }
 
-    public fun <D : MyBaseBean> addData(list: ArrayList<D>) {
-        (listAdapter as MyBaseAdapter<D>).data.addAll(list)
+    fun addLoading(func: (() -> Unit?)) {
+        loadFun = func
+        if (listAdapter is MyBaseAdapter<*>)
+            (listAdapter as MyBaseAdapter<*>).loadFun = func
+        else
+            (listAdapter as MyBaseAdapter2<*, *>).loadFun = func
+    }
+
+    open var caches = ArrayList<Any>()
+    public fun <D : MyBaseBean> addCache(list: List<D>) {
+        caches.clear()
+        caches.addAll(list)
+        if (listAdapter is MyBaseAdapter<*>)
+            (listAdapter as MyBaseAdapter<D>).data.addAll(caches as List<D>)
+        else
+            (listAdapter as MyBaseAdapter2<D, *>).data.addAll(caches as List<D>)
         listAdapter.notifyDataSetChanged()
     }
 
-    fun clearData() {
+    public fun <D : MyBaseBean> addData(list: List<D>) {
 
-        (listAdapter as MyBaseAdapter<*>).data.clear()
+        if (listAdapter is MyBaseAdapter<*>) {
+            caches.forEach { (listAdapter as MyBaseAdapter<D>).data.remove(it) }
+            (listAdapter as MyBaseAdapter<D>).data.addAll(list)
+        } else {
+            caches.forEach { (listAdapter as MyBaseAdapter2<*, *>).data.remove(it) }
+            (listAdapter as MyBaseAdapter2<D, *>).data.addAll(list)
+        }
+
+        listAdapter.notifyDataSetChanged()
+        caches.clear()
+    }
+
+    fun clearData() {
+        if (listAdapter is MyBaseAdapter<*>) {
+            (listAdapter as MyBaseAdapter<*>).data.clear()
+        } else {
+            (listAdapter as MyBaseAdapter2<*, *>).data.clear()
+        }
+
         listAdapter.notifyDataSetChanged()
     }
 
     public fun <D : MyBaseBean> getData(): ArrayList<D> {
-        return (listAdapter as MyBaseAdapter<D>).data
-
+        if (listAdapter is MyBaseAdapter<*>)
+            return (listAdapter as MyBaseAdapter<D>).data
+        else
+            return (listAdapter as MyBaseAdapter2<D, *>).data
     }
 
     fun finishLoading() {
-        (listAdapter as MyBaseAdapter<*>).finishLoading()
+        if (listAdapter is MyBaseAdapter<*>){
+            (listAdapter as MyBaseAdapter<*>).finishLoading()
+        }else{
+            (listAdapter as MyBaseAdapter2<*, *>).finishLoading()
+        }
+
     }
 
     fun isLoading(): Boolean {
-        return (listAdapter as MyBaseAdapter<*>).loading
+        if (listAdapter is MyBaseAdapter<*>){
+            return (listAdapter as MyBaseAdapter<*>).loading
+        }else{
+            return (listAdapter as MyBaseAdapter2<*, *>).loading
+        }
+
+    }
+
+    fun autoLoadMore() {
+        if (listAdapter is MyBaseAdapter<*>){
+            return (listAdapter as MyBaseAdapter<*>).autoLoadMore()
+        }else{
+            return (listAdapter as MyBaseAdapter2<*, *>).autoLoadMore()
+        }
     }
 
     fun getPosition(): Int {
-        return (listAdapter as MyBaseAdapter<*>).position
+        if (listAdapter is MyBaseAdapter<*>){
+            return (listAdapter as MyBaseAdapter<*>).position
+        }else{
+            return (listAdapter as MyBaseAdapter2<*, *>).position
+        }
+
     }
 }

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="20dp"
+            tools:context=".TestActivity">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button33"
+                android:layout_width="80dp"
+                android:layout_height="33dp"
+                android:background="@drawable/base_selector_button_dark"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="测试按钮"
+                android:textColor="@drawable/base_selector_color_button_white" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button1"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/base_selector_button_dark"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="测试按钮"
+                android:textColor="@drawable/base_selector_color_button_white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="按钮"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="80dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/base_selector_button_white_border_1"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="测试按钮"
+                android:textColor="@drawable/base_selector_color_button_dark" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/base_selector_button_white_border_1"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="测试按钮"
+                android:textColor="@drawable/base_selector_color_button_dark" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="背景：base_selector_button_white_border_1"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="颜色：base_selector_color_button_dark"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="80dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/base_selector_button_grey"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="测试按钮"
+                android:textColor="@drawable/base_selector_color_button_black" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/base_selector_button_grey"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="测试按钮"
+                android:textColor="@drawable/base_selector_color_button_black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="背景：base_selector_button_grey"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="颜色：base_selector_color_button_black"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/button2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/base_selector_radiobutton_bg"
+                    android:button="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="多选/单选按钮" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="按钮"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+
+            <EditText
+                android:id="@+id/button3"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/base_selector_edittext_background"
+                android:gravity="center"
+                android:text="编辑框" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="背景：base_selector_edittext_background"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="78dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/base_selector_button_dark_34"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="按钮"
+                android:textColor="@drawable/base_selector_color_button_white"
+                android:textSize="14dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="178dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/base_selector_button_dark_34"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="按钮"
+                android:textColor="@drawable/base_selector_color_button_white"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="背景高度34dp：base_selector_button_dark_34"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="颜色：base_selector_color_button_white"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/base_selector_button_dark_20"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="按钮"
+                android:textColor="@drawable/base_selector_color_button_white"
+                android:textSize="10dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="140dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/base_selector_button_dark_20"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="按钮"
+                android:textColor="@drawable/base_selector_color_button_white"
+                android:textSize="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="背景高度20dp：base_selector_button_dark_20"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="颜色：base_selector_color_button_white"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="50dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/base_selector_button_grey_border_1_24"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="按钮"
+                android:textColor="@drawable/base_selector_color_button_dark"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="背景高度24dp：base_selector_button_grey_border_1_24"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="颜色：base_selector_color_button_dark"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/base_selector_button_white_border_1_20"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="按钮"
+                android:textColor="@drawable/base_selector_color_button_dark"
+                android:textSize="12dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/base_selector_button_white_border_1_20"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="按钮"
+                android:textColor="@drawable/base_selector_color_button_dark"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="背景高度20dp：base_selector_button_grey_border_1_24"
+                android:textColor="#000"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="颜色：base_selector_color_button_dark"
+                android:textColor="#000"
+                android:textSize="12dp" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

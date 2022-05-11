@@ -1,4 +1,4 @@
-package com.chenliang.baselibrary.net.log
+package com.chenliang.baselibrary.debug
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -61,7 +61,7 @@ class FloatView(context: Context?) : Button(context) {
 
 
     fun addLog(log: BaseBeanLog) {
-        logs.add(log)
+        logs.add(0,log)
     }
 
 }

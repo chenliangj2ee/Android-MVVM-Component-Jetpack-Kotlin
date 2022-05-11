@@ -1,5 +1,7 @@
 package com.chenliang.baselibrary.base
 
+import com.chenliang.baselibrary.base.MyBaseViewModel
+
 /**
  *
  * @Project: MVVM-Component
@@ -8,4 +10,5 @@ package com.chenliang.baselibrary.base
  * @date: 2021/7/11
  */
 class DefaultViewModel : MyBaseViewModel() {
+
 }

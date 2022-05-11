@@ -1,4 +1,4 @@
-package com.chenliang.baselibrary.net.log
+package com.chenliang.baselibrary.debug
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,8 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.chenliang.baselibrary.R
+import com.chenliang.baselibrary.utils.click
+import com.chenliang.baselibrary.utils.show
 
 internal class LogDialog : DialogFragment() {
 
@@ -25,7 +27,7 @@ internal class LogDialog : DialogFragment() {
             root = inflater.inflate(R.layout.base_dialog_log_layout, null)
         }
         listview = root!!.findViewById(R.id.listview)
-        listview!!.adapter = LogAdapter(context!!, logs)
+        listview!!.adapter = LogAdapter(requireContext(), logs)
         return root
     }
 
@@ -42,10 +44,16 @@ internal class LogDialog : DialogFragment() {
             var tag = view.findViewById<TextView>(R.id.tag)
             var url = view.findViewById<TextView>(R.id.url)
             var json = view.findViewById<TextView>(R.id.json)
+            var log = view.findViewById<View>(R.id.log)
             var bean = logs[position]
             tag.text = bean.tag
             url.text = bean.url
             json.text = bean.json
+            log.show(logs[position].showLog)
+            url.click {
+                logs[position].showLog=!logs[position].showLog
+                log.show(logs[position].showLog)
+            }
             return view;
         }
 

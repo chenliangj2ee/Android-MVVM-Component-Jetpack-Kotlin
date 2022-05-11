@@ -4,7 +4,7 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="PLATFORM" />
+        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle-5.6.4" />
@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/C-Base" />
             <option value="$PROJECT_DIR$/C-Compiler" />
             <option value="$PROJECT_DIR$/C-Third" />
+            <option value="$PROJECT_DIR$/L-ImageSelector" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

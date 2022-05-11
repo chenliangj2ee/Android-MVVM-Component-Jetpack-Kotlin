@@ -5,7 +5,13 @@
     <attr name="my_top_layout" format="reference" />
     <attr name="my_top_enable" format="boolean" />
     <attr name="my_span_count" format="integer" />
-
+    <attr name="my_divider_height" format="dimension" />
+    <attr name="my_divider_color" format="color" />
+    <attr name="my_divider_marginLeft" format="dimension" />
+    <attr name="my_divider_marginRight" format="dimension" />
+    <attr name="my_ratio" format="string" />
+    <attr name="my_empty_icon" format="reference" />
+    <attr name="my_empty_title" format="string" />
     <attr name="my_layout_manager" format="enum">
         <enum name="linearLayout" value="0" />
         <enum name="gridLayout" value="1" />
@@ -33,6 +39,57 @@
         <attr name="my_layout_manager" />
         <attr name="my_span_count" />
         <attr name="my_orientation" />
+        <attr name="my_divider_height" />
+        <attr name="my_divider_color" />
+        <attr name="my_divider_marginLeft" />
+        <attr name="my_divider_marginRight" />
+        <attr name="my_empty_icon" />
+        <attr name="my_empty_title" />
+    </declare-styleable>
+    <declare-styleable name="MyImageView">
+        <attr name="my_default" format="reference" />
+        <attr name="my_radius" format="integer" />
+        <attr name="my_ratio" />
+    </declare-styleable>
+    <declare-styleable name="MyFrameLayout">
+        <attr name="my_ratio" />
+    </declare-styleable>
+    <attr name="my_icon" format="reference" />
+    <attr name="my_title" format="string" />
+    <attr name="my_value" format="string" />
+    <attr name="my_value_hint" format="string" />
+    <attr name="my_rightShow" format="boolean" />
+    <attr name="my_lineShow" format="boolean" />
+    <attr name="my_edit" format="boolean" />
+    <attr name="my_must_input" format="boolean" />
+    <attr name="my_textSize" format="dimension" />
+    <attr name="my_digits" format="string" />
+    <declare-styleable name="ItemView">
+        <attr name="my_icon" />
+        <attr name="my_title" />
+        <attr name="my_rightShow" />
+        <attr name="my_lineShow" />
+        <attr name="my_must_input" />
+        <attr name="my_textSize" />
+    </declare-styleable>
+    <declare-styleable name="ItemEditView">
+        <attr name="my_icon" />
+        <attr name="my_title" />
+        <attr name="my_value" />
+        <attr name="my_rightShow" />
+        <attr name="my_lineShow" />
+        <attr name="my_edit" />
+        <attr name="my_value_hint" />
+        <attr name="my_must_input" />
+        <attr name="my_textSize" />
+        <attr name="my_digits" />
+        <attr name="my_max_length" />
     </declare-styleable>
 
+    <declare-styleable name="EditArea">
+        <attr name="my_hint" format="string" />
+        <attr name="my_text" format="string" />
+        <attr name="my_textSize" />
+        <attr name="my_max_length" format="integer" />
+    </declare-styleable>
 </resources>

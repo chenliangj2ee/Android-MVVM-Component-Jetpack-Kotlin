@@ -21,9 +21,10 @@ annotation class MyClass(
     val mFullScreen: Boolean = false,//Activity是否全屏
     val mShowNetworkError: Boolean = false,//是否网络异常时，Activity，fragmen显示View提示
     val mRefresh: Boolean = false,//Activity fragment是否启用下拉刷新
+    val mScroll: Boolean = false,//Activity fragment
     val mDialogGravity: Int = Gravity.CENTER,//dialog默认居中显示
     val mDialogAnimation: Boolean = false,//dialog默认居中显示
-    val mDialogAnimationTime: Long = 400,//dialog默认居中显示
+    val mDialogAnimationTime: Long = 300,//dialog默认动画时长
     val mDialogTransparent: Boolean = false//dialog是否透明
 
 
@@ -47,6 +48,15 @@ fun activityRefresh(cla: Any): Boolean {
     val clazz = cla::class.java
     val annotation = clazz.getAnnotation(MyClass::class.java) ?: return false
     return annotation.mRefresh
+}
+
+/**
+ * 获取Activity 是否启动scroll
+ */
+fun isScroll(cla: Any): Boolean {
+    val clazz = cla::class.java
+    val annotation = clazz.getAnnotation(MyClass::class.java) ?: return false
+    return annotation.mScroll
 }
 
 /**

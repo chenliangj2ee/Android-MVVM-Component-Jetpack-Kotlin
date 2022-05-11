@@ -1,4 +1,4 @@
-package com.chenliang.baselibrary.net.log
+package com.chenliang.baselibrary.debug
 
 import com.google.gson.GsonBuilder
 import gorden.rxbus2.RxBus
@@ -7,6 +7,7 @@ class BaseBeanLog {
     var tag = ""
     var url = ""
     var json = ""
+    var showLog=false
 
     fun send(tag: String, path: String, json: Any) {
         this.tag = if (tag == "") {

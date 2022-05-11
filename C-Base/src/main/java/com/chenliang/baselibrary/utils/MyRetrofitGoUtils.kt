@@ -1,11 +1,15 @@
-package com.chenliang.baselibrary.net.utils
+package com.chenliang.baselibrary.utils
 
 import com.chenliang.baselibrary.annotation.MyRetrofitGo
 import com.chenliang.baselibrary.annotation.MyRetrofitGoValue
 import retrofit2.http.GET
 import retrofit2.http.POST
+import java.lang.reflect.ParameterizedType
 
-object MyApiReflex {
+/**
+ * API MyRetrofitGo注解解析
+ */
+object MyRetrofitGoUtils {
 
     var value = HashMap<String, MyRetrofitGoValue>()
 
@@ -40,8 +44,12 @@ object MyApiReflex {
             var failToast = method.getAnnotation(MyRetrofitGo::class.java).mFailToast
             var successCode = method.getAnnotation(MyRetrofitGo::class.java).mSuccessCode
             var failCode = method.getAnnotation(MyRetrofitGo::class.java).mFailCode
+            var type=(method.genericReturnType as ParameterizedType).actualTypeArguments[0]
 
-            value[path] = MyRetrofitGoValue(loading, cache, hasCacheLoading, tag,failToast,successCode,failCode)
+            var mDataNullIsError = method.getAnnotation(MyRetrofitGo::class.java).mDataIsNullToError
+
+            var result= MyRetrofitGoValue(loading, cache, hasCacheLoading, tag,failToast,successCode,failCode,type,mDataNullIsError)
+            value[path] =result
 
         }
     }

@@ -1,7 +1,5 @@
 package com.chenliang.baselibrary.utils
 
-import java.util.regex.Pattern
-
 /**
  *
  * @Project: MVVM-Component

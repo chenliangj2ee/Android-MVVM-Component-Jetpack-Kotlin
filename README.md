@@ -1,5 +1,5 @@
 # Android-MVVM-Component-Jetpack-Kotlin
-## 超级简洁、彻底组件化的轻量级Android Kotlin Jetpack MVVM组件化框架----持续更新----未完结
+## 超级简洁、彻底组件化的轻量级Android Kotlin Jetpack MVVM组件化框架----持续更新----
 
 # 结构
 ![1628995831(1)](https://user-images.githubusercontent.com/4067327/129465391-c2732cec-0b1a-458b-85c4-0bcb33ec7451.jpg)

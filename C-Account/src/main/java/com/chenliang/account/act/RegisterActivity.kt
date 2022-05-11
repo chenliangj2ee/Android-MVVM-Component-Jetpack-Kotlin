@@ -28,9 +28,9 @@ class RegisterActivity : MyBaseActivity<AccountActRegisterBinding, AccountViewMo
         with(user) {
             if (name.check(MyCheck.empty, "请输入账号") || password.check(MyCheck.empty, "请输入密码")) return
             mViewModel.register(name, password).obs(this@RegisterActivity) {
-                it.code = 0//模拟注册成功
-                it.data = user//模拟注册成功
-                it.y { registerSuccess(it) }
+//                it.code = 0//模拟注册成功
+//                it.data = user//模拟注册成功
+//                it.y { registerSuccess(it) }
             }
         }
 

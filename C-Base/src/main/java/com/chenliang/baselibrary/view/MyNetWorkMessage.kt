@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import com.chenliang.baselibrary.R
+import com.chenliang.baselibrary.utils.MyNetWorkUtils
 import com.chenliang.baselibrary.utils.hasNetWork
-import com.chenliang.baselibrary.utils.log
 import com.chenliang.baselibrary.utils.networkChange
 import com.chenliang.baselibrary.utils.show
 
@@ -36,10 +36,14 @@ class MyNetWorkMessage : LinearLayout {
         }
     }
 
+    fun enable() {
+        networkChange { show(!it && !MyNetWorkUtils.isConnected()) }
+    }
+
+
     private fun initViews() {
         root =
             LayoutInflater.from(context).inflate(R.layout.base_layout_network_message, this, true)
-
 
     }
 

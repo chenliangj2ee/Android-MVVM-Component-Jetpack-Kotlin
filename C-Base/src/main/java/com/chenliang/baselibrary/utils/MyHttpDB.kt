@@ -1,58 +1,53 @@
-package com.chenliang.baselibrary.net.utils
+package com.chenliang.baselibrary.utils
 
 import android.content.Context
 import android.text.TextUtils
-import com.google.gson.Gson
 import com.chenliang.baselibrary.BaseInit
-import com.chenliang.baselibrary.utils.log
+import com.google.gson.Gson
 import java.lang.reflect.Type
 import java.util.*
 
+/**
+ * retrofit 缓存
+ */
 internal object MyHttpDB {
-    private var MyCache = "SPUtils-android"
-    private val datasMap = HashMap<String, Any>()
+    private var MyCache = "MyHttpDB"
+    private val datasMap = HashMap<String, String>()
 
     private fun putString(
         context: Context,
         key: String,
         value: String
     ) {
-        log("put key:$key  value:$value")
         val sp =
             context.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val edit = sp.edit()
         edit.putString(key, value)
         edit.commit()
+
+        if (value.contains(" \"records\" : []")) {
+            clearCache(key)
+        }
     }
 
     private fun getString(context: Context, key: String): String? {
         val sp =
             context.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
         val result = sp.getString(key, "")
-        log("get key:$key  value:$result")
         return result
     }
 
-    fun <T> getCache(
+    fun getCacheJson(
         key: String,
-        clazz: Class<T>?
-    ): T? {
+    ): String? {
 
         var res = datasMap[key]
         if (res != null) {
-            log("使用内存缓存")
-            return res as T
+            return res
         }
 
-        res = BaseInit.con?.let {
-            getObject(
-                it,
-                key,
-                clazz
-            )
-        }
+        res = BaseInit.con?.let { getString(it, key) }
         if (res != null) {
-            log("使用文件缓存")
             datasMap[key] = res
         }
         return res
@@ -65,8 +60,7 @@ internal object MyHttpDB {
     ) {
         if (BaseInit.con == null || bean == null || key == null)
             return
-        datasMap[key] = bean
-        log("更新数据到内存缓存")
+        datasMap[key] = bean.toJson()
         if (datasMap.size > 100)
             datasMap.clear()
         putString(
@@ -74,9 +68,28 @@ internal object MyHttpDB {
             key,
             Gson().toJson(bean)
         )
-        log("更新数据到文件缓存")
     }
 
+    fun clearCache(
+        key: String?
+    ) {
+        if (BaseInit.con == null || key == null)
+            return
+        datasMap.remove(key)
+        putString(
+            BaseInit.con!!,
+            key,
+            ""
+        )
+    }
+
+    fun clearAll() {
+        val sp =
+            BaseInit.con!!.getSharedPreferences(MyCache, Context.MODE_PRIVATE)
+        val edit = sp.edit()
+        edit.clear()
+        edit.commit()
+    }
 
     private fun <T> getObject(
         context: Context,

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.chenliang.baselibrary.utils.log
 
 /**
  * chenliang
@@ -45,18 +44,23 @@ open class MyBaseAdapter<D : MyBaseBean>(
         loading = false
     }
 
+    fun autoLoadMore() {
+        loading = true
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         this.position = position
-        if (position >= data.size - 10 && !loading) {
-            log("自动加载....$position")
-            loading = true
-            if(loadFun!=null){
-                loadFun!!()
-            }
+        if (position == data.size - 10 && !loading && data.size > 20) {
+//            log("自动加载....$position")
+//            loading = true
+//            if (loadFun != null) {
+//                loadFun!!()
+//            }
         }
 
         val binding: ViewDataBinding = DataBindingUtil.getBinding(holder.itemView)!!
         if (binding != null) {
+            data[position].itemPosition = position
             data[position].binding = binding
             onBindViewHolder(data[position])
             binding.executePendingBindings()

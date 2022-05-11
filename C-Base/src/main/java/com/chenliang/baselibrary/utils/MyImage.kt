@@ -35,6 +35,44 @@ object MyImage {
             bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
             fOut.flush()
         } catch (e1: IOException) {
+            e1.printStackTrace()
+            outFile.deleteOnExit()
+        } finally {
+            if (null != fOut) {
+                try {
+                    fOut.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    outFile.deleteOnExit()
+                }
+            }
+        }
+        return outFile
+    }
+
+
+    /**
+     * tag bitmap：保存bitmap到文件
+     * 保存bitmap到文件
+     * @param outFile File
+     * @param bitmap Bitmap?
+     * @return File?
+     */
+    fun saveBitmapCompress(outFile: File, bitmap: Bitmap?, compress: Int): File? {
+        // 检测是否达到存放文件的上限
+        if (!outFile.exists() || outFile.isDirectory) {
+            outFile.parentFile.mkdirs()
+        }
+        var fOut: FileOutputStream? = null
+        try {
+            outFile.deleteOnExit()
+            outFile.createNewFile()
+            fOut = FileOutputStream(outFile)
+            if (bitmap == null)
+                return null
+            bitmap!!.compress(Bitmap.CompressFormat.JPEG, compress, fOut)
+            fOut.flush()
+        } catch (e1: IOException) {
             outFile.deleteOnExit()
         } finally {
             if (null != fOut) {
@@ -58,7 +96,7 @@ object MyImage {
     fun getBitmapFormPath(uri: Uri): Bitmap? {
         var bitmap: Bitmap? = null
         try {
-            var input: InputStream =FileInputStream(File(uri.path))
+            var input: InputStream = FileInputStream(File(uri.path))
             val onlyBoundsOptions = BitmapFactory.Options()
             onlyBoundsOptions.inJustDecodeBounds = true
             onlyBoundsOptions.inDither = true //optional
@@ -68,13 +106,13 @@ object MyImage {
             val originalWidth = onlyBoundsOptions.outWidth
             val originalHeight = onlyBoundsOptions.outHeight
             if (originalWidth == -1 || originalHeight == -1) return null
-            //图片分辨率以480x800为标准
-            var hh = 800f //这里设置高度为800f
-            var ww = 480f //这里设置宽度为480f
+            //图片分辨率以1280x720为标准
+            var hh = 1280f //这里设置高度为800f
+            var ww = 720f //这里设置宽度为480f
             val degree = getBitmapDegree(uri)
             if (degree == 90 || degree == 270) {
-                hh = 480f
-                ww = 800f
+                hh = 720f
+                ww = 1280f
             }
             //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
             var be = 1 //be=1表示不缩放
@@ -469,10 +507,25 @@ object MyImage {
     }
 
 
-
     class CopyImageInfo {
         var path: String? = null
         var width = 0
         var height = 0
+    }
+
+
+
+    /**
+     * @param 将字节数组转换为ImageView可调用的Bitmap对象
+     * @param bytes
+     * @param opts
+     * @return Bitmap
+     */
+      fun bytesToBitmap(bytes: ByteArray): Bitmap? {
+        if(bytes==null)
+            return null
+        return BitmapFactory.decodeByteArray(  bytes, 0, bytes.size    )
+
+
     }
 }

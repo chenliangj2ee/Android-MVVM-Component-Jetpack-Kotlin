@@ -69,6 +69,7 @@ class MyNetWorkUtils {
          * @return 当前网络的状态。具体类型可参照NetworkInfo.State.CONNECTED、NetworkInfo.State.CONNECTED.DISCONNECTED等字段。当前没有网络连接时返回null
          */
         private fun getCurrentNetworkState(context: Context): Boolean {
+
             @SuppressLint("MissingPermission")
             val infos =
                 (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).allNetworkInfo

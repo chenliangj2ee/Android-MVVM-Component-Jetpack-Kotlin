@@ -1,10 +1,9 @@
 package com.chenliang.baselibrary.utils
 
 import android.content.Context
-import com.chenliang.baselibrary.R
 
 /**
- *
+ *解析Activity，Fragment，dialog的<BINDING : ViewDataBinding, VM : ViewModel>
  * @Project: MVVM-Component
  * @Package: com.chenliang.baselibrary.utils
  * @author: chenliang

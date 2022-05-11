@@ -5,6 +5,8 @@ import java.io.Serializable
 
 /**
  *
+ * bus事件回调
+ *
  * @Project: MVVM-Component
  * @Package: com.chenliang.baselibrary.utils
  * @author: chenliang
@@ -15,7 +17,8 @@ class RxBusEvent<T>(o: T, back: ((intent: Intent) -> Unit)) : Serializable {
     private var back: ((intent: Intent) -> Unit) = back
     fun callback(vararg values: Any) {
         var intent = Intent()
-        intent.put(*values)
+        if (values.isNotEmpty())
+            intent.put(*values)
         back(intent)
     }
 }

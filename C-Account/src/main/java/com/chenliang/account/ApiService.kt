@@ -3,13 +3,13 @@ package com.chenliang.account
 import com.chenliang.account.bean.BeanUser
 import com.chenliang.annotation.MyApiService
 import com.chenliang.baselibrary.annotation.MyRetrofitGo
-import com.chenliang.baselibrary.net.BaseResponse
+import com.chenliang.baselibrary.base.MyBaseResponse
 import retrofit2.Call
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-typealias Data<T> = Call<BaseResponse<T>>
-typealias Datas<T> = Call<BaseResponse<List<T>>>
+typealias Data<T> = Call<MyBaseResponse<T>>
+typealias Datas<T> = Call<MyBaseResponse<List<T>>>
 
 @MyApiService(
     mName = "API",

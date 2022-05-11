@@ -6,8 +6,8 @@ import com.chenliang.account.vm.AccountViewModel
 import com.chenliang.annotation.MyRoute
 import com.chenliang.baselibrary.annotation.MyClass
 import com.chenliang.baselibrary.base.MyBaseActivity
-import com.chenliang.baselibrary.base.obs
 import com.chenliang.baselibrary.utils.*
+import com.chenliang.baselibrary.base.obs
 import gorden.rxbus2.Subscribe
 import kotlinx.android.synthetic.main.account_act_login.*
 
@@ -35,9 +35,9 @@ class LoginActivity : MyBaseActivity<AccountActLoginBinding, AccountViewModel>()
         ) return
         //登录接口
         mViewModel.login(user.name, user.password).obs(this@LoginActivity) {
-            it.code = 0//模拟登录成功
-            it.data = user//模拟登录成功
-            it.y { loginSuccess(it) }
+//            it.code = 0//模拟登录成功
+//            it.data = user//模拟登录成功
+//            it.y { loginSuccess(it) }
         }
 
     }

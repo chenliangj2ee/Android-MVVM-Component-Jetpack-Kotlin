@@ -16,12 +16,18 @@ import com.chenliang.baselibrary.annotation.activityRefresh
 import com.chenliang.baselibrary.annotation.activityTitle
 import com.chenliang.baselibrary.annotation.initValueFromIntent
 import com.chenliang.baselibrary.annotation.myShowNetworkError
-import com.chenliang.baselibrary.utils.*
+import com.chenliang.baselibrary.utils.MyKotlinClass
+import com.chenliang.baselibrary.utils.anrCheck
+import com.chenliang.baselibrary.utils.initVM
+import com.chenliang.baselibrary.utils.show
 import com.chenliang.baselibrary.view.MyNetWorkMessage
 import com.chenliang.baselibrary.view.MyToolBar
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
+import gorden.rxbus2.RxBus
 import kotlinx.android.synthetic.main.base_activity_content.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragment() {
     lateinit var mRootView: LinearLayout
@@ -34,24 +40,33 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        log("MyActivityManager", "启动-----------${javaClass.name}")
+//        log("MyActivityManager", "启动-----------${javaClass.name}")
         mRootView = layoutInflater.inflate(R.layout.base_fragment_content, null) as LinearLayout
+        mRootView.removeAllViews();
+        retainInstance=false
         initSelf();
         initToolbar()
         initNetWorkMessage()
         bindView()
-
         anrCheck { initOnCreateView() }
+        initClick()
         return mRootView
     }
-    private fun initSelf(){
+
+    private fun initSelf() {
+        RxBus.get().register(this)
 //        mViewModel = MyKotlinClass.createByName<VM>(
 //            this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")
 //        )!!
-        mViewModel= initVM(MyKotlinClass.getViewModelClass<VM>(   this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")))!!
+        mViewModel = initVM(
+            MyKotlinClass.getViewModelClass<VM>(
+                this::class.java.genericSuperclass.toString().split(",")[1].trim().replace(">", "")
+            )
+        )!!
 
         initValueFromIntent(this)
     }
+
     private fun initToolbar() {
         mToolBar = MyToolBar(context)
         mRootView.addView(
@@ -62,10 +77,11 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
             )
         )
         mToolBar.showLeft(false)
-        mToolBar.showRight(false)
+        mToolBar.showRight("") {}
         mToolBar.setTitle(activityTitle(this))
         mToolBar.show(activityTitle(this).isNullOrEmpty().not())
     }
+
     /**
      * 初始化网络异常状态
      */
@@ -81,7 +97,12 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
 
         netWorkMessage.showNetworkError(myShowNetworkError(this))
     }
+
     open fun refresh() {
+    }
+
+    open fun initClick() {
+
     }
 
     open fun stopRefresh() {
@@ -116,6 +137,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
 
 
     }
+
     /**
      * 设置标题栏标题
      * @param title String
@@ -138,6 +160,7 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
     override fun onDestroy() {
         super.onDestroy()
         mBinding.unbind()
+        RxBus.get().unRegister(this)
     }
 
 
@@ -197,5 +220,12 @@ abstract class MyBaseFragment<BINDING : ViewDataBinding, VM : ViewModel> : Fragm
         }
         handler.postDelayed(run, delay)
         handlerRunnable.add(run)
+    }
+
+    open fun toPause(){
+
+    }
+    open fun toResume(){
+
     }
 }

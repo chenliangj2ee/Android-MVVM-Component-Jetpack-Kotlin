@@ -1,12 +1,11 @@
-package com.chenliang.baselibrary.net.utils
+package com.chenliang.baselibrary.utils
 
 import android.app.Activity
 import android.app.Dialog
 import android.os.Handler
 import android.view.MotionEvent
-import com.chenliang.baselibrary.R
-import com.chenliang.baselibrary.net.log.BaseBeanLog
-import com.chenliang.baselibrary.net.log.FloatView
+import com.chenliang.baselibrary.debug.BaseBeanLog
+import com.chenliang.baselibrary.debug.FloatView
 import gorden.rxbus2.RxBus
 import gorden.rxbus2.Subscribe
 import gorden.rxbus2.ThreadMode
@@ -19,37 +18,6 @@ class MyHttpEvent(act: Activity) {
     var act = act
     var log = true
     var floatButton: FloatView = FloatView(act)
-    var dialogs = HashMap<String, Dialog>()
-
-
-    init {
-        RxBus.get().unRegister(this)
-        RxBus.get().register(this)
-    }
-
-    /**
-     * 接受展示loading event
-     */
-    @Subscribe(code = 31415926, threadMode = ThreadMode.MAIN)
-    fun eventShowLoading(id: String) {
-//        log("${act::class.java.simpleName}  eventShowLoading....................")
-        var dialog = Dialog(act)
-        dialog.setContentView(R.layout.base_loading)
-        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.show()
-        dialogs[id] = dialog
-
-    }
-
-    /**
-     * 接受关闭loading event
-     */
-    @Subscribe(code = 31415927, threadMode = ThreadMode.MAIN)
-    fun eventCloseLoading(id: String) {
-//        log("${act::class.java.simpleName}  eventCloseLoading....................")
-        dialogs[id]?.dismiss()
-        dialogs.remove(id)
-    }
 
 
     /**
@@ -70,24 +38,29 @@ class MyHttpEvent(act: Activity) {
     fun onDestroy() {
 //        log("MyHttpEvent ${act::class.java.simpleName} onDestroy......")
         RxBus.get().unRegister(this)
-        for (d in dialogs) {
-            d.value.dismiss()
-        }
     }
 
     /**
      * 开始接受log
      */
-    fun onResume() {
+    fun register() {
         RxBus.get().unRegister(this)
         RxBus.get().register(this)
         log = true
     }
 
+
     /**
      * 停止接受log
      */
     fun onPause() {
+        RxBus.get().unRegister(this)
+        log = false
+    }
+    /**
+     * 停止接受log
+     */
+    fun unRegister() {
         RxBus.get().unRegister(this)
         log = false
     }
@@ -101,7 +74,6 @@ class MyHttpEvent(act: Activity) {
         if (event!!.action == MotionEvent.ACTION_DOWN) {
             down = true
             downTime = System.currentTimeMillis()
-
             Handler().postDelayed(Runnable {
                 if (down && System.currentTimeMillis() - downTime > 1000) {
                     this.floatButton.show(event.x, event.y)

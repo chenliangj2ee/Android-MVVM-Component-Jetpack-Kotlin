@@ -1,6 +1,7 @@
+rootProject.name = "MVVM-Component"
 include ':C-Third'
 include ':C-Account'
 include ':C-Base'
 include ':app'
-rootProject.name = "MVVM-Component"
 include ':C-Compiler'
+include ':L-ImageSelector'

@@ -82,21 +82,21 @@ class MyApiServiceCompiler : AbstractProcessor() {
                 .addStatement(
                     "if (%T.dev) api = %T(%S, %T::class.java)",
                     ClassName("com.chenliang.annotation", "ApiModel"),
-                    ClassName("com.chenliang.baselibrary.net", "initAPI"),
+                    ClassName("com.chenliang.baselibrary.utils", "initAPI"),
                     devPath,
                     ClassName(apiPackageName, apiName)
                 )
                 .addStatement(
                     "if (%T.test) api = %T(%S, %T::class.java)",
                     ClassName("com.chenliang.annotation", "ApiModel"),
-                    ClassName("com.chenliang.baselibrary.net", "initAPI"),
+                    ClassName("com.chenliang.baselibrary.utils", "initAPI"),
                     testPath,
                     ClassName(apiPackageName, apiName)
                 )
                 .addStatement(
                     "if (%T.release) api = %T(%S, %T::class.java)",
                     ClassName("com.chenliang.annotation", "ApiModel"),
-                    ClassName("com.chenliang.baselibrary.net", "initAPI"),
+                    ClassName("com.chenliang.baselibrary.utils", "initAPI"),
                     path,
                     ClassName(apiPackageName, apiName)
                 )

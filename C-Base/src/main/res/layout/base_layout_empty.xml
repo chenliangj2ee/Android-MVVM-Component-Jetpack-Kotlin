@@ -2,15 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="150dp"
     tools:ignore="MissingDefaultResource">
 
+    <ImageView
+        android:id="@+id/emptyIcon"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/base_icon_empty" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/emptyTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="数据为空"
-        android:textSize="30dp" />
+        android:text="暂无数据"
+        android:textColor="#515357"
+        android:textSize="12dp" />
 
 </LinearLayout>

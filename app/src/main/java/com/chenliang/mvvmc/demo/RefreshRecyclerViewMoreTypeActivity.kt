@@ -38,7 +38,7 @@ class RefreshRecyclerViewMoreTypeActivity :
                     bean.itemType = 1
                 datas.add(bean)
             }
-            refresh.addData(datas)
+            refresh.addDatas(datas)
             mToolBar.setTitle("分页：${refresh.pageIndex}")
         }
     }

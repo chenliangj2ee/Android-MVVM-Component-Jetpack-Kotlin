@@ -36,4 +36,18 @@ class MyConfig {
 
     @MySpConfig
     var myObject: MyDialog? = null
+
+    @MySpConfig
+    var pushToken: String = ""
+
+    @MySpConfig
+    var isAgree: Boolean = false
+
+    @MySpConfig
+    var floatDialog: Boolean = false
+
+
+    @MySpConfig
+    var notifyDialog: Boolean = false
+
 }

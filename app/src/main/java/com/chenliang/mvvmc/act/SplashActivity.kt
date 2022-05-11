@@ -22,7 +22,7 @@ class SplashActivity : MyBaseActivity<ActivitySplashBinding, DefaultViewModel>()
     }
 
     fun next() {
-        if (BeanUser().get() == null) {
+        if (BeanUser().get<BeanUser>() == null) {
             goto(accountLogin)
         } else {
             goto(appMain)

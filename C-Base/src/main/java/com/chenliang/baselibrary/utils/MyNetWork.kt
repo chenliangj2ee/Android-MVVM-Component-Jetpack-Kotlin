@@ -1,16 +1,22 @@
-package com.chenliang.baselibrary.net
+package com.chenliang.baselibrary.utils
 
+import android.net.TrafficStats
 import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+
 
 /**
  * 创建API
  */
 fun <T> Any.initAPI(url: String, cla: Class<T>): T = MyNetWork.initRetrofit(url).create(cla)
+
+
+const val apiCode = 1
 
 object MyNetWork {
     private val timeUnit: TimeUnit = TimeUnit.SECONDS
@@ -30,6 +36,9 @@ object MyNetWork {
     }
 
     /**2
+     * tag==header
+     * tag==token
+     * tag==apiCode
      * 初始化OkHttpClient
      */
     private fun initHttpClient(): OkHttpClient {
@@ -40,12 +49,16 @@ object MyNetWork {
             .addInterceptor { chain ->
                 val original = chain.request()
                 val newOriginal = addParam(original)
+                var user = getBeanUser()
                 val request = newOriginal.newBuilder()
-                    .header("NAME", "VALUE")
+//                    .header("token", "${user?.token}")
+//                    .header("apiCode", apiCode.toString())
                     .method(newOriginal.method, newOriginal.body)
                     .build()
                 chain.proceed(request)
             }
+        val loggingInterceptor = HttpLoggingInterceptor()
+        builder.addInterceptor(loggingInterceptor)
         builder.addInterceptor(OkHttpProfilerInterceptor())
         return builder.build()
     }
@@ -55,17 +68,21 @@ object MyNetWork {
      * 统一添加参数
      */
     private fun addParam(oldRequest: Request): Request {
+        var user = getBeanUser()
         var builder = oldRequest.url
             .newBuilder()
-            .setEncodedQueryParameter(
-                "app_token",
-                "DYKTAPP//391a8a9b66937236197031a1d1487f42%3D%3D//si"
-            );
+//            .setEncodedQueryParameter(
+//                "token",
+//                "${user?.token}"
+//            );
         var newRequest = oldRequest.newBuilder()
             .method(oldRequest.method, oldRequest.body)
             .url(builder.build())
             .build();
         return newRequest;
     }
+
+    fun getNetworkBytes() = TrafficStats.getTotalRxBytes()
+
 }
 

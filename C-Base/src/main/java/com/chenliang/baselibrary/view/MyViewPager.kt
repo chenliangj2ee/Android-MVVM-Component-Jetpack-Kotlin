@@ -40,15 +40,55 @@ class MyViewPager(context: Context, attrs: AttributeSet) : ViewPager(context, at
 
     init {
         if (this.tag == "false") setEnableScroll(false)
+        initAdapter()
+    }
+
+    var fragmentManager: FragmentManager? = null
+    fun initFragmentManager(f: FragmentManager) {
+        this.fragmentManager = f
+    }
+
+    private fun initAdapter() {
+        if (context is FragmentActivity) {
+            this.adapter =
+                FragmentAdapter(fragments, (context as FragmentActivity).supportFragmentManager)
+        }
+
+        if (adapter == null && fragmentManager!=null) {
+            this.adapter =
+                FragmentAdapter(fragments, fragmentManager!!)
+        }
+    }
+
+    /**
+     * 添加fragment
+     */
+    fun clearFragments() {
+        fragments.clear()
+        adapter?.notifyDataSetChanged()
     }
 
     /**
      * 添加fragment
      */
     fun addFragments(vararg fs: Fragment) {
+        initAdapter()
         fs.forEach { fragments.add(it) }
-        this.adapter =
-            FragmentAdapter(fragments, (context as FragmentActivity).supportFragmentManager)
+        adapter?.notifyDataSetChanged()
+    }
+
+    fun clear() {
+        fragments.clear()
+        adapter?.notifyDataSetChanged()
+    }
+
+    /**
+     * 添加fragment
+     */
+    fun addFragments(fs: ArrayList<Fragment>) {
+        initAdapter()
+        fs.forEach { fragments.add(it) }
+        adapter?.notifyDataSetChanged()
     }
 
 
@@ -118,10 +158,13 @@ class MyViewPager(context: Context, attrs: AttributeSet) : ViewPager(context, at
         this.tabLayout = tabLayout
 
         tabLayout.removeAllTabs()
-        titles.forEach { _ ->
+
+
+        titles.forEach { title ->
             val tab = tabLayout.newTab()
             tab.customView = View.inflate(context, layoutId, null)
             tabLayout.addTab(tab)
+            tab.text = title.toString()
             tabLayoutFun(tab)
         }
         this.titles.add(titles)
@@ -132,6 +175,7 @@ class MyViewPager(context: Context, attrs: AttributeSet) : ViewPager(context, at
      * tabLayout事件监听，ViewPager关联
      */
     private fun initTabLayoutListener() {
+        initAdapter()
         tabLayout?.addOnTabSelectedListener(onTabSelectedListener)
         addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
         tabLayout?.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(this))
@@ -183,6 +227,8 @@ class MyViewPager(context: Context, attrs: AttributeSet) : ViewPager(context, at
 
         override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         }
+
+
     }
 
     private var onTabSelectedListener = object : TabLayout.OnTabSelectedListener {

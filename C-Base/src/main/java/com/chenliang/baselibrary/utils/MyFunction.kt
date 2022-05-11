@@ -1,53 +1,70 @@
 package com.chenliang.baselibrary.utils
 
-import android.app.Activity
+import android.annotation.SuppressLint
+import android.app.*
 import android.content.Context
+import android.content.Context.VIBRATOR_SERVICE
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Matrix
-import android.graphics.PixelFormat
+import android.content.pm.ActivityInfo
+import android.content.res.ColorStateList
+import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.net.Uri
-import android.os.Bundle
-import android.os.Environment
-import android.os.Handler
+import android.os.*
+import android.provider.MediaStore
 import android.provider.Settings
 import android.text.Editable
+import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import android.webkit.WebView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.target.ViewTarget
 import com.chenliang.annotation.MyRouteUtils
 import com.chenliang.baselibrary.BaseInit
 import com.chenliang.baselibrary.R
+import com.chenliang.baselibrary.base.MyBaseViewModel
 import com.chenliang.baselibrary.base.MyDefaultFragment
+import com.chenliang.baselibrary.bean.BeanUser
+import com.chenliang.baselibrary.utils.*
+import com.chenliang.baselibrary.view.MyImageView
+import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import com.tbruyelle.rxpermissions3.RxPermissions
 import gorden.rxbus2.RxBus
+import kotlinx.android.synthetic.main.base_exception_dialog.view.*
 import kotlinx.android.synthetic.main.base_toast.view.*
+import kotlinx.android.synthetic.main.base_toast.view.message
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.*
 import java.text.SimpleDateFormat
+import java.util.*
 import java.util.regex.Pattern
-import javax.sql.DataSource
+import kotlin.collections.HashMap
 
 
 /**
@@ -57,6 +74,7 @@ import javax.sql.DataSource
  * @author: chenliang
  * @date: 2021/07/09
  */
+
 
 /**
  * 显示、隐藏view
@@ -75,6 +93,13 @@ fun View.hide(hide: Boolean) = this.apply {
     this.visibility = if (hide) View.GONE else View.VISIBLE;
 }
 
+/**
+ * 是否隐藏
+ */
+fun View.invisible(hide: Boolean) = this.apply {
+    this.visibility = if (hide) View.INVISIBLE else View.VISIBLE;
+}
+
 private var toastData = HashMap<String, String>()
 
 /**
@@ -82,18 +107,26 @@ private var toastData = HashMap<String, String>()
  */
 fun Any.toast(msg: String) {
 
+    if (msg.isNullOrEmpty())
+        return
+
     if (toastData.containsKey(msg))
         return
-    toastData[msg] = msg
-    var view = View.inflate(BaseInit.con, R.layout.base_toast, null)
-    var message = view.message
-    message.text = msg
-    var toast = Toast(BaseInit.con)
-    toast.view = view
-    toast!!.setGravity(Gravity.CENTER, 0, 0)
-    toast!!.duration = Toast.LENGTH_SHORT
-    toast.show()
-    Handler().postDelayed(Runnable { toastData.remove(msg) }, 1500)
+    try {
+        toastData[msg] = msg
+        var view = View.inflate(BaseInit.con, R.layout.base_toast, null)
+        var message = view.message
+        message.text = msg
+        var toast = Toast(BaseInit.con)
+        toast.view = view
+        toast!!.setGravity(Gravity.CENTER, 0, 0)
+        toast!!.duration = Toast.LENGTH_SHORT
+        toast.show()
+        Handler().postDelayed(Runnable { toastData.remove(msg) }, 1500)
+    } catch (e: java.lang.Exception) {
+
+    }
+
 
 }
 
@@ -105,11 +138,10 @@ fun Any.log(message: String) {
     val lineNumber = Thread.currentThread().stackTrace[3].lineNumber
 
     var message =
-        ":\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
-                "|      日志：$message\n|\n————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
+        "at $className.$methodName($fileName:$lineNumber)\n" +
+                "|      日志：$message\n————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
 
     Log.i("MyLog", message)
-    Log.i(this::class.java.simpleName, message)
 }
 
 fun Any.log(tag: String, message: String) {
@@ -131,11 +163,10 @@ fun Any.loge(message: String) {
     val methodName = Thread.currentThread().stackTrace[3].methodName
     val lineNumber = Thread.currentThread().stackTrace[3].lineNumber
     var message =
-        ":\n|\n|     at $className.$methodName($fileName:$lineNumber)\n" +
-                "|      日志：$message\n|\n————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
+        "at $className.$methodName($fileName:$lineNumber)\n" +
+                "|      日志：$message\n————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————"
 
     Log.e("MyLog", message)
-    Log.e(this::class.java.simpleName, message)
 }
 
 fun Any.loge(tag: String, message: String) {
@@ -165,8 +196,25 @@ fun Any.toJson(): String = Gson().toJson(this)
  * @param func Function1<[@kotlin.ParameterName] View, Unit>
  * @return View
  */
-fun View.click(func: (view: View) -> Unit) = this.apply {
-    this.setOnClickListener { func(it) }
+fun View.click(func: (view: View) -> Unit) {
+    this.isClickable = true
+    this.setOnClickListener {
+        func(it)
+    }
+}
+
+inline fun View.goto(path: String, vararg values: Any) = this.apply {
+    this.isClickable = true
+    this.setOnClickListener {
+        this.context?.goto(path, *values)
+    }
+}
+
+inline fun <T> View.goto(cls: Class<T>, vararg values: Any) = this.apply {
+    this.isClickable = true
+    this.setOnClickListener {
+        this.context?.goto(cls, *values)
+    }
 }
 
 /**
@@ -220,7 +268,24 @@ fun Array<String>.checkPermissions(act: AppCompatActivity, func: (boo: Boolean) 
     per.request(*array)
         .subscribe {
             func(it)
+            if (it == false) {
+                dialog("使用该功能，需要开启权限，鉴于您禁用相关权限，请手动设置开启权限").n { }
+                    .y {
+                        val packageURI = Uri.parse("package:" + BaseInit.con!!.packageName)
+                        val intent =
+                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI)
+                        BaseInit.con!!.startActivity(intent)
+                    }
+                    .show(BaseInit.act as AppCompatActivity)
+            }
         }
+}
+
+fun Any.toSettings() {
+    val packageURI = Uri.parse("package:" + BaseInit.con!!.packageName)
+    val intent =
+        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI)
+    BaseInit.con!!.startActivity(intent)
 }
 
 /**
@@ -229,6 +294,14 @@ fun Array<String>.checkPermissions(act: AppCompatActivity, func: (boo: Boolean) 
  */
 fun Int.dip2px(): Int {
     return MyScreen.dip2px(BaseInit.con!!, this.toFloat())
+}
+
+/**
+ * dip转px
+ * @return Int
+ */
+fun TextView.setTextSizeDip(size: Int) {
+    this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, size.toFloat())
 }
 
 /**
@@ -255,11 +328,30 @@ fun Int.sp2px(): Int {
  * @return String
  */
 fun String.date(pattern: String) = this.apply {
-    var length = System.currentTimeMillis().toString().length;
-    var time = this + "0".repeat(length - this.length)
-    return SimpleDateFormat(pattern).format(time).toString()
+    try {
+        return SimpleDateFormat(pattern).format(this).toString()
+    } catch (e: Exception) {
+        log("时间格式化失败" + e.message)
+        return ""
+    }
+
 }
 
+/**
+ * 时间戳字符串格式化:var time="13239100192"; time.date("yyyy-MM-dd")
+ * @receiver String
+ * @param pattern String
+ * @return String
+ */
+fun String.dateParse(from: String, to: String) = SimpleDateFormat(from).parse(this).time.date(to)
+
+/**
+ * 时间戳字符串格式化:var time="13239100192"; time.date("yyyy-MM-dd")
+ * @receiver String
+ * @param pattern String
+ * @return String
+ */
+fun String.dateToLong(from: String) = if (this == "") 0 else SimpleDateFormat(from).parse(this).time
 
 /**
  * 时间戳long格式化:var time=13239100192; time.date("yyyy-MM-dd")
@@ -269,6 +361,27 @@ fun String.date(pattern: String) = this.apply {
  */
 fun Long.date(pattern: String): String {
     return SimpleDateFormat(pattern).format(this)
+}
+
+/**2022-02-18T 01:00:00+08:00
+ * 2022-01-27T 16:11:58.857+08:00
+ */
+fun String.dateT(pattern: String): String {
+//    log("时间格式化：${this}")
+    if (this == "") {
+        return ""
+    }
+    return try {
+        var dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ")
+        var timeZone = TimeZone.getTimeZone("GMT+8")
+        dateFormat.timeZone = timeZone
+        var date = dateFormat.parse(this)
+        dateFormat.applyPattern(pattern)
+        dateFormat.format(date)
+    } catch (e: java.lang.Exception) {
+        dateParse("yyyy-MM-dd'T'HH:mm:ss", pattern)
+    }
+
 }
 
 fun String.format(pattern: String) = this.apply {
@@ -357,7 +470,44 @@ fun Bitmap.toZoomImage(w: Int, h: Int): Bitmap {
     return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
 }
 
-fun <T> Context.goto(cls: Class<T>, vararg values: Any): Fragment {
+fun <T> Fragment.goto(cls: Class<T>, vararg values: Any): Fragment {
+    return context!!.goto(cls, *values)
+}
+
+fun Fragment.goto(path: String, vararg values: Any): Fragment {
+    return context!!.goto(path, *values)
+}
+
+fun Context.gotoFinish(path: String, vararg values: Any): Fragment {
+    var result = BaseInit.con!!.goto(path, *values)
+    if (this is Activity) {
+        finish()
+    }
+    return result
+}
+
+
+fun <T> Context.gotoFinish(cls: Class<T>, vararg values: Any): Fragment {
+    var result = BaseInit.con!!.goto(cls, *values)
+    if (this is Activity) {
+        finish()
+    }
+    return result
+}
+
+fun Fragment.gotoFinish(path: String, vararg values: Any): Fragment {
+    var result = BaseInit.con!!.goto(path, *values)
+    activity?.finish()
+    return result
+}
+
+fun <T> Fragment.gotoFinish(cls: Class<T>, vararg values: Any): Fragment {
+    var result = BaseInit.con!!.goto(cls, *values)
+    activity?.finish()
+    return result
+}
+
+fun <T> Context.goto(cls: Class<T>, vararg values: Any?): Fragment {
 
     var size = values.size - 1
 
@@ -412,6 +562,44 @@ fun <T> Context.goto(cls: Class<T>, vararg values: Any): Fragment {
 
 }
 
+fun <T> Activity.gotoBottom(cls: Class<T>, vararg values: Any?) {
+    var size = values.size - 1
+
+    if (values.size % 2 != 0) {
+        throw Exception("${this::class.simpleName} goto(path,values) values参数必须为偶数对...")
+    }
+
+    var intent = Intent(BaseInit.con!!, cls)
+
+    for (index in 0..size step 2) {
+        var key = values[index]
+        var value = values[values.indexOf(key) + 1]
+        when (value) {
+            is Int -> intent.putExtra(key.toString(), value)
+            is Long -> intent.putExtra(key.toString(), value)
+            is String -> intent.putExtra(key.toString(), value)
+            is Boolean -> intent.putExtra(key.toString(), value)
+            is Double -> intent.putExtra(key.toString(), value)
+            is Float -> intent.putExtra(key.toString(), value)
+            is Serializable -> intent.putExtra(key.toString(), value)
+        }
+    }
+    intent.putExtra("bottom", true)
+    startActivity(intent)
+    overridePendingTransition(R.anim.base_bottom_in, R.anim.base_top_out)
+
+
+}
+
+fun Any.postDelayed(delay: Long, func: () -> Unit) {
+    var handler: Handler? = Handler()
+    var run = Runnable {
+        func()
+        handler = null
+    }
+    handler?.postDelayed(run, delay)
+}
+
 fun Context.goto(path: String, vararg values: Any): Fragment {
 
 //    log("goto path: $path -----------------------------")
@@ -431,7 +619,7 @@ fun Context.goto(path: String, vararg values: Any): Fragment {
         key = path;
 //        log("goto MyRouteUtils.path[key]: ${MyRouteUtils.path[key]} -----------------------------")
         if (MyRouteUtils.path[key] == null) {
-            toast("找不到路由对应的页面：$key")
+//            toast("找不到路由对应的页面：$key")
             loge("找不到路由对应的页面：$key")
             return MyDefaultFragment()
         }
@@ -532,7 +720,7 @@ fun Any.send(code: Int) {
 }
 
 fun Any.send(code: Int, f: ((intent: Intent) -> Unit)) {
-    RxBus.get().send(code, RxBusEvent(this, f))
+    RxBus.get().send(code, RxBusEvent(Any(), f))
 }
 
 fun Any.sendSelf(code: Int) {
@@ -581,17 +769,19 @@ fun Any.anrCheck(time: Int, func: () -> Unit) {
     func()
     var end = System.currentTimeMillis();
     if (end - start > time) {
-        loge("耗时操作:${end - start}毫秒 ")
-//        throw Exception("${this::class.simpleName} initCreate耗时太长，请优化...")
+        loge("${this::class.simpleName}  耗时太长:${end - start}毫秒，请优化...")
     } else {
 //        log("操作时长:${end - start}毫秒 ")
     }
 }
 
-fun Context.dialog(message: String): MyDialog {
+fun Any.dialog(message: String): MyDialog {
     return MyDialog().message(message)
 }
 
+fun Any.dialog(): MyDialog {
+    return MyDialog().message("")
+}
 
 fun String.check(vararg checks: Any): Boolean {
 
@@ -696,18 +886,21 @@ fun String.insert(tag: String, vararg positions: Int): String {
 fun EditText.changed(func: (str: String) -> Unit) {
 
     var listener = object : TextWatcher {
+        var boo = false
         override fun afterTextChanged(s: Editable?) {
-
+            func(text.toString())
+            if (!this.boo) {
+                setSelection(text.toString().length)
+                boo = true
+            }
+            this
         }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            this@changed.removeTextChangedListener(this)
-            func(text.toString())
-            this@changed.setSelection(text.toString().length)
-            this@changed.addTextChangedListener(this)
+
         }
     }
 
@@ -788,6 +981,141 @@ fun ImageView.download(url: String) {
         .preload();
 }
 
+/**
+ * 将图片下载到本地
+ * @receiver ImageView
+ * @param url String
+ */
+fun ImageView.load(url: String) {
+    var bg = background
+    if (bg != null) {
+        Glide.with(context!!)
+            .load(url).into(this)
+    } else {
+        var options = RequestOptions().error(R.drawable.load_default)
+        Glide.with(context!!)
+            .load(url).apply(options).into(this)
+    }
+
+
+}
+
+/**
+ * 将图片下载到本地
+ * @receiver ImageView
+ * @param url String
+ */
+fun ImageView.loadGS(url: String) {
+    var bg = background
+    scaleType = ImageView.ScaleType.FIT_XY
+    if (bg != null) {
+        Glide.with(context!!)
+            .load(url).into(this)
+    } else {
+        var options = RequestOptions().error(R.drawable.load_default)
+//        Glide.with(context!!)
+//            .load(url).dontAnimate()
+//            .transform(BlurTransformation(context, 13)).apply(options).into(this)
+
+        Glide.with(this)
+            .load(url)
+            .apply(bitmapTransform(GlideBlurTransformation(context)))
+            .into(object : ViewTarget<ImageView?, Drawable?>(this) {
+                override fun onResourceReady(
+                    resource: Drawable,
+                    transition: com.bumptech.glide.request.transition.Transition<in Drawable?>?
+                ) {
+                    val current = resource.current
+                    this@loadGS.setImageDrawable(current)
+                }
+            })
+
+    }
+
+
+}
+
+
+/**
+ * 将图片下载到本地
+ * @receiver ImageView
+ * @param url String
+ */
+fun ImageView.load(url: String? = "", radius: Int) {
+//        log("加载图片 url：$url  radius:$radius ")
+    if (this is MyImageView) {
+        if (default != -1) {
+            var options = RequestOptions()
+                .transform(CenterCrop(), RoundedCorners((radius).dip2px()))
+            Glide.with(context!!)
+                .load(url)
+                .error(default)
+                .placeholder(default)
+                .apply(options)
+                .into(this)
+            return
+        } else {
+            var options = RequestOptions()
+                .transform(CenterCrop(), RoundedCorners((radius).dip2px()))
+            Glide.with(context!!)
+                .load(url)
+                .apply(options)
+                .into(this)
+            return
+        }
+
+    }
+
+    var options = RequestOptions()
+        .transform(CenterCrop(), RoundedCorners((radius).dip2px()))
+    Glide.with(context!!)
+        .load(url)
+        .apply(options)
+        .error(R.drawable.load_default)
+        .placeholder(R.drawable.load_default)
+        .into(this)
+}
+
+
+/**
+ * 将图片下载到本地
+ * @receiver ImageView
+ * @param url String
+ */
+fun ImageView.load(resourceId: Int, radius: Int) {
+//    log("加载图片 resourceId：$resourceId  radius:$radius ")
+    if (this is MyImageView) {
+        if (default != -1) {
+            var options = RequestOptions()
+                .transform(CenterCrop(), RoundedCorners((radius).dip2px()))
+            Glide.with(context!!)
+                .load(resourceId)
+                .error(default)
+                .placeholder(default)
+                .apply(options)
+                .into(this)
+            return
+        } else {
+            var options = RequestOptions()
+                .transform(CenterCrop(), RoundedCorners((radius).dip2px()))
+            Glide.with(context!!)
+                .load(resourceId)
+                .apply(options)
+                .into(this)
+            return
+        }
+
+    }
+
+    var options = RequestOptions()
+        .transform(CenterCrop(), RoundedCorners(radius))
+    Glide.with(context!!)
+        .load(resourceId)
+        .apply(options)
+//        .error(R.drawable.load_default)
+//        .placeholder(R.drawable.load_default)
+        .into(this)
+}
 
 private fun saveFileFromUri(context: Context, uri: Uri) {
     //系统相册目录
@@ -820,6 +1148,379 @@ private fun saveFileFromUri(context: Context, uri: Uri) {
     }
 }
 
-fun EditText.focusableEnd(){
+fun EditText.focusableEnd() {
     setSelection(text.toString().length)
+}
+
+fun TabLayout.selected(func: (tab: TabLayout.Tab?) -> Unit) {
+    this.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            func(tab)
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {
+            func(tab)
+        }
+
+        override fun onTabReselected(tab: TabLayout.Tab?) {
+        }
+    })
+}
+
+@BindingAdapter(value = ["bindLoad", "bindRadius"], requireAll = false)
+fun imageUrl(view: ImageView, bindLoad: String?, bindRadius: Int) {
+    if (!bindLoad.isNullOrEmpty()) {
+        if (bindRadius > 0) {
+            view.load(bindLoad, bindRadius)
+
+        } else {
+            if (view is MyImageView && view.radius > 0)
+                view.load(bindLoad, view.radius)
+            else
+                view.load(bindLoad)
+        }
+
+    } else {
+        if (view is MyImageView) {
+            if (view.radius > 0) {
+                view.load(view.default, view.radius)
+            } else if (bindRadius > 0) {
+                view.load(view.default, bindRadius)
+            }
+
+        }
+
+    }
+
+
+}
+
+@BindingAdapter(value = ["bindResourceId"])
+fun bindSrc(view: ImageView, resource: Int) {
+    view.setImageResource(resource);
+}
+
+@BindingAdapter(value = ["bindTint"])
+fun bindTint(view: ImageView, color: String) {
+    try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !color.isNullOrEmpty()) {
+            view.imageTintList = ColorStateList.valueOf(Color.parseColor(color))
+        }
+    } catch (e: Exception) {
+        e.loge("颜色值必须为：#FFFFFF格式")
+    }
+}
+
+fun ImageView.tint(color: Int) {
+    try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            imageTintList = ColorStateList.valueOf(color)
+        }
+    } catch (e: Exception) {
+        e.loge("颜色值必须为：#FFFFFF格式")
+    }
+}
+
+@BindingAdapter(value = ["bindResourceId"])
+fun bindBackground(view: Button, resource: Int) {
+    view.setBackgroundResource(resource);
+
+}
+
+@BindingAdapter(value = ["bindResourceId"])
+fun bindTextViewBackground(view: TextView, resource: Int) {
+    view.setBackgroundResource(resource);
+
+}
+
+@BindingAdapter(value = ["myTextColor"])
+fun bindTextColor(view: TextView, color: String) {
+    view.setTextColor((Color.parseColor(color)))
+
+}
+
+@BindingAdapter(value = ["myButtonColor"])
+fun bindButtonTextColor(view: Button, color: String) {
+    view.setTextColor((Color.parseColor(color)))
+
+}
+
+fun TextView.setHtmlText(text: String) {
+    setText(Html.fromHtml(text))
+}
+
+fun MyBaseViewModel.body(vararg values: Any): HashMap<String, Any> {
+
+    var size = values.size - 1
+    if (values.size % 2 != 0) {
+        throw Exception("${this::class.simpleName} body values参数必须为偶数对...")
+    }
+    var map = HashMap<String, Any>()
+    for (index in 0..size step 2) {
+        var key = values[index]
+        var value = values[values.indexOf(key) + 1]
+        map[key as String] = value
+    }
+    return map
+
+}
+
+fun RadioButton.checked(func: (isChecked: Boolean) -> Unit) {
+    this.click {
+        func(this.isChecked)
+    }
+}
+
+fun CheckBox.checked(func: (isChecked: Boolean) -> Unit) {
+    this.click {
+        func(this.isChecked)
+    }
+}
+
+
+fun Any.hideSoftInput(view: View) {
+    val manager: InputMethodManager =
+        BaseInit.con!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    if (manager != null) manager.hideSoftInputFromWindow(
+        view.windowToken,
+        InputMethodManager.HIDE_NOT_ALWAYS
+    )
+
+}
+
+
+fun <T> Any.fromJson(json: String): T {
+    return Gson().fromJson(json, this::class.java) as T
+}
+
+fun String.timestamp(): Long {
+    return try {
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val date: Date = sdf.parse(this)
+        date.time
+    } catch (e: Exception) {
+        e.printStackTrace()
+        0
+    }
+    return 0
+}
+
+
+fun Long.handleDate(): String {
+    var sdf = SimpleDateFormat("yyyy-MM-dd");
+    var date = Date(this);
+    var old = sdf.parse(sdf.format(date));
+    var now = sdf.parse(sdf.format(Date()));
+    var oldTime = old.time;
+    var nowTime = now.time;
+
+    var day = (nowTime - oldTime) / (24 * 60 * 60 * 1000);
+
+    return when {
+        day < 1 -> {
+            "今天";
+        }
+        day == 1L -> {
+            "昨天 "
+        }
+        else -> {
+            var format = SimpleDateFormat("yyyy.MM.dd");
+            format.format(date);
+        }
+    }
+}
+
+fun TextView.setBold(bold: Boolean) {
+    typeface = if (bold) {
+        Typeface.defaultFromStyle(Typeface.BOLD);
+    } else {
+        Typeface.defaultFromStyle(Typeface.NORMAL);
+    }
+}
+
+fun Context.screenLandscape() {
+    (this as Activity).requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+}
+
+fun Context.screenPortrait() {
+    (this as Activity).requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+}
+
+fun Context.isNotificationEnabled(): Boolean {
+    return NotificationManagerCompat.from(this).areNotificationsEnabled();
+}
+
+fun Context.gotoSetting() {
+    var intent = Intent()
+    when {
+        Build.VERSION.SDK_INT >= 26 -> {
+            intent.action = "android.settings.APP_NOTIFICATION_SETTINGS";
+            intent.putExtra("android.provider.extra.APP_PACKAGE", packageName);
+        }
+        Build.VERSION.SDK_INT >= 21 -> {
+            intent.action = "android.settings.APP_NOTIFICATION_SETTINGS";
+            intent.putExtra("app_package", packageName);
+            intent.putExtra("app_uid", applicationInfo.uid);
+        }
+        else -> {
+            intent.action = "android.settings.APPLICATION_DETAILS_SETTINGS";
+            intent.data = Uri.fromParts("package", packageName, null);
+        }
+    }
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK;
+    startActivity(intent);
+}
+
+fun Int.toTime(): String { //2*60*60*60
+    var h = this / (60 * 60)
+    var m = (this - this / (60 * 60)) / 60
+    var s = (this - this / (60 * 60)) % 60
+
+
+    if (h > 0) {
+
+        var hs = if (h < 10) "0$h" else "$h"
+        var ms = if (m < 10) "0$m" else "$m"
+        var ss = if (s < 10) "0$s" else "$s"
+
+        return "$hs:$ms:$ss"
+    } else {
+        var ms = if (m < 10) "0$m" else "$m"
+        var ss = if (s < 10) "0$s" else "$s"
+        return "$ms:$ss"
+    }
+
+
+}
+
+fun Any.vibrate() {
+    var vibrator = BaseInit.con?.getSystemService(VIBRATOR_SERVICE) as Vibrator
+    if (vibrator.hasVibrator()) {
+        var array = arrayListOf<Long>(0, 200, 100, 200)
+        vibrator.vibrate(array.toLongArray(), -1)
+    }
+}
+
+fun Context.playLocalVideo(url: String) {
+    var intent = Intent(Intent.ACTION_VIEW)
+    var file = File(url)
+    var uri = Uri.fromFile(file);
+    intent.setDataAndType(uri, "video/*");
+    startActivity(intent);
+}
+
+fun Any.loading(vararg messages: String): Dialog {
+    var dialog = BaseInit.act?.let { Dialog(it) }
+    dialog?.setCancelable(false)
+    dialog?.setContentView(R.layout.base_loading)
+    if (!messages.isNullOrEmpty()) {
+        dialog?.findViewById<TextView>(R.id.message)?.text = messages[0]
+    }
+
+    dialog?.window!!.setBackgroundDrawableResource(android.R.color.transparent);
+    dialog?.show()
+    return dialog
+}
+
+
+@SuppressLint("WrongConstant")
+fun Any.messageNotification(id: String, title: String, message: String) {
+
+    log("通知》。。。。。。。。。。。。。")
+}
+
+
+fun Any.getBeanUser(): BeanUser? = BeanUser().get<BeanUser>()
+
+fun String.anonymous(): String {
+    if (this.isNullOrEmpty())
+        return "匿名"
+    return this.substring(0, 1) + "*".repeat(this.length - 1)
+}
+
+fun WebView.loadJs(name: String, vararg values: String) {
+
+    var valueStr = ""
+    for (value in values) {
+        valueStr += ",'${value}'"
+    }
+    valueStr = valueStr.substring(1)
+//    user?.token + "','" + webview.testId
+
+    var bridge = "javascript:$name($valueStr)"
+
+    log("loadjs:$bridge")
+
+    loadUrl(bridge)
+}
+
+fun Activity.UI(func: () -> Unit) {
+    runOnUiThread { func() }
+}
+
+
+
+/**
+ * 保存view到图库
+ */
+fun View.saveToBitmap(path: String): Boolean {
+    this.isDrawingCacheEnabled = true
+    this.buildDrawingCache(true)
+    var bitmap = this.getDrawingCache(true)
+    val result: Bitmap
+    val bmpSrcWidth: Int = bitmap.width
+    val bmpSrcHeight: Int = bitmap.height
+
+    val bmpDest =
+        Bitmap.createBitmap(bmpSrcWidth, bmpSrcHeight, Bitmap.Config.ARGB_8888)
+    if (null != bmpDest) {
+        val canvas = Canvas(bmpDest)
+        val rect = Rect(0, 0, bmpSrcWidth, bmpSrcHeight)
+        canvas.drawBitmap(bitmap, rect, rect, null)
+    } else {
+        log("保存失败")
+        return false
+    }
+
+    result = bmpDest
+
+    if (bitmap != null && !bitmap.isRecycled) {
+        bitmap.recycle()
+        bitmap = null
+    } else {
+        log("保存失败")
+        return false
+    }
+    this.isDrawingCacheEnabled = false
+
+    if (result == null) {
+        log("保存失败")
+        return false
+    }
+    MediaStore.Images.Media.insertImage(
+        context.contentResolver!!,
+        result!!,
+        getRandomPath("png"),
+        "心情"
+    ); // 名
+    log("保存成功")
+    return true
+}
+
+/**
+ * 随机获取文件路径
+ */
+fun Any.getRandomPath(suffix: String) =
+    Environment.getExternalStorageDirectory().path + "/" + System.currentTimeMillis() + (Math.random() * 10000F).toInt() + ".$suffix"
+
+/**
+ * 按位与运算-&：判断是否存在某个状态；
+ */
+fun Int.has(status: Int): Boolean {
+//    log("has $status:"+(this and status) )
+    return this and status > 0
+}
+
+fun Long.timeNumString(): String {
+    return if (this >= 10) this.toString() else ("0$this")
 }

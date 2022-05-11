@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Process
 import com.chenliang.baselibrary.BaseInit
 import kotlin.system.exitProcess
+
 /**
  *
  * @Project: MVVM-Component
@@ -221,4 +222,9 @@ object MyApp {
         }
     }
 
+    fun openBrowser(url: String) {
+        log("openBrowser：$url")
+        var intent = Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        BaseInit.con?.startActivity(intent);
+    }
 }

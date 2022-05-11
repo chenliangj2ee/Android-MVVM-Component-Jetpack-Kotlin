@@ -34,7 +34,7 @@ class RefreshRecyclerViewActivity :
                 bean.title = "我是item:第${refresh.pageIndex}页 ： $i"
                 datas.add(bean)
             }
-            refresh.addData(datas)
+            refresh.addDatas(datas)
             recyclerview.addData(datas)
             mToolBar.setTitle("分页：${refresh.pageIndex}")
         }

@@ -5,7 +5,7 @@ import com.chenliang.baselibrary.MyBaseApplication
 import com.chenliang.baselibrary.exception.MyException
 import com.chenliang.baselibrary.utils.anrCheck
 import com.chenliang.mvvmc.act.MainActivity
-import com.chenliang.processor.app.MyRoutePath
+import com.chenliang.processor.CBase.MyRoutePath
 
 class MyApplication : MyBaseApplication() {
 

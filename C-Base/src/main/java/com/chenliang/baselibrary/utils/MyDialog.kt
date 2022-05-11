@@ -1,8 +1,10 @@
 package com.chenliang.baselibrary.utils
 
-import com.chenliang.baselibrary.annotation.MyClass
-import com.chenliang.baselibrary.base.MyBaseDialog
+import android.view.View
+import com.chenliang.baselibrary.R
 import com.chenliang.baselibrary.databinding.BaseDialogDefaultLayoutBinding
+import com.chenliang.baselibrary.base.MyBaseDialog
+import com.chenliang.baselibrary.annotation.MyClass
 import kotlinx.android.synthetic.main.base_dialog_default_layout.view.*
 
 /**
@@ -13,37 +15,61 @@ import kotlinx.android.synthetic.main.base_dialog_default_layout.view.*
  * @date: 2021/07/14
  */
 
-@MyClass(mDialogAnimation = true)
+@MyClass(mDialogAnimation = true, mDialogAnimationTime = 100)
 class MyDialog : MyBaseDialog<BaseDialogDefaultLayoutBinding>() {
 
 
     private var y: (() -> Unit?)? = null
     private var n: (() -> Unit?)? = null
+    private var title = ""
     private var message = ""
     private var cancelText = "取消"
     private var confirmText = "确定"
     override fun initCreate() {
-        mRootView.message.text = message
+        mRootView?.message?.text = message
+        if ("" != title) {
+            mRootView?.title?.text = title;
+            mRootView?.title?.show(true)
+        }
+        mRootView?.cancel?.text = cancelText
+        mRootView?.confirm?.text = confirmText
 
-        mRootView.cancel.text = cancelText
-        mRootView.confirm.text = confirmText
 
-        mRootView.cancel.click {
+        if (single) {
+            mRootView?.cancel?.visibility = View.GONE
+            mRootView?.line?.visibility = View.GONE
+            mRootView?.confirm?.setBackgroundResource(R.drawable.base_selector_yes_single_bg)
+        }
+
+        mRootView?.cancel?.click {
             if (n != null) {
                 n?.invoke()
-                dismiss()
             }
+            dismiss()
         }
-        mRootView.confirm.click {
+        mRootView?.confirm?.click {
             if (y != null) {
                 y?.invoke()
-                dismiss()
             }
+            dismiss()
         }
+    }
+
+    var single = false
+    fun single(single: Boolean): MyDialog {
+        this.single = single
+        return this
+    }
+
+    fun title(title: String): MyDialog {
+        this.title = title
+        mRootView?.title?.text = title
+        return this
     }
 
     fun message(message: String): MyDialog {
         this.message = message
+        mRootView?.message?.text = message
         return this
     }
 

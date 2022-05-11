@@ -50,3 +50,29 @@ fun defaultValueReflex(any: Any) {
     }
 
 }
+
+/**
+ * 获取默认值
+ */
+fun defaultResetToNull(any: Any) {
+    var fields = any::class.java.declaredFields
+
+    for (f in fields) {
+
+        f.isAccessible = true
+        var fieldValue = f.get(any)
+        var fieldType = f.type
+        if (String::class.java.isAssignableFrom(fieldType)) {
+            f.set(any, null)
+        } else if (fieldValue is MyBaseBean) {
+            defaultResetToNull(fieldValue)
+        } else if (fieldValue is List<*>) {
+            for (item in fieldValue) {
+                if (item != null) {
+                    defaultResetToNull(item)
+                }
+            }
+        }
+    }
+
+}
